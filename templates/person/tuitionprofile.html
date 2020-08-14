@@ -1,0 +1,44 @@
+{% extends 'basic.html' %}
+
+{% block title%} Tuition Related Profile{% endblock %}
+{% block userprofile %} active{% endblock userprofile %}
+{% block body %}
+{% load crispy_forms_tags %}
+{% if user.is_authenticated %}
+<div class="col-md-6 offset-md-3">
+    
+        <form action="/profile/tuitionprofile/" method="post" enctype="multipart/form-data" >
+            {% csrf_token %}
+            <fieldset class="form-group mx-auto">
+                <legend class="border-bottom text-center mb-4"><h2>Tuition Related Profile</h2></legend>
+                {{ form|crispy }}
+                
+            </fieldset>
+            <button class="btn btn-outline-info " type="submit" value="submit">Update </button>
+            {% comment %} <input type="submit" value="Submit"> {% endcomment %}
+        </form>
+
+</div>
+{% endif %}
+{% endblock %}
+{% comment %} {% block js %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_district").change(function () {
+      var url = $("#TuitionClassForm").attr("data-cities-url");  // get the url of the `load_cities` view
+      var countryId = $(this).val();  // get the selected country ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'district': countryId       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_preferedPlace").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    });
+  </script>
+{% endblock js %} 
+id="personForm" data-cities-url="{% url 'ajax_load_cities' %}" novalidate{% endcomment %}

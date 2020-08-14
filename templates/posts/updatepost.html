@@ -1,0 +1,23 @@
+{% extends 'basic.html' %}
+
+{% block title%} Create Post{% endblock %}
+ {% block homeactive %} active{% endblock homeactive %}
+{% block body %}
+    {% load crispy_forms_tags %}
+
+<div class="col-md-6 offset-md-3">
+    
+        <form action="/posts/editpost/{{instance.sno}}/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group mx-auto">
+                <legend class="border-bottom text-center mb-4"><h2>Create Your Own Post</h2></legend>
+                {{ form|crispy }}
+                
+            </fieldset>
+            <button class="btn btn-outline-info " type="submit" value="submit">Post it </button>
+            {% comment %} <input type="submit" value="Submit"> {% endcomment %}
+        </form>
+   
+</div>
+
+{% endblock body %}

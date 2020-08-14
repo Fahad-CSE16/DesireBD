@@ -1,0 +1,14 @@
+{% extends 'basic.html' %}
+
+{% block title%} Home{% endblock %}
+ {% block homeactive %} active{% endblock homeactive %}
+{% block body %}
+<a href="/addsubject/"> Add a subject if not listed here</a>
+
+<div class="containter">
+  {% for sub in subjects %}
+   <b> {{sub.name}}</b> <br>
+  {% endfor %}
+
+</div>
+{% endblock body %}

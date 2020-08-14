@@ -1,0 +1,198 @@
+{% extends 'basic.html' %}
+{% load humanize %}
+{% load extras %}
+{% block title%} Blog Post {% endblock %}
+{% block body %}
+<div class="container">
+    <div class="row mt-1">
+        <div class="col-md-8 blog-main">
+            <div class="blog-post">
+
+                <h2><b>{{post.author}}</b> </h2>
+                <h5 class="pb-4 mb-2 font-italic ">
+                    Title:
+                    {{post.title|safe}}
+                </h5>
+                <p>{{post.content|safe}}</p>
+                <br>
+               
+
+                <b> Time Available:</b> {{post.time_available|safe}}
+                <br>
+                
+                {% if post.category == "t" %}
+                He/She is a <b> Teacher</b>
+                <br>
+                {% else %}
+                He/She is a <b> Student</b>
+                <br>
+                {% endif %}
+                
+                
+
+                <a href="#"><span>- {{view}} seens</span></a>
+                {% if user == post.author %}
+                <div>
+                    <a href="/posts/editpost/{{post.sno}}/">Edit Post</a>
+                    <div id="btnOne"><a href="#" onClick="javascript:addBtn();">Delete</a> </div>
+                </div>
+                <div id="btnHolder"></div>
+                {% endif %}
+                <br>
+                <form action="/posts/likepost/{{post.sno}}/" method="post"> 
+                {% csrf_token %}
+                {% if liked %}
+                     <button type="submit" name="like_post" value="{{post.sno}}" class="btn  btn-primary btn-sm">UnLike</button>
+                {% else %}
+                    <button type="submit" name="like_post" value="{{post.sno}}" class="btn  btn-primary btn-sm">Like</button>
+                {% endif %}
+                </form>
+                {{like}} People Likes The Post
+            </div><!-- /.blog-post -->
+        </div><!-- /.blog-main -->
+    </div>
+</div>
+
+<div class="container">
+    {% if user.is_authenticated %}
+
+    <h4>{{comments.count}}-Comments</h4>
+    <form action="/posts/postcomment/" method="post">{% csrf_token %}
+        <div class="form-group">
+            <lebel for="exampleInputEmail"> Post Comment</lebel>
+            <input type="text " class="form-control" name="comment" placeholder="Enter comment here">
+        </div>
+        <input type="hidden" name="postsno" value="{{post.sno}}">
+        <input type="hidden" name="parentsno" value="">
+        <input type="hidden" name="image" value="{{userp.image}}">
+        <button type="submit" class="btn btn-primary" value="submit">Submit</button>
+    </form>
+    {% else %}
+    <p>
+    <h3><b>Please login to add comments to this blogpost. </b></h3>
+    </p>
+    {% endif %}
+    {% for comment in comments %}
+    <div class="row my-3">
+        <div class="col-md-1">
+            <img class="rounded mx-auto my-3 d-block w-50 border border-dark" src="{{comment.image.url}}" alt="">
+        </div>
+        <div class="col md 11">
+            <b>{{comment.user.username}}</b> <span class="badge badge-secondary">
+                {{comment.timestamp | naturaltime}}</span>
+            <div>
+                {{comment.comment}}
+            </div>
+            <div class="row">
+
+                {% if user == comment.user %}
+                <button class="btn  btn-sm btn-primary" type="button" data-toggle="collapse"
+                    data-target="#deleteBox{{comment.sno}}" aria-expanded="true"
+                    aria-controls="#deleteBox{{comment.sno}}">
+                    Delete
+                </button>
+                <div class="collapse" id="deleteBox{{comment.sno}}">
+                    <div class="card card-body my-2">
+                        <form action="/posts/deletecomment/" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="parentsno" value="{{comment.sno}}">
+                            <input type="hidden" name="postsno" value="{{post.sno}}">
+                            <button type="submit" class="btn btn-primary"> Delete comment</button>
+
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="reply mx-2">
+                    {% if user.is_authenticated %}
+                    <button class="btn  btn-sm btn-primary" type="button" data-toggle="collapse"
+                        data-target="#replyBox{{comment.sno}}" aria-expanded="true"
+                        aria-controls="#replyBox{{comment.sno}}">
+                        Reply
+                    </button>
+                    <div class="collapse" id="replyBox{{comment.sno}}">
+                        <div class="card card-body my-2">
+                            <form action="/posts/postcomment/" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <lebel for="comment"> Post a reply</lebel>
+                                    <input type="text" name="comment" placeholder="Enter comment here"
+                                        class="form-control">
+                                    <input type="hidden" name="parentsno" value="{{comment.sno}}">
+                                </div>
+                                <input type="hidden" name="postsno" value="{{post.sno}}">
+                                <input type="hidden" name="image" value="{{userp.image}}">
+                                <button type="submit" class="btn btn-primary"> Post</button>
+
+
+                            </form>
+                        </div>
+                    </div>
+                    {% else %}
+                    <button class="btn  btn-sm btn-primary" type="button" data-toggle="collapse"
+                        data-target="#replyBox{{comment.sno}}" aria-expanded="true"
+                        aria-controls="#replyBox{{comment.sno}}" disabled>
+                        Login to Reply
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="replies  my-1 ">
+                {% for reply in replyDict|get_val:comment.sno %}
+                <div class="row my-3">
+                    <div class="col-md-1 ">
+                        <img class="rounded mx-auto my-3 d-block w-50 border border-dark" src="{{reply.image.url}}"
+                            alt="user">
+                    </div>
+                    <div class="col-md-9 ">
+
+                        <b>{{reply.user}}:</b> <span class="badge badge-secondary">
+                            {{comment.timestamp|naturaltime}}</span>
+                        <div>
+                            {{reply.comment}}
+                            <br>
+                        </div>
+                        {% if user == reply.user %}
+                        <button class="btn  btn-sm btn-primary" type="button" data-toggle="collapse"
+                            data-target="#deleteRBox{{comment.sno}}" aria-expanded="true"
+                            aria-controls="#deleteRBox{{comment.sno}}">
+                            Delete
+                        </button>
+                        <div class="collapse" id="deleteRBox{{comment.sno}}">
+                            <div class="card card-body my-2">
+                                <form action="/posts/deletecomment/" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="parentsno" value="{{reply.sno}}">
+                                    <input type="hidden" name="postsno" value="{{post.sno}}">
+                                    <button type="submit" class="btn btn-primary"> Delete Reply</button>
+
+                                </form>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+{% block js %}
+
+<script>
+
+    function addBtn() {
+        document.getElementById('btnHolder').innerHTML = ' Are you Sure to delete? <a href="/posts/deletepost/{{post.sno}}/" class="stretched-link">Yes,Sure</a>';
+    }
+
+// function removeBtn(){
+//   document.getElementById('btnHolder').innerHTML = '';
+// }
+// onClick="javascript:removeBtn();"
+// <input type="button"  value="Sure" />
+</script>
+{% endblock js %}

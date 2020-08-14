@@ -1,0 +1,318 @@
+{% extends 'basic.html' %}
+{% load humanize %}
+{% load my_filters %}
+{% block title%} Blog Post {% endblock %}
+{% block css %}
+table {
+border: 3px solid black;
+}
+th {
+background-color: #4CAF50;
+color: white;
+padding: 15px;
+text-align: center;
+border: 1px solid black;
+}
+tr:nth-child(even) {background-color: #e4bb3d;}
+tr:nth-child(odd) {background-color: #17a2b8;}
+tr:hover {background-color: #f5f5f5;}
+td {
+height: 50px;
+vertical-align: center;
+horizontal-align:center;
+text-align: center;
+border: 1px solid black;
+}
+#image{
+    visibility:hidden;
+}
+{% endblock css %}
+{% block body %}
+
+<!-- <img src='/media/{{user.userprofile.image}}' alt="..." width="auto" height="300px"> -->
+{% for i in pic %}
+<img src='/media/{{i.file}}' alt="..." width="auto" height="300px">
+
+{% if user == post.user %}
+<a href="/tolet/deletephoto/{{i.id}}">Delete THIS photo</a>
+
+{% endif %}
+
+{% endfor %}
+
+
+<div class="container">
+    <div class="row mt-1">
+        <div class="col-md-8 blog-main">
+            <div class="blog-post">
+
+                <h2><b>{{post.user}}</b> </h2>
+                <h5 class="pb-4 mb-2 font-italic ">
+                    {{post.title|safe}}
+                </h5>
+                <p>{{post.text|safe}}</p>
+                <br>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <tr>
+                            <th>Field</th>
+                            <th>Value</th>
+
+                        </tr>
+                        <tr>
+                            {% if post.category == "a" %}
+                            <td><b> Category:</b></td>
+                            <td> Flat</td>
+
+                            {% elif post.category == "b" %}
+                            <td><b> Category:</b></td>
+                            <td>Room</td>
+
+                            {% elif post.category == "c" %}
+                            <td><b> Category:</b></td>
+                            <td>Any_space</td>
+
+                            {% elif post.category == "Land" %}
+                            <td> <b> Category:</b></td>
+                            <td>Room</td>
+
+                            {% elif post.category == "Shop" %}
+                            <td> <b> Category:</b></td>
+                            <td> Room</td>
+
+                            {% elif post.category == "Hostel_seat" %}
+                            <b> Category:</b></td> Room</td>
+
+                            {% elif post.category == "Company" %}
+                            <b> Category:</b> </td> Room</td>
+
+                            {% elif post.category == "Building" %}
+                            <b> Category:</b></td> Room</td>
+
+                            {% elif post.category == "Bill_board" %}
+                            <b> Category:</b> </td>Room</td>
+
+                            {% elif post.category == "Media_advertisement" %}
+                            <b> Category:</b> </td>Room</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td><b> House_no:</b></td>
+                            <td> {{post.house_no|safe}}</td>
+
+                        </tr>
+                        <tr>
+                            <td><b> post_code:</b></td>
+                            <td> {{post.post_code|safe}} </td>
+                        </tr>
+                        <tr>
+                            <td><b>road_no: </b></td>
+                            <td> {{post.road_no|safe}}</td>
+                        </tr>
+                        <tr>
+                            <td><b> village: </b></td>
+                            <td> {{post.village|safe}} </td>
+                        </tr>
+                        <tr>
+                            <td><b> upozila: </b></td>
+                            <td> {{post.upozila|safe}}</td>
+                        </tr>
+                        <tr>
+                            <td><b> Zilla: </b></td>
+                            <td> {{post.Zilla|safe}} </td>
+                        </tr>
+                        <tr>
+                            <td><b> division: </b></td>
+                            <td> {{post.division|safe}} </td>
+                        </tr>
+                        <tr>
+                            <td><b> country: </b></td>
+                            <td> {{post.country|safe}} </td>
+                        </tr>
+                        <tr>
+                            <td><b> phone: </b></td>
+                            <td> {{post.phone|safe}} </td>
+                        </tr>
+                        <tr>
+                            <td><b>email:</b></td>
+                            <td> {{post.email|safe}} </td>
+                        </tr>
+                        <tr>
+                            <td><b> rent: </b></td>
+                            <td> {{post.rent|safe}}TK </td>
+                        </tr>
+                        <tr>
+                            <td><b> area: </b></td>
+                            <td> {{post.area|safe}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <a href="#"><span>- {{view}} seens</span></a>
+
+                {% if user == post.user %}
+                <div>
+                    <a href="/tolet/edittolet/{{post.id}}">Edit Post</a>
+                    <br>
+                    <a href="/tolet/addphoto/{{post.id}}"> Add</a> a Photo to this post
+                    <div id="btnOne"><a href="#" onClick="javascript:addBtn();">Delete</a> </div>
+                </div>
+                <div id="btnHolder"></div>
+                {% endif %}
+                <br>
+                <form action="/tolet/likepost/{{post.id}}/" method="post"> 
+                {% csrf_token %}
+                {% if liked %}
+                     <button type="submit" name="like_post" value="{{post.id}}" class="btn  btn-primary btn-sm">UnLike</button>
+                {% else %}
+                    <button type="submit" name="like_post" value="{{post.id}}" class="btn  btn-primary btn-sm">Like</button>
+                {% endif %}
+                </form>
+                {{like}} People Likes The Post
+            </div><!-- /.blog-post -->
+        </div><!-- /.blog-main -->
+    </div>
+</div>
+
+<div class="container">
+    {% if user.is_authenticated %}
+
+    <h4>{{comments.count}}-Comments</h4>
+    <form action="/tolet/toletcomment/" method="post">{% csrf_token %}
+        <div class="form-group">
+            <lebel for="exampleInputEmail"> Post Comment</lebel>
+            <input type="text " class="form-control" name="comment" placeholder="Enter comment here">
+        </div>
+        <input type="hidden" name="postsno" value="{{post.id}}">
+        <input type="hidden" name="parentsno" value="">
+        <!-- <input type="file" name="image"  id="image" value="{{user.userprofile.image}}"> -->
+        <button type="submit" class="btn btn-primary" value="submit">Submit</button>
+    </form>
+    {% else %}
+    <p>
+    <h3><b>Please login to add comments to this blogpost. </b></h3>
+    </p>
+    {% endif %}
+    {% for comment in comments %}
+    <div class="row my-3">
+        <div class="col-md-1">
+            <img class="rounded mx-auto my-3 d-block w-50 border border-dark" src="{{comment.image.url}}" alt="">
+        </div>
+        <div class="col md 11">
+            <b>{{comment.user.username}}</b> <span class="badge badge-secondary">
+                {{comment.timestamp | naturaltime}}</span>
+            <div>
+                {{comment.comment}}
+            </div>
+            <div class="row">
+
+                {% if user == comment.user %}
+                <button class="btn  btn-sm btn-primary" type="button" data-toggle="collapse"
+                    data-target="#deleteBox{{comment.sno}}" aria-expanded="true"
+                    aria-controls="#deleteBox{{comment.sno}}">
+                    Delete
+                </button>
+                <div class="collapse" id="deleteBox{{comment.sno}}">
+                    <div class="card card-body my-2">
+                        <form action="/tolet/deletecomment" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="parentsno" value="{{comment.sno}}">
+                            <input type="hidden" name="postsno" value="{{post.id}}">
+                            <button type="submit" class="btn btn-primary"> Delete comment</button>
+
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="reply mx-2">
+                    {% if user.is_authenticated %}
+                    <button class="btn  btn-sm btn-primary" type="button" data-toggle="collapse"
+                        data-target="#replyBox{{comment.sno}}" aria-expanded="true"
+                        aria-controls="#replyBox{{comment.sno}}">
+                        Reply
+                    </button>
+                    <div class="collapse" id="replyBox{{comment.sno}}">
+                        <div class="card card-body my-2">
+                            <form action="/tolet/toletcomment/" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <lebel for="comment"> Post a reply</lebel>
+                                    <input type="text" name="comment" placeholder="Enter comment here"
+                                        class="form-control">
+                                    <input type="hidden" name="parentsno" value="{{comment.sno}}">
+                                </div>
+                                <input type="hidden" name="postsno" value="{{post.id}}">
+                                <!-- <input type="hidden" name="image" value="{{user.userprofile.image}}"> -->
+                                <button type="submit" class="btn btn-primary"> Post</button>
+
+
+                            </form>
+                        </div>
+                    </div>
+                    {% else %}
+                    <button class="btn  btn-sm btn-primary" type="button" data-toggle="collapse"
+                        data-target="#replyBox{{comment.sno}}" aria-expanded="true"
+                        aria-controls="#replyBox{{comment.sno}}" disabled>
+                        Login to Reply
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="replies  my-1 ">
+                {% for reply in replyDict|get_val:comment.sno %}
+                <div class="row my-3">
+                    <div class="col-md-1 ">
+                        <img class="rounded mx-auto my-3 d-block w-50 border border-dark" src="{{reply.image.url}}"
+                            alt="user">
+                    </div>
+                    <div class="col-md-9 ">
+
+                        <b>{{reply.user}}:</b> <span class="badge badge-secondary">
+                            {{comment.timestamp|naturaltime}}</span>
+                        <div>
+                            {{reply.comment}}
+                            <br>
+                        </div>
+                        {% if user == reply.user %}
+                        <button class="btn  btn-sm btn-primary" type="button" data-toggle="collapse"
+                            data-target="#deleteRBox{{comment.sno}}" aria-expanded="true"
+                            aria-controls="#deleteRBox{{comment.sno}}">
+                            Delete
+                        </button>
+                        <div class="collapse" id="deleteRBox{{comment.sno}}">
+                            <div class="card card-body my-2">
+                                <form action="/tolet/deletecomment" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="parentsno" value="{{reply.sno}}">
+                                    <input type="hidden" name="postsno" value="{{post.id}}">
+                                    <button type="submit" class="btn btn-primary"> Delete Reply</button>
+
+                                </form>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+{% block js %}
+
+<script>
+
+    function addBtn() {
+        document.getElementById('btnHolder').innerHTML = ' Are you Sure to delete? <a href="/tolet/deletetolet/{{post.id}}" class="stretched-link">Yes,Sure</a>';
+    }
+
+// function removeBtn(){
+//   document.getElementById('btnHolder').innerHTML = '';
+// }
+// onClick="javascript:removeBtn();"
+// <input type="button"  value="Sure" />
+</script>
+{% endblock js %}

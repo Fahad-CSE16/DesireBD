@@ -1,0 +1,84 @@
+{% extends 'basic.html' %}
+
+{% block title%} Update Your Profile{% endblock %}
+{% block userprofile %} active{% endblock userprofile %}
+{% block body %}
+{% load crispy_forms_tags %}
+{% if user.is_authenticated %}
+<div class="col-md-6 offset-md-3">
+    
+        {% for u in userp %}
+        {% if forloop.last  %}
+        <div class="media">
+            <img class="rounded-circle account-img my-2 mx-3 mr-3" src="{{u.image.url}}" alt="...">
+            <div class="media-body">
+                <h5 class="mt-0">UserName:{{user.username}}</h5>
+                Name: {{user.first_name}} {{user.last_name}}
+                <br>
+                Email:{{user.email}}
+                <br>
+                Blood Group: {{u.blood_group}}
+                <br>
+                
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        <a href="/profile/updateprofile/"> Edit Profile</a>
+        <a href="/profile/updatessc/"> Edit SSC</a>
+        <a href="/profile/updatehsc/"> Edit HSC</a>
+        <a href="/profile/afterhsc/"> Edit Undergraduate</a>
+        <a href="/profile/postgraduate/"> Edit Postgraduate</a>
+        <br>
+        <a href="/profile/tuitionprofile/"> Edit Tuition Profile</a>
+        <a href="/profile/changepass/"> Change Password</a>
+    </div>
+
+<div class="col-md-6 offset-md-3">
+    
+       {% for item in post %}
+    <div class="col-md-12 ">
+        <div class="row bg-succes no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col  p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 bg-warning text-primary">
+                    <h5><b>{{item.author}}</b></h5>
+                </strong>
+                <div class="preview">
+                    <p class="card-text mb-auto">{{item.content|safe|truncatechars:350}}</p>
+                    <br>
+                    <p class="card-text mb-auto">{{item.words|safe|truncatechars:350}} <a href="/posts/{{item.sno}}/"
+                            class="stretched-link">...Details</a></p>
+                    <br>
+                     <strong
+                        class="d-inline-block mb-2 text-primary">
+                        <span>- {{item.views}} seen</span></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% for item in mytolet %}
+    <div class="col-md-12 ">
+        <div class="row bg-succes no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col  p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 bg-warning text-primary">
+                    <h5><b>{{item.user}}</b></h5>
+                </strong>
+                <div class="preview">
+                    <p class="card-text mb-auto">{{item.text|safe|truncatechars:350}}</p>
+                    <a href="/tolet/toletpost/{{item.id}}"
+                            class="stretched-link">...Details</a></p>
+                    <br>
+                   
+                     <strong
+                        class="d-inline-block mb-2 text-primary">
+                        <span>- {{item.view}} seen</span></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+
+{% endif %}
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'basic.html' %}
+
+{% block title%} COntact{% endblock %}
+{% block contactactive %} active{% endblock contactactive %}
+{% block body %}
+{% load crispy_forms_tags %}
+{% load my_filters %}
+{% if user.is_authenticated %}
+<div class="col-md-5">
+    <div class="container mx-2">
+       {% for item in post %}
+    <div class="col-md-12 ">
+        <div class="row bg-succes no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col  p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 bg-warning text-primary">
+                    <h5><b>{{item.author}}</b></h5>
+                </strong>
+                <div class="preview">
+                    <p class="card-text mb-auto">{{item.content|safe|truncatechars:350}}</p>
+                    <br>
+                    <p class="card-text mb-auto">{{item.words|safe|truncatechars:350}} <a href="/posts/{{item.sno}}/"
+                            class="stretched-link">...Details</a></p>
+                    <br>
+                     <strong
+                        class="d-inline-block mb-2 text-primary">
+                        <span>- {{item.views}} seen</span></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% for item in mytolet %}
+    <div class="col-md-12 ">
+        <div class="row bg-succes no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col  p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 bg-warning text-primary">
+                    <h5><b>{{item.user}}</b></h5>
+                </strong>
+                <div class="preview">
+                    <p class="card-text mb-auto">{{item.text|safe|truncatechars:350}}</p>
+                    <a href="/tolet/toletpost/{{item.id}}"
+                            class="stretched-link">...Details</a></p>
+                    <br>
+                   
+                     <strong
+                        class="d-inline-block mb-2 text-primary">
+                        <span>- {{item.view}} seen</span></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+{% block js %}
+<script>
+
+</script>
+{% endblock js %}
