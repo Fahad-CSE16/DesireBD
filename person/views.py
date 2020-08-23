@@ -12,6 +12,9 @@ from tolet.models import Post
 from .models import UserProfile, Contact, SSC,HigherStudies,HSC,AfterHsc,District,Subject,SubDistrict,Classes,TuitionClass
 from .forms import UserProfileForm, UserUpdateForm, ContactForm,SSCForm,HSCForm,AfterHscForm,HigherStudiesForm,TuitionClassForm,SubjectForm,TuitionClassUpdateForm
 
+
+def notification(request):
+    return render(request, 'person/notification.html')
 class homeView(View):
     template_name= "person/home.html"
     def get(self, request, *args, **kwargs):

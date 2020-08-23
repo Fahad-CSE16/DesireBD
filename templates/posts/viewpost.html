@@ -34,12 +34,7 @@ background-color: #3132e6;
 overflow-x: scroll;
 padding-top: 200px;
 }
-.container{
 
-overflow: auto;
-overflow-y: scroll;
-overflow-x: scroll; /* Disable horizontal scroll */
-}
 
 /* The navigation menu links */
 .sidenav a {
@@ -76,12 +71,11 @@ color: #f1f1f1;
     <a class="nav-link" href="/posts/createpost/">Create a Tuition Post</a>
 </div>
 
-
+<div class="col-md-9 offset-md-3">
 <div class="container">
     {% for product, range, nSlides in allProds %}
-    <div>
     {% for item in product %}
-    <div class="col-md-12 ">
+    <div class="col-md-9 ">
         <div class="row bg-succes no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col  p-4 d-flex flex-column position-static">
                 <strong class="d-inline-block mb-2 bg-warning text-primary">
@@ -103,6 +97,7 @@ color: #f1f1f1;
     {% endfor %}
     </div>
     {% endfor %}
+</div>
 </div>
 {% else %}
 <div class="mt-3">

@@ -22,6 +22,7 @@ urlpatterns = [
     path('about_us/', homeView.as_view(template_name='person/about_us.html'), name='about_us'),
     path('contact/', views.contact, name='contact'),
     path('addsubject/', views.addsubject, name='addsubject'),
+    path('notification/', views.notification, name='notification'),
 
     path('ajax/load-cities/', views.load_cities, name='ajax_load_cities'),
 ]

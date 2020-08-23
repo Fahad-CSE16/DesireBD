@@ -15,6 +15,7 @@ from tolet.models import Post, PostFile
 from .forms import TuitionPostForm
 from person.models import UserProfile
 from posts.templatetags import extras
+from notifications.signals import notify
 # Create your views here.
 
 
@@ -169,9 +170,10 @@ def blogPost(request, sno):
 def postComment(request):
     if request.method == "POST":
         comment = request.POST.get("comment")
-        user = request.user
         postsno = request.POST.get("postsno")
         post = TuitionPost.objects.get(sno=postsno)
+        user = request.user
+        receiver = User.objects.filter(username=post.author).first()
         parentsno = request.POST.get("parentsno")
         print(user)
         image = request.user.userprofile.image
@@ -179,6 +181,8 @@ def postComment(request):
             comments = BlogComment(
                 comment=comment, user=user, tuitionpost=post, image=image)
             comments.save()
+            notify.send(user, recipient=receiver,
+                        verb=' has commented on your post')
             messages.success(request, 'Success! your comment have been posted successfully.')
         else:
             parent = BlogComment.objects.get(sno=parentsno)
