@@ -23,6 +23,9 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('addsubject/', views.addsubject, name='addsubject'),
     path('notification/', views.notification, name='notification'),
+    path('markasread/', views.markasread, name='markasread'),
+    
+
 
     path('ajax/load-cities/', views.load_cities, name='ajax_load_cities'),
 ]

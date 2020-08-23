@@ -21,14 +21,19 @@ from notifications.signals import notify
 
 def likepost(request, sno):
     post = get_object_or_404(TuitionPost, sno=sno)
+    user = request.user
+    receiver = User.objects.filter(username=post.author).first()
     liked = False
     if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
         liked = False
+        # notify.send(user, recipient=receiver,
+        #             verb=' has unliked your post')
     else:
         post.likes.add(request.user)
         liked = True
-        
+        notify.send(user, recipient=receiver,
+                verb=' has liked your post')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 class postsView(View):
@@ -181,14 +186,22 @@ def postComment(request):
             comments = BlogComment(
                 comment=comment, user=user, tuitionpost=post, image=image)
             comments.save()
-            notify.send(user, recipient=receiver,
-                        verb=' has commented on your post')
+            notify.send(user, recipient=receiver,verb=' has commented on your post')
             messages.success(request, 'Success! your comment have been posted successfully.')
         else:
             parent = BlogComment.objects.get(sno=parentsno)
             comments = BlogComment(
                 image=image, comment=comment, user=user, tuitionpost=post, parent=parent)
             comments.save()
+            receiver2 = parent.user
+            if receiver != receiver2:
+
+                notify.send(user, recipient=receiver,
+                        verb=' has replied  on someones comment in your post')
+            
+            print(receiver)
+            notify.send(user, recipient=receiver2,
+                        verb=' has replied to your comment')
             messages.success( request, 'Success! your reply have been posted successfully.')
     return redirect(f"/posts/{post.sno}")
 

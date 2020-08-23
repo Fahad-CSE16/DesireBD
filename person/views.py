@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse,redirect
+from django.shortcuts import render, HttpResponse,redirect,HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.models import User
@@ -14,7 +14,17 @@ from .forms import UserProfileForm, UserUpdateForm, ContactForm,SSCForm,HSCForm,
 
 
 def notification(request):
-    return render(request, 'person/notification.html')
+    user = User.objects.get(username=request.user.username)
+    qs = user.notifications.read()
+    return render(request, 'person/notification.html', {'qs': qs})
+    
+def markasread(request):
+    user = User.objects.get(username=request.user.username)
+    qs = user.notifications.unread()
+    qs.mark_all_as_read()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
 class homeView(View):
     template_name= "person/home.html"
     def get(self, request, *args, **kwargs):
