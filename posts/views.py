@@ -42,6 +42,27 @@ class postsView(View):
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
 
+def receiverchoose(j, k):
+    count=0
+    if j.district == k.district:
+        count = count + 1
+    for i in j.medium:
+        for l in k.medium:
+            if i==l:
+                count = count + 1
+                break
+    for i in j.subject.all():
+        for l in k.subject.all():
+            if i == l:
+                count = count + 1
+                break
+    for i in j.level.all():
+        for l in k.class_in.all():
+            if i == l:
+                count = count + 1
+                break
+    if count >= 3:
+        return True
 
 def createpost(request):
     if request.method == 'POST':
@@ -61,18 +82,17 @@ def createpost(request):
                 obj.save()
             messages.success(request, 'Successfully Created Your Post.')
             user = request.user
-            messages.warning(
-                request, 'Now Add your Prefered Tuition Place of your selected District.')
+            messages.warning(request, 'Now Add your Prefered Tuition Place of your selected District.')
             us = User.objects.all()
             for i in us:
                 try:
-                    dis = i.tuitionclass.district
+                    j = i.tuitionclass
                 except:
-                    dis=None
-                if dis == obj.district:
-                # if i.tuitionclass.district:
-                    receiver = i
-                    notify.send(user, recipient=receiver,verb=' has searching for a teacher like you')
+                    j = None
+                if j:
+                    if receiverchoose(j, obj):
+                        receiver = i
+                        notify.send(user, recipient=receiver,verb=' has searching for a teacher like you')
             return redirect(f"/posts/updatepost/{obj.sno}")
     else:
         form = TuitionPostForm()

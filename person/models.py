@@ -196,7 +196,7 @@ class TuitionClass(models.Model):
                              max_choices=3, max_length=100)
     medium = MultiSelectField(choices=Choice_Medium,
                              max_choices=3, max_length=100)
-    subject = models.ManyToManyField(Subject, related_name='subject')
+    subject = models.ManyToManyField(Subject, related_name='subjects')
     level = models.ManyToManyField(Classes, related_name='classes')
     salary = models.CharField(max_length=100)
     days=models.CharField(max_length=100)
