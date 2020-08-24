@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'multiselectfield',
     'notifications',
 ]
-
+# NOTIFICATIONS_NOTIFICATION_MODEL = 'your_app.Notification'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

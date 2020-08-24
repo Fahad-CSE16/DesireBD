@@ -12,7 +12,7 @@ import time
 from math import ceil
 from .models import TuitionPost, BlogComment
 from tolet.models import Post, PostFile
-from .forms import TuitionPostForm
+from .forms import TuitionPostForm,TuitionPostUpdateForm
 from person.models import UserProfile
 from posts.templatetags import extras
 from notifications.signals import notify
@@ -45,48 +45,51 @@ class postsView(View):
 
 def createpost(request):
     if request.method == 'POST':
-        form = TuitionPostForm(
-            request.POST, request.FILES, instance=request.user)
+        # create a form instance and populate it with data from the request:
+        form = TuitionPostForm(request.POST)
         if form.is_valid():
-            author = request.user
-            title = form.cleaned_data['title']
-            content = form.cleaned_data['content']
-            category = form.cleaned_data['category']
-            time_available = form.cleaned_data['time_available']
-            
-            image = form.cleaned_data['image']
-            post = TuitionPost(author=author, title=title, content=content,
-                        category=category, time_available=time_available, image=image)
-            post.save()
-            messages.success(request, 'Successfully Posted')
-            return redirect('viewpost')
+            obj = form.save(commit=False)
+            obj.author = request.user
+            obj.save()
+            subject = form.cleaned_data['subject']
+            for f in subject:
+                obj.subject.add(f)
+                obj.save()
+            class_in = form.cleaned_data['class_in']
+            for f in class_in:
+                obj.class_in.add(f)
+                obj.save()
+            messages.success(request, 'Successfully Created Your Post.')
+            messages.warning(
+                request, 'Now Add your Prefered Tuition Place of your selected District.')
+            return redirect(f"/posts/updatepost/{obj.sno}")
     else:
-        form = TuitionPostForm(instance=request.user)
-
+        form = TuitionPostForm()
     context = {
         'form': form,
-        'user': request.user
     }
-
     return render(request, 'posts/createpost.html', context)
 
 
-def editpost(request, sno):
-    form = TuitionPostForm()
-    post = TuitionPost.objects.get(sno=sno)
+def updatepost(request, sno):
     try:
         instance = TuitionPost.objects.get(sno=sno)
     except TuitionPost.DoesNotExist:
         instance = None
     if request.method == 'POST':
-        form = TuitionPostForm(request.POST, request.FILES, instance=instance)
+        form = TuitionPostUpdateForm(request.POST, instance=instance)
         if form.is_valid():
-            instance = form
-            instance.save()
-            messages.success(request, 'Successfully Edited')
-            return redirect(f"/posts/{post.sno}")
+            obj = form.save(commit=False)
+            obj.author = request.user
+            obj.save()
+            preferedPlace = form.cleaned_data['preferedPlace']
+            for f in preferedPlace:
+                obj.preferedPlace.add(f)
+                obj.save()
+            messages.success(request, 'Successfully Updated with your Places')
+            return redirect(f"/posts/{obj.sno}")
     else:
-        form = TuitionPostForm(instance=instance)
+        form = TuitionPostUpdateForm(instance=instance)
 
     context = {
         'form': form,
@@ -94,21 +97,44 @@ def editpost(request, sno):
     }
     return render(request, 'posts/updatepost.html', context)
 
+def editpost(request, sno):
+    # form = TuitionPostForm()
+    # post = TuitionPost.objects.get(sno=sno)
+    try:
+        instance = TuitionPost.objects.get(sno=sno)
+    except TuitionPost.DoesNotExist:
+        instance = None
+    if request.method == 'POST':
+        form = TuitionPostForm(request.POST, instance=instance)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.author = request.user
+            obj.save()
+            subject = form.cleaned_data['subject']
+            for f in subject:
+                obj.subject.add(f)
+                obj.save()
+            class_in = form.cleaned_data['class_in']
+            for f in class_in:
+                obj.class_in.add(f)
+                obj.save()
+            messages.success(request, 'Successfully Edited Your Post')
+            messages.warning(request, 'Now select some places of your selected district')
+            return redirect(f"/posts/updatepost/{obj.sno}")
+    else:
+        form = TuitionPostForm(instance=instance)
+
+    context = {
+        'form': form,
+        'instance': instance
+    }
+    return render(request, 'posts/editpost.html', context)
+
 
 def viewpost(request):
-    post = TuitionPost.objects.all()
-    n = len(post)
-    nSlides = ceil(n/4)
-    allProds = []
-    catprods = TuitionPost.objects.values('category', 'sno')
-    cats = {item['category'] for item in catprods}
-    for cat in cats:
-        post = TuitionPost.objects.filter(category=cat)
-        n = len(post)
-        nSlides = ceil(n / 4)
-        allProds.append([post, range(1, nSlides), nSlides])
+    posts = TuitionPost.objects.all()
     
-    params = {'allProds': allProds}
+    params = {'posts': posts}
     return render(request, 'posts/viewpost.html', params)
 
 
@@ -117,7 +143,7 @@ def search(request):
         query = request.POST.get('search').lower()
 
         try:
-            mypoststitle = TuitionPost.objects.filter(title__icontains=query)
+            mypoststitle = TuitionPost.objects.filter(preferedPlace__icontains=query)
             mypostscontent = TuitionPost.objects.filter(content__icontains=query)
             myposts = mypoststitle.union(mypostscontent)
 
@@ -186,7 +212,8 @@ def postComment(request):
             comments = BlogComment(
                 comment=comment, user=user, tuitionpost=post, image=image)
             comments.save()
-            notify.send(user, recipient=receiver,verb=' has commented on your post')
+            if receiver != request.user:
+                notify.send(user, recipient=receiver,verb=' has commented on your post')
             messages.success(request, 'Success! your comment have been posted successfully.')
         else:
             parent = BlogComment.objects.get(sno=parentsno)
@@ -194,13 +221,11 @@ def postComment(request):
                 image=image, comment=comment, user=user, tuitionpost=post, parent=parent)
             comments.save()
             receiver2 = parent.user
-            if receiver != receiver2:
-
+            if receiver != receiver2 and receiver != request.user:
                 notify.send(user, recipient=receiver,
                         verb=' has replied  on someones comment in your post')
-            
-            print(receiver)
-            notify.send(user, recipient=receiver2,
+            if  receiver2  != request.user:
+                notify.send(user, recipient=receiver2,
                         verb=' has replied to your comment')
             messages.success( request, 'Success! your reply have been posted successfully.')
     return redirect(f"/posts/{post.sno}")

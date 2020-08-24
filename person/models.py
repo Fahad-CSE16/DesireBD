@@ -153,7 +153,6 @@ class SubDistrict(models.Model):
         super(SubDistrict, self).save(*args, **kwargs)
     def __str__(self):
         return self.name
-
 class TuitionClass(models.Model):
     STATUS = (
         ('Available', 'Available'),
@@ -189,7 +188,7 @@ class TuitionClass(models.Model):
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='tuitionclass')
     district = models.ForeignKey(District, on_delete=models.SET_NULL, null=True, related_name='district')
-    preferedPlace=models.ManyToManyField(SubDistrict, null=True, related_name='city_set')
+    preferedPlace=models.ManyToManyField(SubDistrict, related_name='city_set')
     style = MultiSelectField(choices=Choice_style, max_choices=3, max_length=100)
     place = MultiSelectField(choices=Choice_Place,
                              max_choices=3, max_length=100)
@@ -197,12 +196,12 @@ class TuitionClass(models.Model):
                              max_choices=3, max_length=100)
     medium = MultiSelectField(choices=Choice_Medium,
                              max_choices=3, max_length=100)
-    subject = models.ManyToManyField(Subject, related_name='subject', null=True)
-    level = models.ManyToManyField(Classes, related_name='classes',null=True)
-    high_education = models.CharField(max_length=100)
+    subject = models.ManyToManyField(Subject, related_name='subject')
+    level = models.ManyToManyField(Classes, related_name='classes')
     salary = models.CharField(max_length=100)
-    status = models.CharField(max_length=100, choices=STATUS)
     days=models.CharField(max_length=100)
+    high_education = models.CharField(max_length=100)
+    status = models.CharField(max_length=100, choices=STATUS)
     
 
 # class Person(models.Model):

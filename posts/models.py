@@ -3,43 +3,61 @@ from django.contrib.auth.models import User
 from django.utils.timezone import now
 from django.utils.text import slugify
 from PIL import Image
+from multiselectfield import MultiSelectField
+from person.models import District, SubDistrict, Subject, Classes
 # Create your models here.
 
 
 class TuitionPost(models.Model):
-    CATEGORY = (
-        ('s', 'student'),
-        ('t', 'teacher'),
+    Choice_Medium = (
+        ('Bangla_Medium', 'Bangla Medium'),
+        ('English_Medium', 'English Medium'),
+        ('Arabic_Medium', 'Arabic Medium'),
+        ('Hindi_Medium', 'Hindi Medium'),
+        ('Sports_Section', 'Sports Section'),
+        ('Singing_Section', 'Singing Section'),
+        ('Dance_Section', 'Dance Section'),
+        ('Extra Curricular Activities', 'Extra Curricular Activities'),
+        ('Language Learning', 'Language Learning'),
+        ('Computer Learning', 'Computer Learning'),
     )
+    Choice_Approach = (
+        ('Online_Help', 'Online Help'),
+        ('Phone_Help', 'Phone Help'),
+        ('Provide_Hand_Notes', 'Provide Hand_Notes'),
+        ('Video_Tutorials', 'Video Tutorials'),
+    )
+    Choice_style = (
+        ('Group_Tuition', 'Group Tuition'),
+        ('Private_Tuition', 'Private Tuition'),
+    )
+    Choice_Place = (
+        ('Class_Rooms', 'Class Rooms'),
+        ('Coaching_Center', 'Coaching Center'),
+        ('Home_Visit', 'Home Visit'),
+    )
+    district = models.ForeignKey(District, on_delete=models.SET_NULL, null=True, related_name='district_set')
+    preferedPlace = models.ManyToManyField(SubDistrict, related_name='place_set')
+    style = MultiSelectField(choices=Choice_style, max_choices=3, max_length=100)
+    place = MultiSelectField(choices=Choice_Place, max_choices=3, max_length=100)
+    approach = MultiSelectField(choices=Choice_Approach,max_choices=3, max_length=100)
+    medium = MultiSelectField(choices=Choice_Medium,max_choices=3, max_length=100)
     sno = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=255, unique=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    slug = models.CharField(max_length=255, default=title)
-    content = models.TextField()
-    views = models.ManyToManyField(User, related_name='post_view')
-    likes=models.ManyToManyField(User,related_name='tuition_post')
-    timeStamp = models.DateTimeField(default=now)
-    category = models.CharField(max_length=1, choices=CATEGORY)
+    subject = models.ManyToManyField(Subject, related_name='subject_set')
+    class_in = models.ManyToManyField(Classes, related_name='classes_set')
+    salary = models.CharField(max_length=100)
+    days=models.CharField(max_length=100)
     time_available = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='posts/images', default="default.jpg")
+    content = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    views = models.ManyToManyField(User, related_name='post_view')
+    likes = models.ManyToManyField(User,related_name='tuition_post')
+    timeStamp = models.DateTimeField(default=now)
     def total_likes(self):
         return self.likes.count()
-
     def total_views(self):
         return self.views.count()
 
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        super(TuitionPost, self).save(*args, **kwargs)
-        img = Image.open(self.image.path)
-
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
-
-    def __str__(self):
-        return self.slug
 class BlogComment(models.Model):
     sno = models.AutoField(primary_key=True)
     comment = models.TextField()
