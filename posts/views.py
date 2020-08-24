@@ -60,8 +60,19 @@ def createpost(request):
                 obj.class_in.add(f)
                 obj.save()
             messages.success(request, 'Successfully Created Your Post.')
+            user = request.user
             messages.warning(
                 request, 'Now Add your Prefered Tuition Place of your selected District.')
+            us = User.objects.all()
+            for i in us:
+                try:
+                    dis = i.tuitionclass.district
+                except:
+                    dis=None
+                if dis == obj.district:
+                # if i.tuitionclass.district:
+                    receiver = i
+                    notify.send(user, recipient=receiver,verb=' has searching for a teacher like you')
             return redirect(f"/posts/updatepost/{obj.sno}")
     else:
         form = TuitionPostForm()
@@ -221,6 +232,7 @@ def postComment(request):
                 image=image, comment=comment, user=user, tuitionpost=post, parent=parent)
             comments.save()
             receiver2 = parent.user
+
             if receiver != receiver2 and receiver != request.user:
                 notify.send(user, recipient=receiver,
                         verb=' has replied  on someones comment in your post')

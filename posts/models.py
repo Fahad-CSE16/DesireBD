@@ -57,6 +57,9 @@ class TuitionPost(models.Model):
         return self.likes.count()
     def total_views(self):
         return self.views.count()
+    def __str__(self):
+        return str(self.sno )+" . "+  self.author.username + " 's Post for searching  a techer in " + str(self.district.name)
+    
 
 class BlogComment(models.Model):
     sno = models.AutoField(primary_key=True)
