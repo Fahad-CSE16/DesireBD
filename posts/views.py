@@ -81,8 +81,9 @@ def createpost(request):
                 obj.class_in.add(f)
                 obj.save()
             messages.success(request, 'Successfully Created Your Post.')
-            user = request.user
             messages.warning(request, 'Now Add your Prefered Tuition Place of your selected District.')
+#ppushing notifiaction while creating post
+            user = request.user
             us = User.objects.all()
             for i in us:
                 try:
@@ -92,7 +93,8 @@ def createpost(request):
                 if j:
                     if receiverchoose(j, obj):
                         receiver = i
-                        notify.send(user, recipient=receiver,verb=' has searching for a teacher like you')
+                        notify.send(user, recipient=receiver, verb="is searching for a teacher for "+str(obj.medium)+" for " +str(obj.class_in.all().first())+" for subject " + str(obj.subject.all().first()))
+                        
             return redirect(f"/posts/updatepost/{obj.sno}")
     else:
         form = TuitionPostForm()
@@ -121,7 +123,6 @@ def updatepost(request, sno):
             return redirect(f"/posts/{obj.sno}")
     else:
         form = TuitionPostUpdateForm(instance=instance)
-
     context = {
         'form': form,
         'instance': instance
