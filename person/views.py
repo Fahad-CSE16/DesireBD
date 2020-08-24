@@ -16,7 +16,9 @@ from .forms import UserProfileForm, UserUpdateForm, ContactForm,SSCForm,HSCForm,
 def notification(request):
     user = User.objects.get(username=request.user.username)
     qs = user.notifications.read()
-    return render(request, 'person/notification.html', {'qs': qs})
+    us = user.notifications.unread()
+    # print(us.verb)
+    return render(request, 'person/notification.html', {'qs': qs, 'us':us})
     
 def markasread(request):
     user = User.objects.get(username=request.user.username)

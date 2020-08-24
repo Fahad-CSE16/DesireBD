@@ -93,8 +93,8 @@ def createpost(request):
                 if j:
                     if receiverchoose(j, obj):
                         receiver = i
-                        notify.send(user, recipient=receiver, verb="is searching for a teacher for "+str(obj.medium)+" for " +str(obj.class_in.all().first())+" for subject " + str(obj.subject.all().first()))
-                        
+                        notify.send(user, recipient=receiver, level='success',  verb="is searching for a teacher for "+str(obj.medium)+" for " + str(
+                            obj.class_in.all().first())+" for subject " + str(obj.subject.all().first()) + f''' <a class =" btn btn-primary btn-sm " href="/posts/{obj.sno}">go</a> ''')
             return redirect(f"/posts/updatepost/{obj.sno}")
     else:
         form = TuitionPostForm()

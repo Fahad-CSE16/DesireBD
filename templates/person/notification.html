@@ -5,6 +5,7 @@
 {% block body %}
 
 {% load notifications_tags %}
+{% load humanize %}
 
 
 {% load static %}
@@ -23,8 +24,11 @@
 {% register_notify_callbacks callbacks='fill_notification_badge,my_special_notification_callback' %}
 
 {% live_notify_list %}
+{{live_notify_list|safe}}
 {% endif %}
-
+{% for i in notifications_unread %}
+    {{i}}
+{% endfor %}
 {% for q in qs %}
 {{q}}
 <br>
