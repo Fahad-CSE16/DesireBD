@@ -50,7 +50,7 @@ def authorcontact(request, sno):
             email= form.cleaned_data['email']
             content = form.cleaned_data['content']
             phone=form.cleaned_data['phone']
-            form.save()
+            # form.save()
             notify.send(user, recipient=receiver,  verb="is applying for your tuition teacher, EMail: "+str(email)+" Phone: " + str(
                 phone)+" Says:  " + str(content))
             messages.success(request, 'successfully Sent.')
@@ -193,11 +193,7 @@ def editpost(request, sno):
     return render(request, 'posts/editpost.html', context)
 
 
-def viewpost(request):
-    posts = TuitionPost.objects.all()
-    
-    params = {'posts': posts}
-    return render(request, 'posts/viewpost.html', params)
+
 
 
 def search(request):
@@ -266,6 +262,20 @@ def blogPost(request, sno):
     return render(request, 'posts/blogpost.html', context)
 
 
+def viewpost(request):
+    posts = TuitionPost.objects.all()
+    # subject = posts.subject.all()
+    # class_in = posts.class_in.all()
+    # preferedPlace = posts.preferedPlace.all()
+    params = {
+        'posts': posts
+        # 'subject': subject,
+        # 'class_in': class_in,
+        # 'preferedPlace': preferedPlace
+
+    }
+    return render(request, 'posts/viewpost.html', params)
+
 def postComment(request):
     if request.method == "POST":
         comment = request.POST.get("comment")
@@ -275,30 +285,37 @@ def postComment(request):
         receiver = User.objects.filter(username=post.author).first()
         parentsno = request.POST.get("parentsno")
         print(user)
-        image = request.user.userprofile.image
-        if parentsno == "":
-            comments = BlogComment(
-                comment=comment, user=user, tuitionpost=post, image=image)
-            comments.save()
-            if receiver != request.user:
-                notify.send(user, recipient=receiver,verb=' has commented on your post')
-            messages.success(request, 'Success! your comment have been posted successfully.')
+        try:
+            j = request.user.userprofile
+        except:
+            j = None
+        if j:
+            image = j.image
+            if parentsno == "":
+                comments = BlogComment(
+                    comment=comment, user=user, tuitionpost=post, image=image)
+                comments.save()
+                if receiver != request.user:
+                    notify.send(user, recipient=receiver,verb=' has commented on your post')
+                messages.success(request, 'Success! your comment have been posted successfully.')
+            else:
+                parent = BlogComment.objects.get(sno=parentsno)
+                comments = BlogComment(
+                    image=image, comment=comment, user=user, tuitionpost=post, parent=parent)
+                comments.save()
+                receiver2 = parent.user
+
+                if receiver != receiver2 and receiver != request.user:
+                    notify.send(user, recipient=receiver,
+                            verb=' has replied  on someones comment in your post')
+                if  receiver2  != request.user:
+                    notify.send(user, recipient=receiver2,
+                            verb=' has replied to your comment')
+                messages.success(request, 'Success! your reply have been posted successfully.')
         else:
-            parent = BlogComment.objects.get(sno=parentsno)
-            comments = BlogComment(
-                image=image, comment=comment, user=user, tuitionpost=post, parent=parent)
-            comments.save()
-            receiver2 = parent.user
-
-            if receiver != receiver2 and receiver != request.user:
-                notify.send(user, recipient=receiver,
-                        verb=' has replied  on someones comment in your post')
-            if  receiver2  != request.user:
-                notify.send(user, recipient=receiver2,
-                        verb=' has replied to your comment')
-            messages.success( request, 'Success! your reply have been posted successfully.')
+            messages.warning(request, 'Error! Please make a profile  first to comment')
+            return redirect(f"/profile/updateprofile/")
     return redirect(f"/posts/{post.sno}")
-
 
 def deletecomment(request):
     if request.method == "POST":
@@ -313,7 +330,6 @@ def deletecomment(request):
     messages.success(request, 'Successfully Deleted Your Comment')
     return redirect(f"/posts/{post.sno}")
 
-
 def deletepost(request, sno):
     post = TuitionPost.objects.get(sno=sno)
     if request.user == post.author:
@@ -322,6 +338,4 @@ def deletepost(request, sno):
         raise PermissionDenied
     messages.success(request, 'Successfully Deleted your Post.')
     return redirect('/posts/viewpost')
-
-
 

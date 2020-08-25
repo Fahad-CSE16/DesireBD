@@ -74,22 +74,57 @@ color: #f1f1f1;
 <div class="col-md-9 offset-md-3">
 <div class="container">
     
-    {% for item in posts %}
+    {% for post in posts %}
     <div class="col-md-12 ">
         <div class="row bg-succes no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col  p-4 d-flex flex-column position-static">
-                <strong class="d-inline-block mb-2 bg-warning text-primary">
-                    <h5><b>{{item.author}}</b></h5>
+                <strong class="d-inline-block mb-2 ">
+                    <div>
+                    <a href="#">
+                        <h4>{{post.author.first_name}} {{post.author.last_name}}</h4>
+                    </a>
+                    <span class="badge badge-secondary">
+                        {{post.timeStamp|naturaltime}}</span>
+                </div>
+                 -Searching for a Teacher.
                 </strong>
                 <div class="preview">
-                    <p class="card-text mb-auto">{{item.content|safe|truncatechars:350}}</p>
-                    <br>
-                    <p class="card-text mb-auto">{{item.words|safe|truncatechars:350}} <a href="/posts/{{item.sno}}/"
+                For <b>{{post.medium}}</b>'s student
+                     {% comment %}  for subject:
+                <b>
+                    {% for sub in subject %}
+                    {{sub}}
+                    {% if not forloop.last %}
+                    and
+                    {% endif %}
+                    {% endfor %}
+                </b>
+                for <b>
+                    {% for cls in class_in %}
+                    {{cls}}
+                    {% if not forloop.last %}
+                    and
+                    {% endif %}
+                    {% endfor %}
+                </b>
+                in
+                
+                    {% for place in preferedPlace %}
+                    <b>
+                    {{place}}</b>
+                    {% if not forloop.last %}
+                    or
+                    {% endif %}
+                    {% endfor %}, of  {% endcomment %}
+                   in {{post.district}} District
+                
+                <br>
+                <b>Salary:</b>{{post.salary}}
+                <br>
+                    <p class="card-text mb-auto"> <a href="/posts/{{post.sno}}/"
                             class="stretched-link">...Details</a></p>
                     <br>
-                     <strong
-                        class="d-inline-block mb-2 text-primary">
-                        <span>- {{item.views}} seen</span></strong>
+                
                 </div>
             </div>
         </div>
