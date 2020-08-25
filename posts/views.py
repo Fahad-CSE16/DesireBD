@@ -12,8 +12,10 @@ import time
 from math import ceil
 from .models import TuitionPost, BlogComment
 from tolet.models import Post, PostFile
-from .forms import TuitionPostForm,TuitionPostUpdateForm
-from person.models import UserProfile
+from .forms import TuitionPostForm, TuitionPostUpdateForm
+from person.forms import ContactForm
+
+from person.models import UserProfile, Contact
 from posts.templatetags import extras
 from notifications.signals import notify
 # Create your views here.
@@ -35,6 +37,33 @@ def likepost(request, sno):
         notify.send(user, recipient=receiver,
                 verb=' has liked your post')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def authorcontact(request, sno):
+    post=TuitionPost.objects.get(sno=sno)
+    if request.method == 'POST':
+        user = request.user
+        receiver= User.objects.get(username=post.author)
+        # create a form instance and populate it with data from the request:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            email= form.cleaned_data['email']
+            content = form.cleaned_data['content']
+            phone=form.cleaned_data['phone']
+            form.save()
+            notify.send(user, recipient=receiver,  verb="is applying for your tuition teacher, EMail: "+str(email)+" Phone: " + str(
+                phone)+" Says:  " + str(content))
+            messages.success(request, 'successfully Sent.')
+            return redirect('userprofile')
+    else:
+        form = ContactForm()
+    context = {
+        'form': form,
+        'user': request.user,
+        'post':post
+    }
+    # redirect to a new URL:
+    return render(request, 'posts/contact.html', context)
 
 class postsView(View):
     template_name = "posts/home.html"
@@ -141,6 +170,7 @@ def editpost(request, sno):
         if form.is_valid():
             obj = form.save(commit=False)
             obj.author = request.user
+            obj.preferedPlace.set([])
             obj.save()
             subject = form.cleaned_data['subject']
             for f in subject:
@@ -218,6 +248,9 @@ def blogPost(request, sno):
             replyDict[reply.parent.sno] = [reply]
         else:
             replyDict[reply.parent.sno].append(reply)
+    subject=post.subject.all()
+    class_in=post.class_in.all()
+    preferedPlace = post.preferedPlace.all()
     context = {
         'post': post,
         'comments': comments,
@@ -225,7 +258,10 @@ def blogPost(request, sno):
         'userp': userp,
         'like': like,
         'liked': liked,
-        'view':view
+        'view': view,
+        'subject': subject,
+        'class_in': class_in,
+        'preferedPlace':preferedPlace
     }
     return render(request, 'posts/blogpost.html', context)
 

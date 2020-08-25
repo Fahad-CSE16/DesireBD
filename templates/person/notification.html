@@ -19,10 +19,8 @@
 {% csrf_token %}
 <button type="submit"  class="btn  btn-primary btn-sm">Mark All As Read</button>
 </form>
-
 {% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' %}
 {% register_notify_callbacks callbacks='fill_notification_badge,my_special_notification_callback' %}
-
 {% live_notify_list %}
 {{live_notify_list|safe}}
 {% endif %}
@@ -34,6 +32,8 @@
 <br>
 {% endfor %}
 {% endblock  %}
+
+
  {% block js %} 
   <script>
   function my_special_notification_callback(data) {

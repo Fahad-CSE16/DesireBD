@@ -7,28 +7,60 @@
     <div class="row mt-1">
         <div class="col-md-8 blog-main">
             <div class="blog-post">
+                <div>
+                    <a href="#">
+                        <h4>{{post.author.first_name}} {{post.author.last_name}}</h4>
+                    </a>
+                    <span class="badge badge-secondary">
+                        {{post.timeStamp|naturaltime}}</span>
+                </div>
+                <br> -Searching for a Teacher.
 
-                <h2><b>{{post.author}}</b> </h2>
-                <h5 class="pb-4 mb-2 font-italic ">
-                    Title:
-                    {{post.title|safe}}
-                </h5>
-                <p>{{post.content|safe}}</p>
+                For <b>{{post.medium}}</b>'s student for subject:
+                <b>
+                    {% for sub in subject %}
+                    {{sub}}
+                    {% if not forloop.last %}
+                    and
+                    {% endif %}
+                    {% endfor %}
+                </b>
+                for <b>
+                    {% for cls in class_in %}
+                    {{cls}}
+                    {% if not forloop.last %}
+                    and
+                    {% endif %}
+                    {% endfor %}
+                </b>
+                in
+                
+                    {% for place in preferedPlace %}
+                    <b>
+                    {{place}}</b>
+                    {% if not forloop.last %}
+                    or
+                    {% endif %}
+                    {% endfor %}, of {{post.district}} District
+                
                 <br>
-               
+                <b>Salary:</b>{{post.salary}}
+                <br><b>Free Time for Student:</b> {{post.time_available}}<b>
+                   <br> Days Per Week:</b> {{post.days}}<br>
 
-                <b> Time Available:</b> {{post.time_available|safe}}
+                Teacher May follow Appproaches: <b>{{post.approach}}</b><br>
+                Teacher May Have to teach : <b>{{post.style}}</b><br>
+                Teacher May Have to teach In : <b>{{post.place}}</b><br>
+
+                <b>Author of this Post's Speech:</b>
+                <i>
+                    {{post.content}}
+                </i>
                 <br>
-                
-                {% if post.category == "t" %}
-                He/She is a <b> Teacher</b>
-                <br>
-                {% else %}
-                He/She is a <b> Student</b>
-                <br>
-                {% endif %}
-                
-                
+
+
+
+
 
                 <a href="#"><span>- {{view}} seens</span></a>
                 {% if user == post.author %}
@@ -39,22 +71,24 @@
                 <div id="btnHolder"></div>
                 {% endif %}
                 <br>
-                <form action="/posts/likepost/{{post.sno}}/" method="post"> 
-                {% csrf_token %}
-                {% if liked %}
-                     <button type="submit" name="like_post" value="{{post.sno}}" class="btn  btn-primary btn-sm">UnLike</button>
-                {% else %}
-                    <button type="submit" name="like_post" value="{{post.sno}}" class="btn  btn-primary btn-sm">Like</button>
-                {% endif %}
+                <form action="/posts/likepost/{{post.sno}}/" method="post">
+                    {% csrf_token %}
+                    {% if liked %}
+                    <button type="submit" name="like_post" value="{{post.sno}}"
+                        class="btn  btn-primary btn-sm">UnLike</button>
+                    {% else %}
+                    <button type="submit" name="like_post" value="{{post.sno}}"
+                        class="btn  btn-primary btn-sm">Like</button>
+                    {% endif %}
                 </form>
                 {{like}} People Likes The Post
             </div><!-- /.blog-post -->
         </div><!-- /.blog-main -->
     </div>
 </div>
-
 <div class="container">
     {% if user.is_authenticated %}
+    <button class=" btn "><a href="/posts/authorcontact/{{post.sno}}/"> Contact To Apply</a></button>
 
     <h4>{{comments.count}}-Comments</h4>
     <form action="/posts/postcomment/" method="post">{% csrf_token %}
