@@ -8,7 +8,7 @@
         <div class="col-md-8 blog-main">
             <div class="blog-post">
                 <div>
-                    <a href="#">
+                    <a href="/profile/otherprofile/{{post.author.username}}">
                         <h4>{{post.author.first_name}} {{post.author.last_name}}</h4>
                     </a>
                     <span class="badge badge-secondary">
@@ -112,7 +112,10 @@
             <img class="rounded mx-auto my-3 d-block w-50 border border-dark" src="{{comment.image.url}}" alt="">
         </div>
         <div class="col md 11">
-            <b>{{comment.user.username}}</b> <span class="badge badge-secondary">
+             <a href="/profile/otherprofile/{{comment.user.username}}">
+                       <b>{{comment.user.first_name}} {{comment.user.last_name}}</b> 
+                    </a>
+             <span class="badge badge-secondary">
                 {{comment.timestamp | naturaltime}}</span>
             <div>
                 {{comment.comment}}

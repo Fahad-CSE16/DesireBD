@@ -7,21 +7,21 @@ from multiselectfield import MultiSelectField
 
 class UserProfile(models.Model):
     GENRE_CHOICES = (
-        ('m', 'MALE'),
-        ('f', 'FEMALE'),
+        ('Male', 'MALE'),
+        ('Female', 'FEMALE'),
     )
     MARITAL_STATUS_CHOICES = (
-        ('m', 'married'),
-        ('u', 'Unmarried'),
-        ('d', 'Divorced'),
-        ('e', 'engaged'),
-        ('s', 'separed'),
+        ('Married', 'Married'),
+        ('Unmarried', 'Unmarried'),
+        ('Divorced', 'Divorced'),
+        ('Engaged', 'Engaged'),
+        ('Separated', 'Separated'),
     )
     CATEGORY=(
-        ('s', 'student'),
-        ('t', 'teacher'),
-        ('j', 'employee'),
-        ('k', 'employery'),
+        ('Student', 'Student'),
+        ('Teacher', 'Teacher'),
+        ('Employee', 'Employee'),
+        ('Employeer', 'Employeer'),
     )
     BLOOD_GROUP=(
         ('A+', 'A+'),
@@ -38,14 +38,14 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     birth_date = models.DateField()
     blood_group=models.CharField(max_length=3, choices=BLOOD_GROUP)
-    genre = models.CharField(max_length=1, choices=GENRE_CHOICES)
+    genre = models.CharField(max_length=50, choices=GENRE_CHOICES)
     address = models.CharField(max_length=150)
     phone=models.CharField(max_length=13)
-    locatity = models.CharField(max_length=30)
-    marital_status = models.CharField(max_length=1, choices=MARITAL_STATUS_CHOICES)
+    nationality = models.CharField(max_length=30)
+    marital_status = models.CharField(max_length=50, choices=MARITAL_STATUS_CHOICES)
     religion = models.CharField(max_length=50)
     biodata=models.TextField()
-    category=models.CharField(max_length=4,choices=CATEGORY,null=True)
+    profession=models.CharField(max_length=50,choices=CATEGORY,null=True)
     image=models.ImageField(default='default.jpg', upload_to='tuition/images')
 
     def __str__(self):

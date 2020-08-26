@@ -83,7 +83,8 @@ class TuitionClassUpdateForm(ModelForm):
 class UserProfileForm(ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['birth_date','blood_group','genre','address','phone','locatity','religion','marital_status','biodata','category','image']
+        fields = ['birth_date', 'blood_group', 'genre', 'address', 'phone',
+                  'nationality', 'religion', 'marital_status', 'biodata', 'profession', 'image']
         # exclude = ['user']
         # fields='__all__'
         widgets = {

@@ -1,0 +1,100 @@
+{% extends 'basic.html' %}
+
+{% block title%} Update Your Profile{% endblock %}
+{% block userprofile %} active{% endblock userprofile %}
+{% block body %}
+{% load crispy_forms_tags %}
+{% if user.is_authenticated %}
+<div class="col-md-6 offset-md-3"> 
+        <div class="media">
+            <img class="rounded-circle account-img my-2 mx-3 mr-3" src="{{userp.image.url}}" alt="...">
+            <div class="media-body">
+                <h5 class="mt-0">UserName:{{user.username}}</h5>
+                Name: {{user.first_name}} {{user.last_name}}
+                <br>
+                Email:{{user.email}}
+                <br>
+            </div>
+        </div>
+    {% if userp %}
+    <b><h3><legend class="border-bottom mb-4">Personal Information</legend></h3></b>
+    <b>Gender &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  </b> <i> {{userp.genre}}</i> <br>
+    <b>Marital Status :  </b> <i> {{userp.marital_status}}</i> <br>
+    <b>Blood Group&nbsp; &nbsp;:  </b> <i> {{userp.blood_group}}</i> <br>
+    <b>Birth Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> {{userp.birth_date}}</i> <br>
+    <b>Religion&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  </b> <i> {{userp.religion}}</i> <br>
+    <b>Profession &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  </b> <i> {{userp.profession}}</i> <br>
+    <b>Adress&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;:  </b> <i> {{userp.address}}</i> <br>
+    <b>Nationality&nbsp;&nbsp;&nbsp;&nbsp; :  </b> <i> {{userp.nationality}}</i> <br>
+    <b><div class="border-bottom text-center mb-4">Biodata</div>  </b> <i> <p> {{userp.biodata}}</p></i> <br>
+    {% endif %} <br><br>
+
+    {% if tuitionprofile %}
+    <b><h3><legend class="border-bottom mb-4">Tuition Related Information</legend></h3></b>
+    <b>Class &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> 
+    {% for cls in class_in %}
+    {{cls}} 
+    {% if not forloop.last %}
+    , &nbsp;
+    {% endif %}
+    {% endfor %}
+    </i> <br>
+    <b>Subjects &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> 
+    {% for sub in subject %}
+    {{sub}} 
+    {% if not forloop.last %}
+    , &nbsp;
+    {% endif %}
+    {% endfor %}
+    </i> <br>
+    <b>Style &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  </b> <i> {{tuitionprofile.style}}</i> <br>
+    <b>Place  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  </b> <i> {{tuitionprofile.place}}</i> <br>
+    <b>Approach &nbsp;&nbsp;&nbsp;:  </b> <i> {{tuitionprofile.approach}}</i> <br>
+    <b>Medium &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> {{tuitionprofile.medium}}</i> <br>
+    <b>Salary&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  </b> <i> {{tuitionprofile.salary}}</i> <br>
+    <b>Days/week&nbsp;&nbsp;&nbsp;:  </b> <i> {{tuitionprofile.days}}</i> <br>
+    <b>Max Degree&nbsp;:  </b> <i> {{tuitionprofile.high_education}}</i> <br>
+    <b>Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :  </b> <i> {{tuitionprofile.status}}</i> <br>
+    {% endif %} <br><br>
+
+    {% if uSsc %}
+    <b><h3><legend class="border-bottom mb-4">Secondary School Certificate(SSC)</legend></h3></b>
+    <b>Group&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> {{uSsc.group}}</i> <br>
+    <b>Institution&nbsp;&nbsp; &nbsp;:  </b> <i> {{uSsc.institute}}</i> <br>
+    <b>Board &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  </b> <i> {{uSsc.board}}</i> <br>
+    <b>GPA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  </b> <i> {{uSsc.gpa}}</i> <br>
+    <b>Passing Year :  </b> <i> {{uSsc.passing_year}}</i> <br>
+    {% endif %} <br><br>
+
+    {% if uHsc %}
+    <b><h3><legend class="border-bottom mb-4">Higher School Certificate(SSC)</legend></h3></b>
+    <b>Group&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> {{uHsc.group}}</i> <br>
+    <b>Institution&nbsp;&nbsp; &nbsp;:  </b> <i> {{uHsc.institute}}</i> <br>
+    <b>Board &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  </b> <i> {{uHsc.board}}</i> <br>
+    <b>GPA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  </b> <i> {{uHsc.gpa}}</i> <br>
+    <b>Passing Year :  </b> <i> {{uHsc.passing_year}}</i> <br>
+    {% endif %} <br><br>
+
+    {% if afterhsc %}
+    <b><h3><legend class="border-bottom mb-4">Undergraduate</legend></h3></b>
+    <b>Degree Type&nbsp;&nbsp;&nbsp; : </b> <i> {{afterhsc.Etype}}</i> <br>
+    <b>Degree Name&nbsp;&nbsp;:  </b> <i> {{afterhsc.degree}}</i> <br>
+    <b>Institution&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;:  </b> <i> {{afterhsc.institute}}</i> <br>
+    <b>GPA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  </b> <i> {{afterhsc.cgpa}}</i> <br>
+    <b>Passing Year &nbsp;&nbsp;&nbsp;&nbsp;:  </b> <i> {{afterhsc.passing_year}}</i> <br>
+    {% endif %} <br><br>
+
+    {% if higherstudies %}
+    <b><h3><legend class="border-bottom mb-4">Postgraduate</legend></h3></b>
+    <b>MSc&nbsp;&nbsp; : </b> <i> {{higherstudies.masters}}</i> <br>
+    <b>Phd&nbsp;&nbsp; :  </b> <i> {{higherstudies.phd}}</i> <br>
+    {% endif %} <br><br>
+
+
+
+</div>
+
+
+
+{% endif %}
+{% endblock %}

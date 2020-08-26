@@ -107,10 +107,10 @@ def updateprofile(request):
                 obj.birth_date= p_form.cleaned_data['birth_date']
                 obj.genre= p_form.cleaned_data['genre']
                 obj.address= p_form.cleaned_data['address']
-                obj.locatity= p_form.cleaned_data['locatity']
+                obj.nationality = p_form.cleaned_data['nationality']
                 obj.marital_status= p_form.cleaned_data['marital_status']
                 obj.phone= p_form.cleaned_data['phone']
-                obj.category= p_form.cleaned_data['category']
+                obj.profession = p_form.cleaned_data['profession']
                 obj.blood_group= p_form.cleaned_data['blood_group']
                 obj.religion= p_form.cleaned_data['religion']
                 obj.image= p_form.cleaned_data['image']
@@ -122,16 +122,17 @@ def updateprofile(request):
                 birth_date= p_form.cleaned_data['birth_date']
                 genre= p_form.cleaned_data['genre']
                 address= p_form.cleaned_data['address']
-                locatity= p_form.cleaned_data['locatity']
+                nationality= p_form.cleaned_data['nationality']
                 marital_status= p_form.cleaned_data['marital_status']
                 phone= p_form.cleaned_data['phone']
-                category= p_form.cleaned_data['category']
+                profession = p_form.cleaned_data['profession']
                 religion = p_form.cleaned_data['religion']
                 blood_group = p_form.cleaned_data['blood_group']
                 image= p_form.cleaned_data['image']
                 biodata = p_form.cleaned_data['biodata']
                 print("fahad")
-                useprofile = UserProfile(user=user, birth_date=birth_date, biodata=biodata, genre=genre, address=address, locatity=locatity, marital_status=marital_status, phone=phone, category=category, blood_group=blood_group, religion=religion, image=image)
+                useprofile = UserProfile(user=user, birth_date=birth_date, biodata=biodata, genre=genre, address=address, nationality=nationality,
+                                         marital_status=marital_status, phone=phone, profession=profession, blood_group=blood_group, religion=religion, image=image)
                 useprofile.save()
             messages.success(request, 'Successfully updated.')
             return redirect('userprofile')
@@ -477,6 +478,53 @@ def tuitionprofileupdate(request):
     }
     # redirect to a new URL:
     return render(request, 'person/tuitionprofileupdate.html', context)
+def otherprofile(request, slug):
+    user = User.objects.get(username=slug)
+    try:
+        uSsc = user.ssc
+    except:
+        uSsc=None
+    try:
+        uHsc = user.hsc
+    except:
+        uHsc=None
+    try:
+        afterhsc = user.afterhsc
+    except:
+        afterhsc = None
+    try:
+        higherstudies = user.higherstudies
+    except:
+        higherstudies = None
+    try:
+        userp = user.userprofile
+    except:
+        userp = None
+    try:
+        tuitionprofile = user.tuitionclass
+    except:
+        tuitionprofile = None
+    try:
+        subject = tuitionprofile.subject.all()
+    except:
+        subject = None
+    try:
+        class_in = tuitionprofile.level.all()
+    except:
+        class_in = None
+    context = {
+        'user': user,
+        'uSsc': uSsc,
+        'uHsc': uHsc,
+        'afterhsc': afterhsc,
+        'higherstudies': higherstudies,
+        'tuitionprofile': tuitionprofile,
+        'subject': subject,
+        'class_in': class_in,
+        'userp':userp
+    }
+    return render(request, 'person/otherprofile.html', context)
+    
 
 def load_cities(request):
     district_id = request.GET.get('district')
