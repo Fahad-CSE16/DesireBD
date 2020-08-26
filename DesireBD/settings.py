@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'person',
     'tolet',
     'posts',
@@ -46,6 +47,17 @@ INSTALLED_APPS = [
     'multiselectfield',
     'notifications',
 ]
+REST_FRAMEWORK = {
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'rest_framework.authentication.SessionAuthentication',
+
+    # ],
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+
+    # ]
+}
+
 # NOTIFICATIONS_NOTIFICATION_MODEL = 'your_app.Notification'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -14,5 +14,7 @@ urlpatterns = [
     path('tolet/', include('tolet.urls')),
     path('posts/', include('posts.urls')),
     path('classapp/', include('classapp.urls')),
+    path('rest/', include('rest_api_create.urls')),
+    path('api/', include('rest_framework.urls')),
     path('inbox/notifications/',include(notifications.urls, namespace='notifications')),
 ] +  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
