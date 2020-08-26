@@ -3,8 +3,13 @@ from django.contrib.auth.models import User
 from person.models import (UserProfile, TuitionClass, District, SubDistrict, Subject, Classes, SSC, HSC, HigherStudies, AfterHsc, Contact)
 from posts.models import TuitionPost, BlogComment
 from tolet.models import Post, PostFile, ToletComment
+from notifications.models import Notification
 
 
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = '__all__'
 
 #person serializers
 class UserProfileSerializer(serializers.ModelSerializer):

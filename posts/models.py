@@ -59,7 +59,11 @@ class TuitionPost(models.Model):
         return self.views.count()
     def __str__(self):
         return str(self.sno )+" . "+  self.author.username + " 's Post for searching  a techer in " + str(self.district.name)
-    
+
+    class Meta:
+        ordering = ['timeStamp']
+        # verbose_name_plural= "Categories"
+
 
 class BlogComment(models.Model):
     sno = models.AutoField(primary_key=True)
@@ -80,3 +84,7 @@ class BlogComment(models.Model):
 
     def __str__(self):
         return self.user.username + ": " + self.comment[0:13]
+
+    class Meta:
+        ordering = ['timestamp']
+        # verbose_name_plural= "Categories"

@@ -13,6 +13,7 @@ router.register(r'subjects', SubjectViewSet)
 router.register(r'classes', ClassesViewSet)
 router.register(r'districts', DistrictViewSet)
 router.register(r'subdistricts', SubDistrictViewSet)
+router.register(r'notifications', NotificationViewSet)
 
 
 urlpatterns = [
