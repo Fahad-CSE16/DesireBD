@@ -21,13 +21,11 @@ class DistrictSerializer(serializers.ModelSerializer):
     class Meta:
         model = District
         fields = '__all__'
-
 class SubDistrictSerializer(serializers.ModelSerializer):
     district=DistrictSerializer(many=False, read_only=True)
     class Meta:
         model = SubDistrict
-        fields = '__all__'
-        
+        fields = '__all__'       
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
@@ -72,19 +70,18 @@ class UserSerializer1(serializers.ModelSerializer):
         model = User
         fields = [ 'username']
 
-
 class UserSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField( view_name="user-detail", read_only=True)
     userprofile = UserProfileSerializer(many=False, read_only=True)
     ssc = SSCSerializer(many=False, read_only=True)
     hsc = HSCSerializer(many=False, read_only=True)
     afterhsc = AfterHscSerializer(many=False, read_only=True)
     higherstudies = HigherStudiesSerializer(many=False, read_only=True)
     tuitionclass = TuitionClassSerializer(many=False, read_only=True)
-
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'first_name',
-                  'last_name', 'userprofile', 'ssc', 'hsc', 'afterhsc', 'higherstudies', 'tuitionclass']
+        fields = '__all__'
+        # fields = ['id', 'username', 'email', 'first_name','last_name', 'userprofile', 'ssc', 'hsc', 'afterhsc', 'higherstudies', 'tuitionclass','url']
 
 #tuitionposts serializers
 
@@ -96,6 +93,7 @@ class BlogCommentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class TuitionPostSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField( view_name="tuitionpost-detail", read_only=True)
     comment = BlogCommentSerializer(many=True, read_only=True)
     preferedPlace=SubDistrictSerializer(many=True, read_only=True)
     class_in=ClassesSerializer(many=True, read_only=True)
@@ -122,8 +120,8 @@ class PostFileSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class PostSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name="post-detail", read_only=True)
     comment = ToletCommentSerializer(many=True, read_only=True)
-
     author = UserSerializer1(many=False, read_only=True)
     likes = UserSerializer1(many=True, read_only=True)
     views = UserSerializer1(many=True, read_only=True)
