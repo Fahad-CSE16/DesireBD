@@ -18,8 +18,6 @@ class SSCForm(ModelForm):
         model = SSC
         exclude = ['user']
         
-
-
 class HSCForm(ModelForm):
     class Meta:
         model = HSC
@@ -52,8 +50,6 @@ class TuitionClassForm(ModelForm):
             'level': forms.CheckboxSelectMultiple(attrs={'multiple': True}),
             
         }
-
-
 
 class TuitionClassUpdateForm(ModelForm):
     class Meta:
