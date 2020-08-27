@@ -184,8 +184,9 @@
                     </div>
                     <div class="col-md-9 ">
 
-                        <b>{{reply.user}}:</b> <span class="badge badge-secondary">
-                            {{comment.timestamp|naturaltime}}</span>
+                        <a href="/profile/otherprofile/{{reply.user.username}}">
+                       <b>{{reply.user.first_name}} {{reply.user.last_name}}</b> </a> <span class="badge badge-secondary">
+                            {{reply.timestamp|naturaltime}}</span>
                         <div>
                             {{reply.comment}}
                             <br>

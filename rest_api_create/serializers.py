@@ -22,7 +22,6 @@ class DistrictSerializer(serializers.ModelSerializer):
         model = District
         fields = '__all__'
 class SubDistrictSerializer(serializers.ModelSerializer):
-    district=DistrictSerializer(many=False, read_only=True)
     class Meta:
         model = SubDistrict
         fields = '__all__'       
