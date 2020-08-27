@@ -9,7 +9,6 @@ class UserUpdateForm(ModelForm):
         model=User
         fields = ['username', 'email', 'first_name', 'last_name']
 
-
 class SubjectForm(ModelForm):
     class Meta:
         model = Subject
@@ -59,7 +58,7 @@ class TuitionClassForm(ModelForm):
 class TuitionClassUpdateForm(ModelForm):
     class Meta:
         model = TuitionClass
-        exclude = ['user']
+        exclude = ['user','district']
         widgets = {
             'subject': forms.CheckboxSelectMultiple(attrs={'multiple': True}),
             'level': forms.CheckboxSelectMultiple(attrs={'multiple': True}),
@@ -100,4 +99,3 @@ class ContactForm(ModelForm):
     class Meta:
         model=Contact
         fields=['name','email','phone','content']
-    

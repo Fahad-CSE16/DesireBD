@@ -349,6 +349,10 @@ def tuitionprofile(request):
                 obj.place = form.cleaned_data['place']
                 obj.approach = form.cleaned_data['approach']
                 obj.medium = form.cleaned_data['medium']
+                if obj.district == form.cleaned_data['district']:
+                    pass
+                else:
+                    obj.preferedPlace.set([])
                 obj.district = form.cleaned_data['district']
                 obj.high_education = form.cleaned_data['high_education']
                 obj.salary = form.cleaned_data['salary']
@@ -364,6 +368,7 @@ def tuitionprofile(request):
                 for f in subject:
                     obj.subject.add(f)
                     obj.save()
+                
                 # preferedPlace = form.cleaned_data['preferedPlace']
                 # for p in preferedPlace:
                 #     obj.preferedPlace.add(p)
@@ -423,7 +428,6 @@ def tuitionprofileupdate(request):
                 obj.place = form.cleaned_data['place']
                 obj.approach = form.cleaned_data['approach']
                 obj.medium = form.cleaned_data['medium']
-                obj.district = form.cleaned_data['district']
                 obj.high_education = form.cleaned_data['high_education']
                 obj.salary = form.cleaned_data['salary']
                 obj.status = form.cleaned_data['status']

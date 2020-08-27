@@ -338,4 +338,3 @@ def deletepost(request, sno):
         raise PermissionDenied
     messages.success(request, 'Successfully Deleted your Post.')
     return redirect('/posts/viewpost')
-
