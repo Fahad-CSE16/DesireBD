@@ -68,19 +68,19 @@ class CommentViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ToletCommentSerializer
     
 #sevaral used model viewsets starts from here
-class SubjectViewSet(viewsets.ReadOnlyModelViewSet):
+class SubjectViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
-class ClassesViewSet(viewsets.ReadOnlyModelViewSet):
+class ClassesViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Classes.objects.all()
     serializer_class = ClassesSerializer
-class DistrictViewSet(viewsets.ReadOnlyModelViewSet):
+class DistrictViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = District.objects.all()
     serializer_class = DistrictSerializer
-class SubDistrictViewSet(viewsets.ReadOnlyModelViewSet):
+class SubDistrictViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     queryset = SubDistrict.objects.all()
     serializer_class = SubDistrictSerializer

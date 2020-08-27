@@ -8,11 +8,16 @@
         <form action="/profile/addsubject/" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset class="form-group mx-auto">
+            {% if user.is_authenticated %}
                 <legend class="border-bottom text-center mb-4"><h2>Add your Subject if not listed below</h2></legend>
                 {{ form|crispy }}               
             </fieldset>
             <button class="btn btn-outline-info " type="submit" value="submit">ADD </button>
             {% comment %} <input type="submit" value="Submit"> {% endcomment %}
+            {% else %}
+            <legend class="border-bottom text-center mb-4"><h2>Subjects are listed below</h2></legend>
+
+            {% endif %}
         </form>
         <div class="containter">
   {% for sub in subjects %}

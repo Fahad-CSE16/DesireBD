@@ -9,21 +9,27 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-{% load notifications_tags %}
+  {% load notifications_tags %}
 
 
-{% load static %}
-<script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
+  {% load static %}
+  <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
 
 
   <title>{% block title%} {% endblock %}</title>
-   <style>
-       {% block css %} {% endblock %}
+  <style>
+    {
+      % block css %
+    }
+
+      {
+      % endblock %
+    }
   </style>
 </head>
 
 <body>
-{% comment %} {% load notification_tags %} {% endcomment %}
+  {% comment %} {% load notification_tags %} {% endcomment %}
   <nav class="navbar navbar-expand-lg navbar-dark bg-success">
     <a class="navbar-brand" href="/profile/">DesireBD</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -33,37 +39,39 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-      <li class="nav-item {% block blogactive %}
+        <li class="nav-item {% block blogactive %}
       {% endblock blogactive %} ">
           <a class="nav-link" href="/profile/">Home</a>
         </li>
-         <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          View
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/posts/viewpost/">Tuition Posts</a>
-          <a class="dropdown-item" href="/tolet/viewtolet/">To-let Posts</a>
-          <a class="dropdown-item" href="/profile/addsubject/">Subjects List</a>
-        </div>
-        
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Create
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/posts/createpost/">Tuition Posts</a>
-          <a class="dropdown-item" href="/tolet/posttolet/">To-let Posts</a>
-          {% comment %} <a class="dropdown-item" href="/addsubject/">Subject</a> {% endcomment %}
-        </div>
-        
-      </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            View
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/posts/viewpost/">Tuition Posts</a>
+            <a class="dropdown-item" href="/tolet/viewtolet/">To-let Posts</a>
+            <a class="dropdown-item" href="/profile/addsubject/">Subjects List</a>
+          </div>
+
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Create
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/posts/createpost/">Tuition Posts</a>
+            <a class="dropdown-item" href="/tolet/posttolet/">To-let Posts</a>
+            {% comment %} <a class="dropdown-item" href="/addsubject/">Subject</a> {% endcomment %}
+          </div>
+
+        </li>
         <li class="nav-item  {% block contactactive %}
       {% endblock contactactive %}">
           <a class="nav-link" href="/profile/contact/">Contact</a>
         </li>
-        
+
         <li class="nav-item  {% block aboutactive %}
       {% endblock aboutactive %}">
           <a class="nav-link" href="/profile/about_us/">About</a>
@@ -71,22 +79,21 @@
         {% comment %} <div>{% now "SHORT_DATETIME_FORMAT" %}</div> {% endcomment %}
       </ul>
       <ul class="navbar-nav ml-auto">
-        <form method="post" action="/posts/search/" class="form-inline my-2 my-lg-0">
-        {% csrf_token %}
+        {% if user.is_authenticated %}
+        {% comment %} <form method="post" action="/posts/search/" class="form-inline my-2 my-lg-0">
+          {% csrf_token %}
           <input class="form-control mr-sm-2 " type="search" placeholder="Search" aria-label="Search" name="search"
             id="search">
           <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
-
-        </form>
-        {% if user.is_authenticated %}
+        </form> {% endcomment %}
         <li class="nav-item {% block notifications %}
       {% endblock notifications %} ">
           <a class="nav-link" href="/profile/notification/">
-          
+
             <i class="globe red ">{% live_notify_badge %}</i>
-          {% comment %} {% notifications_unread %} {% endcomment %}
+            {% comment %} {% notifications_unread %} {% endcomment %}
             Notifications
-         
+
           </a>
         </li>
         <li class="nav-item {% block userprofile %}
@@ -114,13 +121,13 @@
       </button>
       {% endif %}
     </div>
-  <div class="nav-item my-2">
-        <div class="btn btn-outline-dark my-2 my-sm-0 mx-3"> {% now "h:i A" as current_time %}
-          {{ current_time|center:"150"  }}
-        </div>
-        <div class="btn btn-outline-dark my-2 my-sm-0 ml-auto"> {% now "D jS F Y" %}
-        </div>
-  </div>
+    <div class="nav-item my-2">
+      <div class="btn btn-outline-dark my-2 my-sm-0 mx-3"> {% now "h:i A" as current_time %}
+        {{ current_time|center:"150"  }}
+      </div>
+      <div class="btn btn-outline-dark my-2 my-sm-0 ml-auto"> {% now "D jS F Y" %}
+      </div>
+    </div>
   </nav>
 
 
@@ -204,19 +211,18 @@
       </div>
     </div>
   </div>
- {% for message in messages  %}
+  {% for message in messages  %}
 
-<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
     <strong></strong> {{ message }}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
+      <span aria-hidden="true">&times;</span>
     </button>
-</div>
-{% endfor %}
+  </div>
+  {% endfor %}
   <br>
   {% block body %} {% endblock %}
   {% block js %} {% endblock %}
-
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="

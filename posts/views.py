@@ -199,14 +199,14 @@ def editpost(request, sno):
 def search(request):
     if request.method == 'POST':
         query = request.POST.get('search').lower()
-
         try:
-            mypoststitle = TuitionPost.objects.filter(preferedPlace__icontains=query)
-            mypostscontent = TuitionPost.objects.filter(content__icontains=query)
-            myposts = mypoststitle.union(mypostscontent)
-
+            mypoststitle = TuitionPost.objects.filter(medium__icontains=query)
+            mypostscontent = TuitionPost.objects.filter(
+                content__icontains=query)
+            post = mypoststitle.union(mypostscontent)
         except TuitionPost.DoesNotExist:
-            myposts = None
+            post = None
+
         try:
             tolettitle = Post.objects.filter(text__icontains=query)
             tolettitle1 = Post.objects.filter(village__icontains=query)
@@ -219,10 +219,9 @@ def search(request):
             mytolet = mytolet.union(tolettitle2)
             mytolet = mytolet.union(tolettitle3)
             mytolet = mytolet.union(tolettitle4)
-
         except Post.DoesNotExist:
             mytolet = None
-        return render(request, "search.html", {'post': myposts, 'mytolet': mytolet})
+        return render(request, "search.html", {'post': post, 'mytolet': mytolet})
     else:
         return render(request, "search.html", {})
 
