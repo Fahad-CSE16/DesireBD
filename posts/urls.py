@@ -11,6 +11,7 @@ urlpatterns = [
     # path('viewsubjects/', views.viewsubjects, name='viewsubjects'),
     
     path('viewpost/', views.viewpost, name='viewpost'),
+    path('filterpost/', views.filterpost, name='filterpost'),
     path('postcomment/', views.postComment, name='postComment'),
     path('<int:sno>/', views.blogPost, name='blogPost'),
     path('deletepost/<int:sno>/', views.deletepost, name='deletepost'),

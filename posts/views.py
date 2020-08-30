@@ -12,14 +12,27 @@ import time
 from math import ceil
 from .models import TuitionPost, BlogComment
 from tolet.models import Post, PostFile
+from person.models import Subject, District, Classes
 from .forms import TuitionPostForm, TuitionPostUpdateForm
 from person.forms import ContactForm
-
 from person.models import UserProfile, Contact
 from posts.templatetags import extras
 from notifications.signals import notify
 # Create your views here.
 
+def filterpost(request):
+    if request.method == "POST":
+        district = request.POST['district_i']
+        subject = request.POST['subject_i']
+        classes = request.POST['class_i']
+        # print(district, subject, classes)
+        if district or subject or classes:
+            queryset = (Q(district__name__icontains=district)) & (
+                Q(class_in__name__icontains=classes)) & (Q(subject__name__icontains=subject))
+            results = TuitionPost.objects.filter(queryset).distinct()
+        else:
+            results = []
+    return render(request, "posts/filterpost.html", {'results': results})
 
 def likepost(request, sno):
     post = get_object_or_404(TuitionPost, sno=sno)
@@ -249,14 +262,14 @@ def blogPost(request, sno):
 
 def viewpost(request):
     posts = TuitionPost.objects.all()
-    # subject = posts.subject.all()
-    # class_in = posts.class_in.all()
-    # preferedPlace = posts.preferedPlace.all()
+    district = District.objects.all()
+    subject = Subject.objects.all()
+    classes = Classes.objects.all()
     params = {
-        'posts': posts
-        # 'subject': subject,
-        # 'class_in': class_in,
-        # 'preferedPlace': preferedPlace
+        'posts': posts,
+        'subject': subject,
+        'classes': classes,
+        'district': district
 
     }
     return render(request, 'posts/viewpost.html', params)

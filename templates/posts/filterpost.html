@@ -71,59 +71,12 @@ color: #f1f1f1;
     <a class="nav-link" href="/posts/createpost/">Create a Tuition Post</a>
 </div>
 
-
-<div class="col-md-6 offset-md-3">
-  <form action="/posts/filterpost/" method="post">
-    {% csrf_token %}
-
-    <div class="input-group mb-3">
-      <select class="custom-select" id="inputGroupSelect01" name="district_i" >
-        <option ></option>
-        {% for i in district %}
-        <option value="{{i}}">{{i.id}}:{{i}}</option>
-        {% endfor %}
-      </select>
-      <div class="input-group-append">
-        <label class="input-group-text" for="inputGroupSelect01">District</label>
-      </div>
-    </div>
-
-    <div class="input-group mb-3">
-      <select class="custom-select" id="inputGroupSelect03" name="subject_i" >
-        <option ></option>
-        {% for i in subject %}
-        <option value="{{i}}">{{i.id}}:{{i}}</option>
-        {% endfor %}
-      </select>
-      <div class="input-group-append">
-        <label class="input-group-text" for="inputGroupSelect03">Subject</label>
-      </div>
-    </div>
-
-    <div class="input-group mb-3">
-      <select class="custom-select" id="inputGroupSelect02" name="class_i" >
-        <option ></option>
-        {% for i in classes %}
-        <option value="{{i}}">{{i.id}}:{{i}}</option>
-        {% endfor %}
-      </select>
-      <div class="input-group-append">
-        <label class="input-group-text" for="inputGroupSelect02"> Class</label>
-      </div>
-    </div>
-
-    <button class="btn btn-outline-info " type="submit" value="submit">Filter Posts </button>
-
-  </form>
-</div>
-
-
-
-
 <div class="col-md-9 offset-md-3">
 <div class="container">
-    
-    {% for post in posts %}
+    {% if not results %}
+    <h2>Nothing Found for your filter data</h2>
+    {% endif %}
+    {% for post in results %}
     <div class="col-md-12 ">
         <div class="row bg-succes no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col  p-4 d-flex flex-column position-static">
@@ -139,32 +92,6 @@ color: #f1f1f1;
                 </strong>
                 <div class="preview">
                 For <b>{{post.medium}}</b>'s student
-                     {% comment %}  for subject:
-                <b>
-                    {% for sub in subject %}
-                    {{sub}}
-                    {% if not forloop.last %}
-                    and
-                    {% endif %}
-                    {% endfor %}
-                </b>
-                for <b>
-                    {% for cls in class_in %}
-                    {{cls}}
-                    {% if not forloop.last %}
-                    and
-                    {% endif %}
-                    {% endfor %}
-                </b>
-                in
-                
-                    {% for place in preferedPlace %}
-                    <b>
-                    {{place}}</b>
-                    {% if not forloop.last %}
-                    or
-                    {% endif %}
-                    {% endfor %}, of  {% endcomment %}
                    in {{post.district}} District
                 
                 <br>
