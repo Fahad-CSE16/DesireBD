@@ -1,0 +1,31 @@
+{% extends 'basic.html' %}
+{% block title%} UserList {% endblock %}
+{% block body %}
+<div class="col-md-6 offset-md-3">
+<div class="container">
+{% if results %}
+
+{% for u in results %}
+<div class="col-md-12 ">
+            <div class="row bg-succes no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col  p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 ">
+                        <div>
+                            <a href="/profile/otherprofile/{{u.user.username}}/">
+                                <h4>{{u.user.first_name}} {{u.user.last_name}}</h4>
+                            </a>
+                        </div>
+                    </strong>
+                    <div class="preview">
+                         email: {{u.user.email}}
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    No Teacher Found for Your Filtered Data
+    {% endif %}
+
+</div>
+{% endblock %}

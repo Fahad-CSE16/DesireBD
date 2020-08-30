@@ -99,7 +99,19 @@
         <br>
         {% endif %}
 </div>
-
+{% comment %} 
+{% if query %}
+    {% if results %}
+    <ul>
+    {% for item in results %}
+        <li>{{ item|escape }}</li>
+    {% endfor %}
+    </ul>
+    {% else %}
+       <p>Query returned no results.</p>
+       
+    {% endif %}
+{% endif %} {% endcomment %}
 
 {% endif %}
 {% endblock %}

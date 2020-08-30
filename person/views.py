@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, HttpResponse,redirect,HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
@@ -13,11 +14,39 @@ from .models import UserProfile, Contact, SSC,HigherStudies,HSC,AfterHsc,Distric
 from .forms import UserProfileForm, UserUpdateForm, ContactForm,SSCForm,HSCForm,AfterHscForm,HigherStudiesForm,TuitionClassForm,SubjectForm,TuitionClassUpdateForm
 
 
+def userlist(request):
+    users=User.objects.all()
+    district = District.objects.all()
+    subject = Subject.objects.all()
+    classes = Classes.objects.all()
+    
+    context = {
+        'district': district,
+        'subject': subject,
+        'classes': classes,
+        'users':users,
+    }
+    return render(request, 'person/person_list.html', context)
+
+
+def teacherlist(request):
+    if request.method == "POST":
+        district=request.POST['district_i']
+        subject=request.POST['subject_i']
+        classes = request.POST['class_i']
+        # print(district, subject, classes)
+        if district or subject or classes:
+            queryset = (Q(district__name__icontains=district)) & (
+                Q(level__name__icontains=classes)) & (Q(subject__name__icontains=subject))
+            results = TuitionClass.objects.filter(queryset).distinct()
+        else:
+            results = []
+    return render(request, "person/teacher_list.html", {'results': results})
+
 def notification(request):
     user = User.objects.get(username=request.user.username)
     qs = user.notifications.read()
     us = user.notifications.unread()
-    # print(us.verb)
     return render(request, 'person/notification.html', {'qs': qs, 'us':us})
     
 def markasread(request):

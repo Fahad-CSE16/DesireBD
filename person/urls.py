@@ -24,6 +24,8 @@ urlpatterns = [
     path('addsubject/', views.addsubject, name='addsubject'),
     path('notification/', views.notification, name='notification'),
     path('markasread/', views.markasread, name='markasread'),
+    path('userlist/', views.userlist, name='userlist'),
+    path('teacherlist/', views.teacherlist, name='teacherlist'),
     
 
 
