@@ -195,38 +195,22 @@ def editpost(request, sno):
 
 
 
-
+from django.db.models import Q
 
 def search(request):
-    if request.method == 'POST':
-        query = request.POST.get('search').lower()
-        try:
-            mypoststitle = TuitionPost.objects.filter(medium__icontains=query)
-            mypostscontent = TuitionPost.objects.filter(
-                content__icontains=query)
-            post = mypoststitle.union(mypostscontent)
-        except TuitionPost.DoesNotExist:
-            post = None
-
-            
-        try:
-            tolettitle = Post.objects.filter(text__icontains=query)
-            tolettitle1 = Post.objects.filter(village__icontains=query)
-            tolettitle2 = Post.objects.filter(upozila__icontains=query)
-            tolettitle3 = Post.objects.filter(division__icontains=query)
-            tolettitle4 = Post.objects.filter(area__icontains=query)
-            mytolet = Post.objects.filter(Zilla__icontains=query)
-            mytolet = mytolet.union(tolettitle)
-            mytolet = mytolet.union(tolettitle1)
-            mytolet = mytolet.union(tolettitle2)
-            mytolet = mytolet.union(tolettitle3)
-            mytolet = mytolet.union(tolettitle4)
-        except Post.DoesNotExist:
-            mytolet = None
-        return render(request, "search.html", {'post': post, 'mytolet': mytolet})
+    query = request.GET.get('q', '')
+    if query:
+        queryset = (Q(medium__icontains=query)) | (
+            Q(content__icontains=query)) | (Q(subject__name__icontains=query)) | (Q(preferedPlace__name__icontains=query)) | (Q(class_in__name__icontains=query)) | (Q(district__name__icontains=query))
+        results = TuitionPost.objects.filter(queryset).distinct()
     else:
-        return render(request, "search.html", {})
-
+       results = []
+    if query:
+        queryset = (Q(text__icontains=query)) | (Q(village__icontains=query)) | (Q(upozila__icontains=query)) | (Q(division__icontains=query)) | (Q(area__icontains=query)) | (Q(Zilla__icontains=query))
+        mytolet = Post.objects.filter(queryset).distinct()
+    else:
+        mytolet = []
+    return render(request, "search.html", {'results': results, 'mytolet': mytolet, 'query':query})
 
 def blogPost(request, sno):
     post = TuitionPost.objects.filter(sno=sno).first()
@@ -339,3 +323,27 @@ def deletepost(request, sno):
         raise PermissionDenied
     messages.success(request, 'Successfully Deleted your Post.')
     return redirect('/posts/viewpost')
+
+    # if request.method == 'POST':
+    #     query = request.POST.get('search').lower()
+    #     try:
+    #         mypoststitle = TuitionPost.objects.filter(medium__icontains=query)
+    #         mypostscontent = TuitionPost.objects.filter(
+    #             content__icontains=query)
+    #         post = mypoststitle.union(mypostscontent)
+    #     except TuitionPost.DoesNotExist:
+    #         post = None
+    # try:
+    #         tolettitle = Post.objects.filter(text__icontains=query)
+    #         tolettitle1 = Post.objects.filter(village__icontains=query)
+    #         tolettitle2 = Post.objects.filter(upozila__icontains=query)
+    #         tolettitle3 = Post.objects.filter(division__icontains=query)
+    #         tolettitle4 = Post.objects.filter(area__icontains=query)
+    #         mytolet = Post.objects.filter(Zilla__icontains=query)
+    #         mytolet = mytolet.union(tolettitle)
+    #         mytolet = mytolet.union(tolettitle1)
+    #         mytolet = mytolet.union(tolettitle2)
+    #         mytolet = mytolet.union(tolettitle3)
+    #         mytolet = mytolet.union(tolettitle4)
+    #     except Post.DoesNotExist:
+    #         mytolet = None

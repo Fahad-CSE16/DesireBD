@@ -80,11 +80,12 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         {% if user.is_authenticated %}
-        <form method="post" action="/posts/search/" class="form-inline my-2 my-lg-0">
+       
+        <form method="GET" action="/posts/search/" class="form-inline my-2 my-lg-0">
           {% csrf_token %}
-          <input class="form-control mr-sm-2 " type="search" placeholder="Search" aria-label="Search" name="search"
-            id="search">
-          <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+          <input class="form-control mr-sm-2 " type="search" placeholder="Search" aria-label="Search" name="q"
+            id="search" >
+          <button class="btn btn-outline-dark my-2 my-sm-0" type="submit"  value="{{ query|escape }}">Search</button>
         </form>
         <li class="nav-item {% block notifications %}
       {% endblock notifications %} ">
