@@ -542,6 +542,10 @@ def otherprofile(request, slug):
     except:
         subject = None
     try:
+        places = tuitionprofile.preferedPlace.all()
+    except:
+        places = None
+    try:
         class_in = tuitionprofile.level.all()
     except:
         class_in = None
@@ -553,6 +557,7 @@ def otherprofile(request, slug):
         'higherstudies': higherstudies,
         'tuitionprofile': tuitionprofile,
         'subject': subject,
+        'places': places,
         'class_in': class_in,
         'userp':userp
     }

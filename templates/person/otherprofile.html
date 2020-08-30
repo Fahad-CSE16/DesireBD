@@ -51,6 +51,13 @@
     <b>Place  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  </b> <i> {{tuitionprofile.place}}</i> <br>
     <b>Approach &nbsp;&nbsp;&nbsp;:  </b> <i> {{tuitionprofile.approach}}</i> <br>
     <b>Medium &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> {{tuitionprofile.medium}}</i> <br>
+    <b>District &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> {{tuitionprofile.district}}</i> <br>
+    <b>Places of {{tuitionprofile.district}}: </b> <i> {% for pls in places %}
+    {{pls}} 
+    {% if not forloop.last %}
+    , &nbsp;
+    {% endif %}
+    {% endfor %}</i> <br>
     <b>Salary&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  </b> <i> {{tuitionprofile.salary}}</i> <br>
     <b>Days/week&nbsp;&nbsp;&nbsp;:  </b> <i> {{tuitionprofile.days}}</i> <br>
     <b>Max Degree&nbsp;:  </b> <i> {{tuitionprofile.high_education}}</i> <br>
