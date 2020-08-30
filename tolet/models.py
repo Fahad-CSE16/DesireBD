@@ -37,8 +37,8 @@ class Post(models.Model):
     views = models.ManyToManyField(User, related_name='tpost_view')
     likes = models.ManyToManyField(User, related_name='tolet_post')
 
-    class Meta:
-        ordering = ['timestamp']
+    # class Meta:
+    #     ordering = ['timestamp']
         # verbose_name_plural= "Categories"
     def total_likes(self):
         return self.likes.count()
@@ -71,8 +71,8 @@ class ToletComment(models.Model):
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null= True)
     image=models.ImageField(upload_to='tolet/images', default="default.jpg")
     timestamp=models.DateTimeField(default= now)
-    class Meta:
-        ordering = ['timestamp']
+    # class Meta:
+    #     ordering = ['timestamp']
         # verbose_name_plural= "Categories"
         
     def save( self, *args, **kwargs):

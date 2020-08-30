@@ -60,8 +60,8 @@ class TuitionPost(models.Model):
     def __str__(self):
         return str(self.sno )+" . "+  self.author.username + " 's Post for searching  a techer in " + str(self.district.name)
 
-    class Meta:
-        ordering = ['timeStamp']
+    # class Meta:
+    #     ordering = ['timeStamp']
         # verbose_name_plural= "Categories"
 
 
@@ -85,6 +85,6 @@ class BlogComment(models.Model):
     def __str__(self):
         return self.user.username + ": " + self.comment[0:13]
 
-    class Meta:
-        ordering = ['timestamp']
+    # class Meta:
+    #     ordering = ['timestamp']
         # verbose_name_plural= "Categories"

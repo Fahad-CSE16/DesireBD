@@ -151,9 +151,9 @@ border: 1px solid black;
 
                 {% if user == post.user %}
                 <div>
-                    <a href="/tolet/edittolet/{{post.id}}">Edit Post</a>
+                    <a href="/tolet/edittolet/{{post.id}}/">Edit Post</a>
                     <br>
-                    <a href="/tolet/addphoto/{{post.id}}"> Add</a> a Photo to this post
+                    <a href="/tolet/addphoto/{{post.id}}/"> Add</a> a Photo to this post
                     <div id="btnOne"><a href="#" onClick="javascript:addBtn();">Delete</a> </div>
                 </div>
                 <div id="btnHolder"></div>
@@ -213,7 +213,7 @@ border: 1px solid black;
                 </button>
                 <div class="collapse" id="deleteBox{{comment.sno}}">
                     <div class="card card-body my-2">
-                        <form action="/tolet/deletecomment" method="post">
+                        <form action="/tolet/deletecomment/" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="parentsno" value="{{comment.sno}}">
                             <input type="hidden" name="postsno" value="{{post.id}}">
@@ -281,7 +281,7 @@ border: 1px solid black;
                         </button>
                         <div class="collapse" id="deleteRBox{{comment.sno}}">
                             <div class="card card-body my-2">
-                                <form action="/tolet/deletecomment" method="post">
+                                <form action="/tolet/deletecomment/" method="post">
                                     {% csrf_token %}
                                     <input type="hidden" name="parentsno" value="{{reply.sno}}">
                                     <input type="hidden" name="postsno" value="{{post.id}}">

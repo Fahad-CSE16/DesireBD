@@ -208,6 +208,7 @@ def search(request):
         except TuitionPost.DoesNotExist:
             post = None
 
+            
         try:
             tolettitle = Post.objects.filter(text__icontains=query)
             tolettitle1 = Post.objects.filter(village__icontains=query)
