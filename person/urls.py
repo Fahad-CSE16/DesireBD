@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from . import views
-from .views import homeView
+from .views import homeView, ResetPassword,ResetPasswordComplete,ResetPasswordConfirm,ResetPasswordDone
 
 
 urlpatterns = [
@@ -10,6 +10,14 @@ urlpatterns = [
     path('login/', views.handleLogin, name='handleLogin'),
     path('logout/', views.handleLogout, name='handleLogout'),
     path('changepass/', views.changepass, name='changepass'),
+    path('reset/password/',ResetPassword.as_view(), name='password_reset'),
+    path('reset/password/done/', ResetPasswordDone.as_view(), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/',
+         ResetPasswordConfirm.as_view(), name='password_reset_confirm'),
+    path('reset/done/', ResetPasswordComplete.as_view(),
+         name='password_reset_complete'),
+
+
     path('userprofile/', views.userprofile, name='userprofile'),
     path('updateprofile/', views.updateprofile, name='updateprofile'),
     path('otherprofile/<str:slug>/', views.otherprofile, name='otherprofile'),

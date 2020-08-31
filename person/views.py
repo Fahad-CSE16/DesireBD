@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.contrib.auth.views import PasswordChangeForm
+from django.contrib.auth.views import PasswordChangeForm, PasswordResetCompleteView,PasswordResetConfirmView, PasswordResetView,PasswordResetForm,PasswordResetDoneView
 from django.http import HttpResponseRedirect
 from django.views.generic import View
 import time
@@ -118,6 +118,19 @@ def changepass(request):
     else:
         form = PasswordChangeForm(user=request.user)
     return render(request, 'person/changepass.html', {'form': form})
+
+class ResetPassword(PasswordResetView):
+    template_name = 'person/reset_pass.html'
+
+class ResetPasswordDone(PasswordResetDoneView):
+    template_name = 'person/reset_pass_done.html'
+
+class ResetPasswordConfirm(PasswordResetConfirmView):
+    template_name = 'person/reset_pass_confirm.html'
+
+class ResetPasswordComplete(PasswordResetCompleteView):
+    template_name = 'person/reset_pass_complete.html'
+
 def updateprofile(request):
     try:
         instance = UserProfile.objects.get(user=request.user)
