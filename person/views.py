@@ -49,7 +49,7 @@ def handleSignup(request):
             )
             email.send()
             messages.info(
-                request, 'Please confirm your email address to complete the registration')
+                request, 'Please confirm From your email address to complete the registration and Then you can login')
             return redirect('home')
     else:
         form = SignUpForm()
@@ -72,6 +72,93 @@ def activate(request, uidb64, token):
         messages.warning(request, 'Activation link is invalid!')
         return redirect('signup')
 
+def updateprofile(request):
+    try:
+        instance = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        instance = None
+    username = request.user.username
+    userp = User.objects.get(username=username)
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        u_form= UserUpdateForm(request.POST , instance=request.user)
+        p_form = UserProfileForm(request.POST ,request.FILES, instance=instance) 
+        if u_form.is_valid() and p_form.is_valid():
+            email =u_form.cleaned_data.get('email')
+            if UserProfile.objects.filter(user=request.user):
+                obj=UserProfile.objects.get(user=request.user)
+                obj.user= request.user
+                obj.birth_date= p_form.cleaned_data['birth_date']
+                obj.genre= p_form.cleaned_data['genre']
+                obj.address= p_form.cleaned_data['address']
+                obj.nationality = p_form.cleaned_data['nationality']
+                obj.marital_status= p_form.cleaned_data['marital_status']
+                obj.phone= p_form.cleaned_data['phone']
+                obj.profession = p_form.cleaned_data['profession']
+                obj.blood_group= p_form.cleaned_data['blood_group']
+                obj.religion= p_form.cleaned_data['religion']
+                obj.image= p_form.cleaned_data['image']
+                obj.biodata = p_form.cleaned_data['biodata']
+                obj.save()
+                
+            else:
+                user= request.user
+                birth_date= p_form.cleaned_data['birth_date']
+                genre= p_form.cleaned_data['genre']
+                address= p_form.cleaned_data['address']
+                nationality= p_form.cleaned_data['nationality']
+                marital_status= p_form.cleaned_data['marital_status']
+                phone= p_form.cleaned_data['phone']
+                profession = p_form.cleaned_data['profession']
+                religion = p_form.cleaned_data['religion']
+                blood_group = p_form.cleaned_data['blood_group']
+                image= p_form.cleaned_data['image']
+                biodata = p_form.cleaned_data['biodata']
+                print("fahad")
+                useprofile = UserProfile(user=user, birth_date=birth_date, biodata=biodata, genre=genre, address=address, nationality=nationality,
+                                         marital_status=marital_status, phone=phone, profession=profession, blood_group=blood_group, religion=religion, image=image)
+                useprofile.save()
+            if User.objects.filter(email=email).exists() and userp.email != email:
+                messages.warning(
+                    request, 'Your Provided email is already in Use in another profile.')
+                return redirect('updateprofile')
+            elif userp.email == email:
+                u_form.save()
+            else:
+                user = u_form.save(commit=False)
+                user.is_active = False
+                user.save()
+                current_site = get_current_site(request)
+                mail_subject = 'Activate your account.'
+                message = render_to_string('person/acc_active_email.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': default_token_generator.make_token(user),
+                })
+                to_email = email
+                email1 = EmailMessage(
+                    mail_subject, message, to=[to_email]
+                )
+                email1.send()
+                messages.warning(request, ' Email Changed. Temporarily Your accound has been deactivated.')
+                messages.info(request, 'Activate your account From your email address and only then you can login.')
+                logout(request)
+                return redirect('home')
+            messages.success(request, 'Successfully updated.')
+            return redirect('userprofile')
+    else:
+        u_form= UserUpdateForm( instance=request.user)
+        p_form = UserProfileForm( instance=instance) 
+    userp=UserProfile.objects.filter(user=request.user)
+    context = {
+            'u_form':u_form,
+            'p_form':p_form,
+            'user': request.user,
+            'userp':userp
+             }
+        # redirect to a new URL:
+    return render(request, 'person/updateprofile.html', context)
 
 def handleLogin(request):
     if request.method == 'POST':
@@ -168,73 +255,7 @@ class homeView(View):
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
 
-def updateprofile(request):
-    try:
-        instance = UserProfile.objects.get(user=request.user)
-    except UserProfile.DoesNotExist:
-        instance = None
-    username = request.user.username
-    userp = User.objects.get(username=username)
-    if request.method == 'POST':
-        
-        # create a form instance and populate it with data from the request:
-        u_form= UserUpdateForm(request.POST , instance=request.user)
-        p_form = UserProfileForm(request.POST ,request.FILES, instance=instance) 
-        if u_form.is_valid() and p_form.is_valid():
-            email =u_form.cleaned_data.get('email')
-            
-            if User.objects.filter(email=email).exists() and userp.email != email:
-                messages.warning(request,'Your Provided email is already in Use in another profile.')
-                return redirect('updateprofile')
-            else:
-                u_form.save()
-            if UserProfile.objects.filter(user=request.user):
-                obj=UserProfile.objects.get(user=request.user)
-                obj.user= request.user
-                obj.birth_date= p_form.cleaned_data['birth_date']
-                obj.genre= p_form.cleaned_data['genre']
-                obj.address= p_form.cleaned_data['address']
-                obj.nationality = p_form.cleaned_data['nationality']
-                obj.marital_status= p_form.cleaned_data['marital_status']
-                obj.phone= p_form.cleaned_data['phone']
-                obj.profession = p_form.cleaned_data['profession']
-                obj.blood_group= p_form.cleaned_data['blood_group']
-                obj.religion= p_form.cleaned_data['religion']
-                obj.image= p_form.cleaned_data['image']
-                obj.biodata = p_form.cleaned_data['biodata']
-                obj.save()
-                
-            else:
-                user= request.user
-                birth_date= p_form.cleaned_data['birth_date']
-                genre= p_form.cleaned_data['genre']
-                address= p_form.cleaned_data['address']
-                nationality= p_form.cleaned_data['nationality']
-                marital_status= p_form.cleaned_data['marital_status']
-                phone= p_form.cleaned_data['phone']
-                profession = p_form.cleaned_data['profession']
-                religion = p_form.cleaned_data['religion']
-                blood_group = p_form.cleaned_data['blood_group']
-                image= p_form.cleaned_data['image']
-                biodata = p_form.cleaned_data['biodata']
-                print("fahad")
-                useprofile = UserProfile(user=user, birth_date=birth_date, biodata=biodata, genre=genre, address=address, nationality=nationality,
-                                         marital_status=marital_status, phone=phone, profession=profession, blood_group=blood_group, religion=religion, image=image)
-                useprofile.save()
-            messages.success(request, 'Successfully updated.')
-            return redirect('userprofile')
-    else:
-        u_form= UserUpdateForm( instance=request.user)
-        p_form = UserProfileForm( instance=instance) 
-    userp=UserProfile.objects.filter(user=request.user)
-    context = {
-            'u_form':u_form,
-            'p_form':p_form,
-            'user': request.user,
-            'userp':userp
-             }
-        # redirect to a new URL:
-    return render(request, 'person/updateprofile.html', context)
+
 def userprofile(request):
     userp=UserProfile.objects.filter(user=request.user)
     query=request.user
