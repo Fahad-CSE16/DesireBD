@@ -143,21 +143,21 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-MAILER_EMAIL_BACKEND = EMAIL_BACKEND
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_PASSWORD = 'lonelyfahad'
-EMAIL_HOST_USER = 'hmdfahad49@gmail.com'
-EMAIL_PORT = 465
-EMAIL_USE_SSL = True
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# MAILER_EMAIL_BACKEND = EMAIL_BACKEND
 # EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = 'hmdfahad49@gmail.com'
 # EMAIL_HOST_PASSWORD = 'lonelyfahad'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# DEFAULT_FROM_EMAIL = 'OTF Team <hmdfahad49@gmail.com>'
+# EMAIL_HOST_USER = 'hmdfahad49@gmail.com'
+# EMAIL_PORT = 465
+# EMAIL_USE_SSL = True
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'hmdfahad49@gmail.com'
+EMAIL_HOST_PASSWORD = 'lonelyfahad'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'OTF Team <hmdfahad49@gmail.com>'
 
 
 STATIC_URL = '/static/'
