@@ -172,14 +172,22 @@ def updateprofile(request):
     try:
         instance = UserProfile.objects.get(user=request.user)
     except UserProfile.DoesNotExist:
-        instance = None 
+        instance = None
+    username = request.user.username
+    userp = User.objects.get(username=username)
     if request.method == 'POST':
         
         # create a form instance and populate it with data from the request:
         u_form= UserUpdateForm(request.POST , instance=request.user)
         p_form = UserProfileForm(request.POST ,request.FILES, instance=instance) 
         if u_form.is_valid() and p_form.is_valid():
-            u_form.save()
+            email =u_form.cleaned_data.get('email')
+            
+            if User.objects.filter(email=email).exists() and userp.email != email:
+                messages.warning(request,'Your Provided email is already in Use in another profile.')
+                return redirect('updateprofile')
+            else:
+                u_form.save()
             if UserProfile.objects.filter(user=request.user):
                 obj=UserProfile.objects.get(user=request.user)
                 obj.user= request.user

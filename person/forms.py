@@ -23,6 +23,16 @@ class UserUpdateForm(ModelForm):
         model = User
         fields = ['username', 'email', 'first_name', 'last_name']
 
+    # def clean_email(self):
+    #     email = self.cleaned_data.get('email')
+    #     username=self.cleaned_data.get('username')
+    #     userp=User.objects.get(username=username)
+    #     if User.objects.filter(email=email).exists() and userp.email != email :
+    #         raise forms.ValidationError(
+    #             "This email address is already in use.")
+    #     else:
+    #         return email
+
 class SubjectForm(ModelForm):
     class Meta:
         model = Subject
