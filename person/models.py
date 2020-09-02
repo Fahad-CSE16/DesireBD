@@ -1,10 +1,9 @@
 from django.db import models
 from django.db.models.signals import post_save
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,AbstractUser
 from PIL import Image
 from multiselectfield import MultiSelectField
 # from main.models import Store
-
 class UserProfile(models.Model):
     GENRE_CHOICES = (
         ('Male', 'MALE'),

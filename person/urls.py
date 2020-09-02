@@ -6,16 +6,16 @@ from .views import homeView, ResetPassword,ResetPasswordComplete,ResetPasswordCo
 
 urlpatterns = [
     path('', homeView.as_view(), name='home'),
-    path('signup/', views.handleSignup, name='handleSignup'),
-    path('login/', views.handleLogin, name='handleLogin'),
-    path('logout/', views.handleLogout, name='handleLogout'),
+    path('signup/', views.handleSignup, name='signup'),
+    path('activate/<uidb64>/<token>/', views.activate, name='activate'),
+    path('login/', views.handleLogin, name='login'),
+    path('logout/', views.handleLogout, name='logout'),
+
     path('changepass/', views.changepass, name='changepass'),
     path('reset/password/',ResetPassword.as_view(), name='password_reset'),
     path('reset/password/done/', ResetPasswordDone.as_view(), name='password_reset_done'),
-    path('reset/<uidb64>/<token>/',
-         ResetPasswordConfirm.as_view(), name='password_reset_confirm'),
-    path('reset/done/', ResetPasswordComplete.as_view(),
-         name='password_reset_complete'),
+    path('reset/<uidb64>/<token>/',ResetPasswordConfirm.as_view(), name='password_reset_confirm'),
+    path('reset/done/', ResetPasswordComplete.as_view(), name='password_reset_complete'),
 
 
     path('userprofile/', views.userprofile, name='userprofile'),
