@@ -13,7 +13,25 @@ class TuitionPostForm(ModelForm):
         widgets = {
             'subject': forms.CheckboxSelectMultiple(attrs={'multiple': True}),
             'class_in': forms.CheckboxSelectMultiple(attrs={'multiple': True}),
-
+            'salary': forms.TextInput(attrs={'placeholder':' ENter the account of money you can give'}),
+            'days': forms.TextInput(attrs={'placeholder':' Enter Days per week '}),
+            'time_available': forms.TextInput(attrs={'placeholder':' Say the time in which your student are free '}),
+            'content': forms.Textarea(attrs={'placeholder':' Describe your Wants'}),
+        }
+        labels = {
+            'days': 'DAYs\Week',
+            'class_in':'Class',
+            'style':'Tuition Style',
+            'approach':'Tuition Approach',
+            'place':'Tuition Place',
+            'medium':'Students Medium',
+            'content':'Your Words',
+        }
+        help_texts = {
+            'days': 'How much day per week a teacher have to teach your student?',
+            'subject': 'Maximum 3 subjects you can choose!',
+            'medium': 'Maximum 3 mediums you can choose!',
+            'class_in': 'Maximum 3 class you can choose!',
         }
 class TuitionPostUpdateForm(ModelForm):
     class Meta:
@@ -21,10 +39,29 @@ class TuitionPostUpdateForm(ModelForm):
         exclude = ['author', 'sno', 'district','views', 'likes','timeStamp']
         # fields = ['title', 'content', 'category', 'time_available', 'image']
         widgets = {
+            'preferedPlace': forms.CheckboxSelectMultiple(attrs={'multiple': True}),
             'subject': forms.CheckboxSelectMultiple(attrs={'multiple': True}),
             'class_in': forms.CheckboxSelectMultiple(attrs={'multiple': True}),
-            'preferedPlace': forms.CheckboxSelectMultiple(attrs={'multiple': True}),
-
+            'salary': forms.TextInput(attrs={'placeholder': ' ENter the account of money you can give'}),                'days': forms.TextInput(attrs={'placeholder': ' Enter Days per week '}),
+            'time_available': forms.TextInput(attrs={'placeholder': ' Say the time in which your student are free '}),
+            'content': forms.Textarea(attrs={'placeholder': ' Describe your Wants'}),
+            }
+        labels = {
+                'days': 'DAYs\Week',
+                'class_in': 'Class',
+                'style': 'Tuition Style',
+                'approach': 'Tuition Approach',
+                'place': 'Tuition Place',
+                'medium': 'Students Medium',
+                'content': 'Your Words',
+                'preferedPlace': 'Subplace of That District',
+        }
+        help_texts = {
+                'days': 'How much day per week a teacher have to teach your student?',
+                'subject': 'Maximum 3 subjects you can choose!',
+                'medium': 'Maximum 3 mediums you can choose!',
+                'class_in': 'Maximum 3 class you can choose!',
+                'preferedPlace': 'Choose your nearest Area',
         }
 
     def __init__(self, *args, **kwargs):

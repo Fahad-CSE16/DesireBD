@@ -10,8 +10,13 @@ class PostModelForm(forms.ModelForm):
         exclude=['user','timestamp','views','likes']
         widgets = {
             
-            'no_of_img': forms.TextInput(attrs={ 'lebel':'Say Something','placeholder':'Enter The number of image you want to add(minimum 1)'}),
-            'text': forms.Textarea(attrs={ 'lebel':'Say Something','placeholder':'Say something that You want to say about your assets.'})
+            'no_of_img': forms.TextInput(attrs={ 'placeholder':'Enter The number of image you want to add(minimum 1)'}),
+            'rent': forms.TextInput(attrs={ 'placeholder':'Enter Rent per month'}),
+            'text': forms.Textarea(attrs={ 'placeholder':'Say something About your Property!'})
+        }
+        labels = {
+            'no_of_img':' Number of Images',
+            'text':' Your Words'
         }
 
 class FileModelForm(forms.ModelForm):
