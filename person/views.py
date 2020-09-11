@@ -276,8 +276,8 @@ def contact(request):
         # create a form instance and populate it with data from the request:
         form= ContactForm(request.POST) 
         if form.is_valid():
-            messages.success(request, 'successfully Sent.')
             form.save()
+            messages.success(request, 'successfully Sent.')
             return redirect('userprofile')
     else:
         form = ContactForm() 
@@ -296,22 +296,14 @@ def updatessc(request):
     except SSC.DoesNotExist:
         instance = None
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = SSCForm(request.POST, instance=instance)
-        if form.is_valid() :
-            if SSC.objects.filter(user=request.user):
-                obj = SSC.objects.get(user=request.user)
-                obj.user = request.user
-                obj.group = form.cleaned_data['group']
-                obj.institute = form.cleaned_data['institute']
-                obj.gpa = form.cleaned_data['gpa']
-                obj.board = form.cleaned_data['board']
-                obj.passing_year = form.cleaned_data['passing_year']
-                obj.save()
-            else:
-                profile = form.save(commit=False)
-                profile.user = request.user
-                profile.save()
+        if instance:
+            form = SSCForm(request.POST, instance=instance)
+        else:
+            form = SSCForm(request.POST)
+        if form.is_valid():
+            profile_obj = form.save(commit=False)
+            profile_obj.user = request.user
+            profile_obj.save()
             messages.success(request, 'Successfully updated.')
             return redirect('userprofile')
     else:
@@ -330,22 +322,14 @@ def updatehsc(request):
     except HSC.DoesNotExist:
         instance = None
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = HSCForm(request.POST, instance=instance)
+        if instance:
+            form = HSCForm(request.POST, instance=instance)
+        else:
+            form = HSCForm(request.POST)
         if form.is_valid():
-            if HSC.objects.filter(user=request.user):
-                obj = HSC.objects.get(user=request.user)
-                obj.user = request.user
-                obj.group = form.cleaned_data['group']
-                obj.institute = form.cleaned_data['institute']
-                obj.gpa = form.cleaned_data['gpa']
-                obj.board = form.cleaned_data['board']
-                obj.passing_year = form.cleaned_data['passing_year']
-                obj.save()
-            else:
-                profile = form.save(commit=False)
-                profile.user = request.user
-                profile.save()
+            profile_obj = form.save(commit=False)
+            profile_obj.user = request.user
+            profile_obj.save()
             messages.success(request, 'Successfully updated.')
             return redirect('userprofile')
     else:
@@ -354,7 +338,6 @@ def updatehsc(request):
     context = {
         'form': form,
     }
-    # redirect to a new URL:
     return render(request, 'person/updatehsc.html', context)
 
 
@@ -364,22 +347,14 @@ def afterhsc(request):
     except AfterHsc.DoesNotExist:
         instance = None
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = AfterHscForm(request.POST, instance=instance)
+        if instance:
+            form = AfterHscForm(request.POST, instance=instance)
+        else:
+            form = AfterHscForm(request.POST)
         if form.is_valid():
-            if AfterHsc.objects.filter(user=request.user):
-                obj = AfterHsc.objects.get(user=request.user)
-                obj.user = request.user
-                obj.degree = form.cleaned_data['degree']
-                obj.institute = form.cleaned_data['institute']
-                obj.cgpa = form.cleaned_data['cgpa']
-                obj.Etype = form.cleaned_data['Etype']
-                obj.passing_year = form.cleaned_data['passing_year']
-                obj.save()
-            else:
-                profile = form.save(commit=False)
-                profile.user = request.user
-                profile.save()
+            profile_obj = form.save(commit=False)
+            profile_obj.user = request.user
+            profile_obj.save()
             messages.success(request, 'Successfully updated.')
             return redirect('userprofile')
     else:
@@ -388,7 +363,6 @@ def afterhsc(request):
     context = {
         'form': form,
     }
-    # redirect to a new URL:
     return render(request, 'person/updateafterhsc.html', context)
 
 
@@ -398,19 +372,14 @@ def postgraduate(request):
     except HigherStudies.DoesNotExist:
         instance = None
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = HigherStudiesForm(request.POST, instance=instance)
+        if instance:
+            form = HigherStudiesForm(request.POST, instance=instance)
+        else:
+            form = HigherStudiesForm(request.POST)
         if form.is_valid():
-            if HigherStudies.objects.filter(user=request.user):
-                obj = HigherStudies.objects.get(user=request.user)
-                obj.user = request.user
-                obj.masters = form.cleaned_data['masters']
-                obj.phd = form.cleaned_data['phd']
-                obj.save()
-            else:
-                profile = form.save(commit=False)
-                profile.user = request.user
-                profile.save()
+            profile_obj = form.save(commit=False)
+            profile_obj.user = request.user
+            profile_obj.save()
             messages.success(request, 'Successfully updated.')
             return redirect('userprofile')
     else:
@@ -419,58 +388,40 @@ def postgraduate(request):
     context = {
         'form': form,
     }
-    # redirect to a new URL:
     return render(request, 'person/updatepostgraduate.html', context)
 
 
 def tuitionprofile(request):
     try:
         instance = TuitionClass.objects.get(user=request.user)
+        obj = TuitionClass.objects.get(user=request.user)
     except TuitionClass.DoesNotExist:
         instance = None
+
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = TuitionClassForm(request.POST, instance=instance)
+        if instance:
+            form = TuitionClassForm(request.POST, instance=instance)
+        else:
+            form = TuitionClassForm(request.POST)
         if form.is_valid():
-            if TuitionClass.objects.filter(user=request.user):
-                obj = TuitionClass.objects.get(user=request.user)
-                obj.user = request.user
-                obj.style = form.cleaned_data['style']
-                obj.place = form.cleaned_data['place']
-                obj.approach = form.cleaned_data['approach']
-                obj.medium = form.cleaned_data['medium']
-                if obj.district == form.cleaned_data['district']:
-                    pass
-                else:
-                    obj.preferedPlace.set([])
-                obj.district = form.cleaned_data['district']
-                obj.high_education = form.cleaned_data['high_education']
-                obj.salary = form.cleaned_data['salary']
-                obj.status = form.cleaned_data['status']
-                obj.days = form.cleaned_data['days']
-                
-                obj.save()
-                level = form.cleaned_data['level']
-                for l in level:
-                    obj.level.add(l)
-                    obj.save()
-                subject = form.cleaned_data['subject']
-                for f in subject:
-                    obj.subject.add(f)
-                    obj.save()
-                
-                # preferedPlace = form.cleaned_data['preferedPlace']
-                # for p in preferedPlace:
-                #     obj.preferedPlace.add(p)
-                #     obj.save()
+            profile_obj = form.save(commit=False)
+            profile_obj.user = request.user
+            if obj.district == form.cleaned_data['district']:
+                pass
             else:
-                profile = form.save(commit=False)
-                profile.user = request.user
-                profile.save()
-                # preferedPlace = form.cleaned_data['preferedPlace']
-                # for p in preferedPlace:
-                #     useprofile.preferedPlace.add(p)
-                #     useprofile.save()
+                profile_obj.preferedPlace.set([])
+                profile_obj.save()
+            level = form.cleaned_data['level']
+            profile_obj.level.set([])
+            for l in level:
+                profile_obj.level.add(l)
+                profile_obj.save()
+            subject = form.cleaned_data['subject']
+            profile_obj.subject.set([])
+            for f in subject:
+                profile_obj.subject.add(f)
+                profile_obj.save()
+            profile_obj.save()
             messages.success(request, 'Successfully updated.')
             messages.warning(request, 'Now Add your Prefered Tuition Place of That District.')
             return redirect('tuitionprofileupdate')
@@ -480,7 +431,6 @@ def tuitionprofile(request):
     context = {
         'form': form,
     }
-    # redirect to a new URL:
     return render(request, 'person/tuitionprofile.html', context)
 
 
@@ -490,38 +440,27 @@ def tuitionprofileupdate(request):
     except TuitionClass.DoesNotExist:
         instance = None
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = TuitionClassUpdateForm(request.POST, instance=instance)
+        if instance:
+            form = TuitionClassUpdateForm(request.POST, instance=instance)
+        else:
+            form = TuitionClassUpdateForm(request.POST) 
         if form.is_valid():
-            if TuitionClass.objects.filter(user=request.user):
-                obj = TuitionClass.objects.get(user=request.user)
-                obj.user = request.user
-                obj.style = form.cleaned_data['style']
-                obj.place = form.cleaned_data['place']
-                obj.approach = form.cleaned_data['approach']
-                obj.medium = form.cleaned_data['medium']
-                obj.high_education = form.cleaned_data['high_education']
-                obj.salary = form.cleaned_data['salary']
-                obj.status = form.cleaned_data['status']
-                obj.days = form.cleaned_data['days']
-
-                obj.save()
-                level = form.cleaned_data['level']
-                for l in level:
-                    obj.level.add(l)
-                    obj.save()
-                subject = form.cleaned_data['subject']
-                for f in subject:
-                    obj.subject.add(f)
-                    obj.save()
-                preferedPlace = form.cleaned_data['preferedPlace']
-                for p in preferedPlace:
-                    obj.preferedPlace.add(p)
-                    obj.save()
-            else:
-                profile = form.save(commit=False)
-                profile.user = request.user
-                profile.save()
+            profile_obj = form.save(commit=False)
+            profile_obj.user = request.user
+            level = form.cleaned_data['level']
+            for l in level:
+                profile_obj.level.add(l)
+                profile_obj.save()
+            subject = form.cleaned_data['subject']
+            for f in subject:
+                profile_obj.subject.add(f)
+                profile_obj.save()
+            preferedPlace = form.cleaned_data['preferedPlace']
+            for p in preferedPlace:
+                profile_obj.preferedPlace.add(p)
+                profile_obj.save()
+            profile_obj.save()
+            profile_obj.save()
             messages.success(request, 'Successfully updated.')
             return redirect('userprofile')
     else:
@@ -530,7 +469,6 @@ def tuitionprofileupdate(request):
     context = {
         'form': form,
     }
-    # redirect to a new URL:
     return render(request, 'person/tuitionprofileupdate.html', context)
 def otherprofile(request, slug):
     user = User.objects.get(username=slug)
