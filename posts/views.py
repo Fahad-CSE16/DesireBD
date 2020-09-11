@@ -19,7 +19,8 @@ from person.models import UserProfile, Contact
 from posts.templatetags import extras
 from notifications.signals import notify
 # Create your views here.
-
+from django.views import generic, View
+from django.urls import reverse_lazy
 def filterpost(request):
     if request.method == "POST":
         district = request.POST['district_i']
@@ -146,67 +147,20 @@ def createpost(request):
     }
     return render(request, 'posts/createpost.html', context)
 
-
-def updatepost(request, sno):
-    try:
-        instance = TuitionPost.objects.get(sno=sno)
-    except TuitionPost.DoesNotExist:
-        instance = None
-    if request.method == 'POST':
-        form = TuitionPostUpdateForm(request.POST, instance=instance)
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.author = request.user
-            obj.save()
-            preferedPlace = form.cleaned_data['preferedPlace']
-            for f in preferedPlace:
-                obj.preferedPlace.add(f)
-                obj.save()
-            messages.success(request, 'Successfully Updated with your Places')
-            return redirect(f"/posts/{obj.sno}")
-    else:
-        form = TuitionPostUpdateForm(instance=instance)
-    context = {
-        'form': form,
-        'instance': instance
-    }
-    return render(request, 'posts/updatepost.html', context)
-
-def editpost(request, sno):
-    # form = TuitionPostForm()
-    # post = TuitionPost.objects.get(sno=sno)
-    try:
-        instance = TuitionPost.objects.get(sno=sno)
-    except TuitionPost.DoesNotExist:
-        instance = None
-    if request.method == 'POST':
-        form = TuitionPostForm(request.POST, instance=instance)
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.author = request.user
-            obj.preferedPlace.set([])
-            obj.save()
-            subject = form.cleaned_data['subject']
-            for f in subject:
-                obj.subject.add(f)
-                obj.save()
-            class_in = form.cleaned_data['class_in']
-            for f in class_in:
-                obj.class_in.add(f)
-                obj.save()
-            messages.success(request, 'Successfully Edited Your Post')
-            messages.warning(request, 'Now select some places of your selected district')
-            return redirect(f"/posts/updatepost/{obj.sno}")
-    else:
-        form = TuitionPostForm(instance=instance)
-
-    context = {
-        'form': form,
-        'instance': instance
-    }
-    return render(request, 'posts/editpost.html', context)
-
-
+class EditPostView(generic.UpdateView):
+    model = TuitionPost
+    form_class = TuitionPostForm
+    template_name = 'posts/editpost.html'
+    def get_success_url(self):
+        id = self.kwargs['pk']
+        return reverse_lazy('posts:update', kwargs={'pk': id})
+class UpdatePostView(generic.UpdateView):
+    model = TuitionPost
+    form_class = TuitionPostUpdateForm
+    template_name = 'posts/updatepost.html'
+    def get_success_url(self):
+        id = self.kwargs['pk']
+        return reverse_lazy('posts:blogPost', kwargs={'sno': id})
 
 from django.db.models import Q
 

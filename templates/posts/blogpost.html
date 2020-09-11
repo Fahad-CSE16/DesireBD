@@ -65,7 +65,7 @@
                 <a href="#"><span>- {{view}} seens</span></a>
                 {% if user == post.author %}
                 <div>
-                    <a href="/posts/editpost/{{post.sno}}/">Edit Post</a>
+                    <a href="{% url 'posts:editpost' pk=post.sno %} ">Edit Post</a>
                     <div id="btnOne"><a href="#" onClick="javascript:addBtn();">Delete</a> </div>
                 </div>
                 <div id="btnHolder"></div>
