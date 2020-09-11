@@ -80,44 +80,16 @@ def updateprofile(request):
     username = request.user.username
     userp = User.objects.get(username=username)
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
+        if instance:
+            p_form = UserProfileForm(request.POST, request.FILES, instance=instance)
+        else:
+            p_form = UserProfileForm(request.POST, request.FILES)
         u_form= UserUpdateForm(request.POST , instance=request.user)
-        p_form = UserProfileForm(request.POST ,request.FILES, instance=instance) 
         if u_form.is_valid() and p_form.is_valid():
+            profile_obj = p_form.save(commit=False)
+            profile_obj.user = request.user
+            profile_obj.save()
             email =u_form.cleaned_data.get('email')
-            if UserProfile.objects.filter(user=request.user):
-                obj=UserProfile.objects.get(user=request.user)
-                obj.user= request.user
-                obj.birth_date= p_form.cleaned_data['birth_date']
-                obj.genre= p_form.cleaned_data['genre']
-                obj.address= p_form.cleaned_data['address']
-                obj.nationality = p_form.cleaned_data['nationality']
-                obj.marital_status= p_form.cleaned_data['marital_status']
-                obj.phone= p_form.cleaned_data['phone']
-                obj.profession = p_form.cleaned_data['profession']
-                obj.blood_group= p_form.cleaned_data['blood_group']
-                obj.religion= p_form.cleaned_data['religion']
-                obj.image= p_form.cleaned_data['image']
-                obj.biodata = p_form.cleaned_data['biodata']
-                obj.save()
-                
-            else:
-                user= request.user
-                birth_date= p_form.cleaned_data['birth_date']
-                genre= p_form.cleaned_data['genre']
-                address= p_form.cleaned_data['address']
-                nationality= p_form.cleaned_data['nationality']
-                marital_status= p_form.cleaned_data['marital_status']
-                phone= p_form.cleaned_data['phone']
-                profession = p_form.cleaned_data['profession']
-                religion = p_form.cleaned_data['religion']
-                blood_group = p_form.cleaned_data['blood_group']
-                image= p_form.cleaned_data['image']
-                biodata = p_form.cleaned_data['biodata']
-                print("fahad")
-                useprofile = UserProfile(user=user, birth_date=birth_date, biodata=biodata, genre=genre, address=address, nationality=nationality,
-                                         marital_status=marital_status, phone=phone, profession=profession, blood_group=blood_group, religion=religion, image=image)
-                useprofile.save()
             if User.objects.filter(email=email).exists() and userp.email != email:
                 messages.warning(
                     request, 'Your Provided email is already in Use in another profile.')
