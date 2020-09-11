@@ -201,13 +201,5 @@ class TuitionClass(models.Model):
     days=models.CharField(max_length=100)
     high_education = models.CharField(max_length=100)
     status = models.CharField(max_length=100, choices=STATUS)
-    
 
-# class Person(models.Model):
-#     name=models.CharField(max_length=100)
-#     subject=models.ManyToManyField(Subject, related_name='subject')
-#     def __str__(self):
-#         return self.name
-        
-    
     
