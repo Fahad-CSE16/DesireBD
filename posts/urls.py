@@ -7,7 +7,8 @@ app_name='posts'
 urlpatterns = [
     
     path('', postsView.as_view(), name='posts'),
-    path('createpost/', views.createpost, name='createpost'),
+    # path('createpost/', views.createpost, name='createpost'),
+    path('createpost/', CreatePostView.as_view(), name='createpost'),
     path('updatepost/<int:pk>/', UpdatePostView.as_view(), name='update'),
     path('editpost/<int:pk>/',EditPostView.as_view(), name='editpost'),
     # path('viewsubjects/', views.viewsubjects, name='viewsubjects'),

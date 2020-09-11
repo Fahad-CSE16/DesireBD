@@ -170,7 +170,7 @@ color: #f1f1f1;
                 <br>
                 <b>Salary:</b>{{post.salary}}
                 <br>
-                    <p class="card-text mb-auto"> <a href="/posts/{{post.sno}}/"
+                    <p class="card-text mb-auto"> <a href="{% url 'posts:blogPost' sno=post.sno %}"
                             class="stretched-link">...Details</a></p>
                     <br>
                 

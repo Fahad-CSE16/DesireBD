@@ -106,47 +106,32 @@ def receiverchoose(j, k):
                 break
     if count >= 3:
         return True
-
-def createpost(request):
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = TuitionPostForm(request.POST)
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.author = request.user
-            obj.save()
-            subject = form.cleaned_data['subject']
-            for f in subject:
-                obj.subject.add(f)
-                obj.save()
-            class_in = form.cleaned_data['class_in']
-            for f in class_in:
-                obj.class_in.add(f)
-                obj.save()
-            messages.success(request, 'Successfully Created Your Post.')
-            messages.warning(request, 'Now Add your Prefered Tuition Place of your selected District.')
-#ppushing notifiaction while creating post
-            user = request.user
-            us = User.objects.all()
-            for i in us:
-                try:
-                    j = i.tuitionclass
-                except:
-                    j = None
-                if j:
-                    if receiverchoose(j, obj):
-                        receiver = i
-                        if receiver != user:
-                            notify.send(user, recipient=receiver, level='success',  verb="is searching for a teacher for "+str(obj.medium)+" for " + str(
-                                obj.class_in.all().first())+" for subject " + str(obj.subject.all().first()) + f''' <a class =" btn btn-primary btn-sm " href="/posts/{obj.sno}">go</a> ''')
-            return redirect(f"/posts/updatepost/{obj.sno}")
-    else:
-        form = TuitionPostForm()
-    context = {
-        'form': form,
-    }
-    return render(request, 'posts/createpost.html', context)
-
+class CreatePostView(generic.CreateView):
+    model = TuitionPost
+    form_class = TuitionPostForm
+    template_name = 'posts/createpost.html'
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        messages.success(self.request, 'Successfully Created Your Post.')
+        messages.warning(self.request, 'Now Add your Prefered Tuition Place of your selected District.')
+        return super().form_valid(form)
+    def get_success_url(self):
+        id = self.object.sno
+        user = self.request.user
+        us = User.objects.all()
+        for i in us:
+            try:
+                j = i.tuitionclass
+            except:
+                j = None
+            if j:
+                if receiverchoose(j, self.object):
+                    receiver = i
+                    if receiver != user:
+                        notify.send(user, recipient=receiver, level='success',  verb="is searching for a teacher for "+str(self.object.medium)+" for " + str(
+                            self.object.class_in.all().first())+" for subject " + str(self.object.subject.all().first()) + f''' <a class =" btn btn-primary btn-sm " href="/posts/post/{self.object.sno}">go</a> ''')
+        
+        return reverse_lazy('posts:update', kwargs={'pk': id})
 class EditPostView(generic.UpdateView):
     model = TuitionPost
     form_class = TuitionPostForm
@@ -290,27 +275,3 @@ def deletepost(request, sno):
         raise PermissionDenied
     messages.success(request, 'Successfully Deleted your Post.')
     return redirect('/posts/viewpost')
-
-    # if request.method == 'POST':
-    #     query = request.POST.get('search').lower()
-    #     try:
-    #         mypoststitle = TuitionPost.objects.filter(medium__icontains=query)
-    #         mypostscontent = TuitionPost.objects.filter(
-    #             content__icontains=query)
-    #         post = mypoststitle.union(mypostscontent)
-    #     except TuitionPost.DoesNotExist:
-    #         post = None
-    # try:
-    #         tolettitle = Post.objects.filter(text__icontains=query)
-    #         tolettitle1 = Post.objects.filter(village__icontains=query)
-    #         tolettitle2 = Post.objects.filter(upozila__icontains=query)
-    #         tolettitle3 = Post.objects.filter(division__icontains=query)
-    #         tolettitle4 = Post.objects.filter(area__icontains=query)
-    #         mytolet = Post.objects.filter(Zilla__icontains=query)
-    #         mytolet = mytolet.union(tolettitle)
-    #         mytolet = mytolet.union(tolettitle1)
-    #         mytolet = mytolet.union(tolettitle2)
-    #         mytolet = mytolet.union(tolettitle3)
-    #         mytolet = mytolet.union(tolettitle4)
-    #     except Post.DoesNotExist:
-    #         mytolet = None
