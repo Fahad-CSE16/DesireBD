@@ -309,14 +309,9 @@ def updatessc(request):
                 obj.passing_year = form.cleaned_data['passing_year']
                 obj.save()
             else:
-                user = request.user
-                group = form.cleaned_data['group']
-                institute = form.cleaned_data['institute']
-                gpa = form.cleaned_data['gpa']
-                board = form.cleaned_data['board']
-                passing_year = form.cleaned_data['passing_year']
-                useprofile = SSC(user=user, group=group, institute=institute, gpa=gpa, board=board, passing_year=passing_year)
-                useprofile.save()
+                profile = form.save(commit=False)
+                profile.user = request.user
+                profile.save()
             messages.success(request, 'Successfully updated.')
             return redirect('userprofile')
     else:
@@ -348,15 +343,9 @@ def updatehsc(request):
                 obj.passing_year = form.cleaned_data['passing_year']
                 obj.save()
             else:
-                user = request.user
-                group = form.cleaned_data['group']
-                institute = form.cleaned_data['institute']
-                gpa = form.cleaned_data['gpa']
-                board = form.cleaned_data['board']
-                passing_year = form.cleaned_data['passing_year']
-                useprofile = HSC(user=user, group=group, institute=institute,
-                                 gpa=gpa, board=board, passing_year=passing_year)
-                useprofile.save()
+                profile = form.save(commit=False)
+                profile.user = request.user
+                profile.save()
             messages.success(request, 'Successfully updated.')
             return redirect('userprofile')
     else:
@@ -388,14 +377,9 @@ def afterhsc(request):
                 obj.passing_year = form.cleaned_data['passing_year']
                 obj.save()
             else:
-                user = request.user
-                degree = form.cleaned_data['degree']
-                institute = form.cleaned_data['institute']
-                cgpa = form.cleaned_data['cgpa']
-                Etype = form.cleaned_data['Etype']
-                passing_year = form.cleaned_data['passing_year']
-                useprofile = AfterHsc(user=user, degree=degree, institute=institute,cgpa=cgpa, Etype=Etype, passing_year=passing_year)
-                useprofile.save()
+                profile = form.save(commit=False)
+                profile.user = request.user
+                profile.save()
             messages.success(request, 'Successfully updated.')
             return redirect('userprofile')
     else:
@@ -424,11 +408,9 @@ def postgraduate(request):
                 obj.phd = form.cleaned_data['phd']
                 obj.save()
             else:
-                user = request.user
-                masters = form.cleaned_data['masters']
-                phd = form.cleaned_data['phd']
-                useprofile = HigherStudies(user=user, masters=masters, phd=phd)
-                useprofile.save()
+                profile = form.save(commit=False)
+                profile.user = request.user
+                profile.save()
             messages.success(request, 'Successfully updated.')
             return redirect('userprofile')
     else:
@@ -482,27 +464,9 @@ def tuitionprofile(request):
                 #     obj.preferedPlace.add(p)
                 #     obj.save()
             else:
-                user = request.user
-                style = form.cleaned_data['style']
-                place = form.cleaned_data['place']
-                approach = form.cleaned_data['approach']
-                medium = form.cleaned_data['medium']
-                district = form.cleaned_data['district']
-                high_education = form.cleaned_data['high_education']
-                salary = form.cleaned_data['salary']
-                status = form.cleaned_data['status']
-                days = form.cleaned_data['days']
-                level = form.cleaned_data['level']
-                subject = form.cleaned_data['subject']
-                useprofile = TuitionClass(
-                    user=user, style=style, place=place, approach=approach, medium=medium, district=district, high_education=high_education, salary=salary, status=status, days=days)
-                useprofile.save()
-                for l in level:
-                    useprofile.level.add(l)
-                    useprofile.save()
-                for f in subject:
-                    useprofile.subject.add(f)
-                    useprofile.save()
+                profile = form.save(commit=False)
+                profile.user = request.user
+                profile.save()
                 # preferedPlace = form.cleaned_data['preferedPlace']
                 # for p in preferedPlace:
                 #     useprofile.preferedPlace.add(p)
@@ -555,31 +519,9 @@ def tuitionprofileupdate(request):
                     obj.preferedPlace.add(p)
                     obj.save()
             else:
-                user = request.user
-                style = form.cleaned_data['style']
-                place = form.cleaned_data['place']
-                approach = form.cleaned_data['approach']
-                medium = form.cleaned_data['medium']
-                district = form.cleaned_data['district']
-                high_education = form.cleaned_data['high_education']
-                salary = form.cleaned_data['salary']
-                status = form.cleaned_data['status']
-                days = form.cleaned_data['days']
-                level = form.cleaned_data['level']
-                subject = form.cleaned_data['subject']
-                useprofile = TuitionClass(
-                    user=user, style=style, place=place, approach=approach, medium=medium, district=district, high_education=high_education, salary=salary, status=status, days=days)
-                useprofile.save()
-                for l in level:
-                    useprofile.level.add(l)
-                    useprofile.save()
-                for f in subject:
-                    useprofile.subject.add(f)
-                    useprofile.save()
-                preferedPlace = form.cleaned_data['preferedPlace']
-                for p in preferedPlace:
-                    useprofile.preferedPlace.add(p)
-                    useprofile.save()
+                profile = form.save(commit=False)
+                profile.user = request.user
+                profile.save()
             messages.success(request, 'Successfully updated.')
             return redirect('userprofile')
     else:
