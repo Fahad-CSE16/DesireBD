@@ -5,10 +5,11 @@ from django.conf.urls.static import static
 from django.conf import settings
 from . import views
 from .views import homeView
+from person.views import home
 import notifications.urls
 
 urlpatterns = [
-    path('', homeView.as_view(), name='home'),
+    path('', home, name='home'),
     path('admin/', admin.site.urls),
     path('profile/', include('person.urls')),
     path('tolet/', include('tolet.urls')),

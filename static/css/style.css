@@ -41,7 +41,7 @@
 
     }
     ul li a:hover{
-      background-color: green;
+      background-color: rgb(223, 240, 223);
     }
     ul li ul li{
       display: none;
@@ -66,6 +66,10 @@
       left: 50%;
       transform: translate (-50%, -50%);
       color: white;
+      
+    }
+    .container b{
+      color:white;
     }
 
     .conatiner h1 {
@@ -85,6 +89,9 @@
       border-bottom: 1px solid #4caf50;
       color: white;
     }
+    .asteriskField{
+      display: none;
+    }
     .form-group {
       width: 100%;
       overflow: hidden;
@@ -94,6 +101,9 @@
       border-bottom: 1px solid #4caf50;
       color: white;
       background: none;
+    }
+    .form-group label{
+      width:100%;
     }
     .form-text text-muted {
       width: 100%;
@@ -160,9 +170,16 @@
     .alert{
       background:none;
       color: aqua;
+      width:auto;
+    }
+    
+    .ab{
+      background:blanchedalmond;
+      text-shadow: brown;
+      width:280px;
+
       
     }
-
     .textbox textarea,.emailinput,.textarea form-control,.asteriskField {
       width: 100%;
       border: none;
@@ -216,7 +233,11 @@
       cursor: pointer;
     }
 
-    .col-md-6 p {
+    .col-md-6 p,b {
+      background: none;
+      color: white;
+    }
+    .col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-md-10 {
       background: none;
       color: white;
     }

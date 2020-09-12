@@ -6,13 +6,30 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% if user.is_authenticated %}
-<div class="col-md-6 offset-md-3">
+<div class="col-md-18 ">
     
         {% for u in userp %}
         {% if forloop.last  %}
         <div class="media">
             <img class="rounded-circle account-img my-2 mx-3 mr-3" src="{{u.image.url}}" alt="...">
-            <div class="media-body">
+            <div class="media-body">            
+                <ul>
+                <li><a href="/profile/changepass/">ChangePass</a></li>
+                <li>
+                <a href="">
+                Edit
+                </a>
+                    <ul>
+                        <li><a href="/profile/updateprofile/">SSC</a></li>
+                        <li><a href="/profile/updatehsc/">HSC</a></li>
+                        <li><a href="/profile/afterhsc/">UnderGraduation</a></li>
+                        <li><a href="/profile/postgraduate/">PostGraduation</a></li>
+                        <li><a href="/profile/tuitionprofile/">Tuition Profile</a></li>                        
+                    </ul>
+                </li> 
+                </ul>
+                <br>
+                <br>
                 <h5 class="mt-0">UserName:{{user.username}}</h5>
                 Name: {{user.first_name}} {{user.last_name}}
                 <br>
@@ -25,21 +42,12 @@
         </div>
         {% endif %}
         {% endfor %}
-        <a href="/profile/updateprofile/"> Edit Profile</a>
-        <a href="/profile/updatessc/"> Edit SSC</a>
-        <a href="/profile/updatehsc/"> Edit HSC</a>
-        <a href="/profile/afterhsc/"> Edit Undergraduate</a>
-        <a href="/profile/postgraduate/"> Edit Postgraduate</a>
-        <br>
-        <a href="/profile/tuitionprofile/"> Edit Tuition Profile</a>
-        <a href="/profile/changepass/"> Change Password</a>
     </div>
 
-<div class="col-md-9 offset-md-3">
-<div class="container">
+
     
     {% for post in post %}
-    <div class="col-md-12 ">
+    <div class="col-md-8 offset-md-2  ">
         <div class="row bg-succes no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col  p-4 d-flex flex-column position-static">
                 <strong class="d-inline-block mb-2 ">
@@ -54,32 +62,6 @@
                 </strong>
                 <div class="preview">
                 For <b>{{post.medium}}</b>'s student
-                     {% comment %}  for subject:
-                <b>
-                    {% for sub in subject %}
-                    {{sub}}
-                    {% if not forloop.last %}
-                    and
-                    {% endif %}
-                    {% endfor %}
-                </b>
-                for <b>
-                    {% for cls in class_in %}
-                    {{cls}}
-                    {% if not forloop.last %}
-                    and
-                    {% endif %}
-                    {% endfor %}
-                </b>
-                in
-                
-                    {% for place in preferedPlace %}
-                    <b>
-                    {{place}}</b>
-                    {% if not forloop.last %}
-                    or
-                    {% endif %}
-                    {% endfor %}, of  {% endcomment %}
                    in {{post.district}} District
                 
                 <br>
@@ -97,7 +79,7 @@
 
 
     {% for item in mytolet %}
-    <div class="col-md-12 ">
+    <div class="col-md-14 ">
         <div class="row bg-succes no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col  p-4 d-flex flex-column position-static">
                 <strong class="d-inline-block mb-2 text-primary">
@@ -117,7 +99,30 @@
         </div>
     </div>
     {% endfor %}
-    </div>
+    
 
 {% endif %}
 {% endblock %}
+{% block css %}
+div.media-body {
+    height: auto;
+    width:100%;
+    color:white;
+    background: none;}
+    .col-md-18{
+        text-align:left;
+    }
+    .media-body ul li{
+        width:450px;
+        text-align:center;
+    }
+    .media-body ul li ul li{
+        width:-226px;
+        float:center;
+        text-align:right;
+    }
+    .col-md-8{
+            color:white;
+    }
+    
+{% endblock  %}

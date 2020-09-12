@@ -289,8 +289,9 @@ def tuitionprofileupdate(request):
         'form': form,
     }
     return render(request, 'person/tuitionprofileupdate.html', context)
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def otherprofile(request, slug):
     user = User.objects.get(username=slug)
     try:

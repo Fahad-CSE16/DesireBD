@@ -100,15 +100,12 @@
     </div>
       
   </nav>
-  <div class="alert alert-info alert-dismissible" role="alert">
-    <strong></strong> {% now "h:i A" as current_time %}
+  <div class="ab">
+   {% now "h:i A" as current_time %}
     {{ current_time|center:"150"  }}  {% now "D, F jS, Y" %}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
   </div>
   {% for message in messages  %}
-  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+  <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
     <strong></strong> {{ message }}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>

@@ -1,17 +1,256 @@
 {% extends 'basic.html' %}
 
 {% block title%} Home{% endblock %}
- {% block homeactive %} active{% endblock homeactive %}
+{% block homeactive %} active{% endblock homeactive %}
 {% block body %}
-<div class="containter">
- <div class="jumbotron">
-  <h1 class="display-4">Welcome to DesireBD!</h1>
-  <p class="lead">This is a simple  website where you can find your desired Tuition!</p>
-  <hr class="my-4">
-  <p>I think you will enjoy our website.</p>
-  {% if user.is_authenticated %}
-  <a class="btn btn-primary btn-lg" href="/profile/userprofile/" role="button">Go to Your profile</a>
-  {% endif %}
+<div class="sidenav">
+  <nav id="navbar-example3" class="navbar navbar-light ">
+    <a class="navbar-brand" href="#">Scroll</a>
+    <nav class="nav  flex-column">
+      <a class="nav-link deactive" href="#item-1">Teachers</a>
+      <nav class="nav nav-pills flex-column">
+        {% for t in teachers %}
+        <a class="nav-link ml-3 my-1" href="#item-1-{{forloop.counter}}">{{forloop.counter}}.
+          {{t.user.username}}(<small>{{t.district}}</small>)</a>
+        {% endfor %}
+      </nav>
+      <a class="nav-link" href="#item-2">Item 2</a>
+      <a class="nav-link" href="#item-3">Item 3</a>
+      <nav class="nav nav-pills flex-column">
+        <a class="nav-link ml-3 my-1" href="#item-3-1">Item 3-1</a>
+        <a class="nav-link ml-3 my-1" href="#item-3-2">Item 3-2</a>
+      </nav>
+    </nav>
+  </nav>
 </div>
+<div class="col-md-14 ">
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active ">
+      <div class="col-md-12 offset-md-3">
+        <div class="card" style="width: 40rem;">
+          <div class="card-body">
+            <h5>Users</h5>
+            <h6>See all the users</h6>
+            <p>Go and find out the user list and Teacher by Filtering With your Wish</p>
+            <a href="{% url 'userlist' %}" class="btn">Users</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="col-md-12 offset-md-3">
+        <div class="card" style="width: 40rem;">
+          <div class="card-body">
+            <h5>Subjects</h5>
+            <h6>See all the Subjects</h6>
+            <p>Go and find out the Subject list and Add your subject if not listed </p>
+            <a href="{% url 'addsubject' %}" class="btn">Subjects</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="carousel-item">
+      <div class="col-md-12 offset-md-3">
+
+        <div class="card" style="width: 40rem;">
+          <div class="card-body">
+            <h5>Tuition Post</h5>
+            <h6>They are searching for teachers.Who?Where? For Whom?</h6>
+            <p>Go and find out the tuition searching post and by Filtering find your desired tuition.</p>
+            <a href="{% url 'posts:viewpost' %}" class="btn">View Tuition Post</a>
+            <a href="{% url 'posts:createpost' %}" class="btn">Create </a>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="col-md-12 offset-md-3">
+
+        <div class="card" style="width: 40rem;">
+          <div class="card-body">
+            <h5>TO-Let Post</h5>
+            <h6>They are searchinf for to-let</h6>
+            <p>Go and find out the tolet post and book your desired property for a while.</p>
+            <a href="{% url 'viewtolet' %}" class="btn">View Tolet Post</a>
+            <a href="{% url 'posttolet' %}" class="btn">Create </a>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+  </div>
+
+
+</div>
+<div class="col-md-6 offset-md-3 my-3">
+  <div data-spy="scroll" data-target="#navbar-example3" data-offset="0">
+    <h4 id="item-1">Teachers</h4>
+    {% for t in teachers %}
+    <h5 id="item-1-{{forloop.counter}}">{{forloop.counter}}. {{t.user.username}}</h5>
+    <div class="col-md-14 offsetmd-3-">
+      <div class="media">
+        <img class="rounded-circle account-img my-2 mx-3 mr-3" src="{{t.user.userprofile.image.url}}" alt="...">
+        <div class="media-body">
+          {% if user.is_authenticated %}
+          <a href="/profile/otherprofile/{{t.user.username}}">
+            <h4> {{t.user.first_name}} {{t.user.last_name}}</h4>
+          </a>
+          <b>Email:</b> {{t.user.email}} <br>
+          {% else %}
+          <a href="#">
+            <h4> {{t.user.first_name}} {{t.user.last_name}}</h4>
+          </a>
+          <b>Email:</b> Please Login for Contact Details and User profile <br>
+          {% endif %}
+          <br>
+
+          <b>District:</b> {{t.district}} <br>
+          <b>Area(s): </b>{% for p in t.preferedPlace.all %}
+          {{p}}
+          {% if not forloop.last %} , {% endif %}
+          {% endfor %}
+          <br>
+          <b>Subjects: </b>{% for s in t.subject.all %}
+          {{s}}
+          {% if not forloop.last %} , {% endif %}
+          {% endfor %}
+          <br>
+          <b>Classes: </b>{% for c in t.level.all %}
+          {{c}}
+          {% if not forloop.last %} , {% endif %}
+          {% endfor %} <br>
+
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+
+    <h4 id="item-2">Item 2</h4>
+
+    <h4 id="item-3">Item 3</h4>
+
+    <h5 id="item-3-1">Item 3-1</h5>
+    <p>...</p>
+    <h5 id="item-3-2">Item 3-2</h5>
+    <p>...</p>
+  </div>
 </div>
 {% endblock body %}
+{% block css %}
+.sidebar {
+margin: 0;
+width: 180px;
+background-color: #f1f1f1;
+height: 95%;
+overflow: auto;
+overflow-y: scroll;
+display: block;
+color: black;
+padding: 16px;
+text-decoration: none;
+}
+
+/* The sidebar menu */
+.sidenav {
+height: 90%; /* Full-height: remove this if you want "auto" height */
+width:270px; /* Set the width of the sidebar */
+position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+z-index: 1; /* Stay on top */
+top:10; /* Stay at the top */
+left: 0;
+display: block;
+overflow: auto;
+margin: 0;
+overflow-y: scroll;
+background: none;
+overflow-x: scroll;
+
+}
+
+
+/* The navigation menu links */
+.sidenav a {
+padding: 6px 8px 6px 16px;
+text-decoration: none;
+font-size: 25px;
+color: #818181;
+display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+color: #e42b2b;
+}
+.col-md-14,.col-md-12,.card-body,.card{
+  background:none;
+color:white;
+}
+.col-md-6 h4{
+  margin-top: 100px;
+}
+.carousel-indicators .active {
+background-color: blue;
+}
+body .carousel-indicator li{
+background-color: blue;
+}
+body .carousel-indicators{
+bottom: -20px;
+}
+.carousel-indicators li{
+background-color:black;
+}
+body .carousel-control-prev-icon,
+.sr-only{
+background-color: blue;
+width: auto;
+position: absolute;
+left:5px;
+top:00px;
+padding-top: 20px;
+padding-left: 20px;
+padding-right: 20px;
+margin-left: 300px;
+margin-right: 300px;
+}
+body .carousel-control-next-icon,
+.sr-only{
+background-color: blue;
+width: auto;
+position: absolute;
+right:30px;
+padding-top: 20px;
+padding-left: 20px;
+padding-right: 20px;
+margin-left: 300px;
+margin-right: 300px;
+}
+.carousel-control-prev,
+.carousel-control-next{
+top: auto;
+bottom: auto;
+left:auto;
+
+padding-top: 0px;
+}
+
+{% endblock %}

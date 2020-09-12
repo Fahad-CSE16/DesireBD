@@ -3,54 +3,6 @@
 {% block title%} View Post{% endblock %}
 {% block homeactive %} active{% endblock homeactive %}
 
-{% block css %}
-.sidebar {
-margin: 0;
-width: 180px;
-background-color: #f1f1f1;
-height: 95%;
-overflow: auto;
-overflow-y: scroll;
-display: block;
-color: black;
-padding: 16px;
-text-decoration: none;
-}
-
-/* The sidebar menu */
-.sidenav {
-height: 90%; /* Full-height: remove this if you want "auto" height */
-width: 190px; /* Set the width of the sidebar */
-position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-z-index: 1; /* Stay on top */
-top:10; /* Stay at the top */
-left: 0;
-
-display: block;
-overflow: auto;
-margin: 0;
-overflow-y: scroll;
-background-color: #3132e6;
-overflow-x: scroll;
-padding-top: 200px;
-}
-
-
-/* The navigation menu links */
-.sidenav a {
-padding: 6px 8px 6px 16px;
-text-decoration: none;
-font-size: 25px;
-color: #818181;
-display: block;
-}
-
-/* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
-color: #f1f1f1;
-}
-
-{% endblock %}
 
 {% block body %}
 {% load crispy_forms_tags %}
@@ -72,7 +24,7 @@ color: #f1f1f1;
 </div>
 
 
-<div class="col-md-6 offset-md-3">
+<div class="col-md-7 offset-md-3">
   <form action="/posts/filterpost/" method="post">
     {% csrf_token %}
 
@@ -120,11 +72,11 @@ color: #f1f1f1;
 
 
 
-<div class="col-md-9 offset-md-3">
-<div class="container">
+
+
     
     {% for post in posts %}
-    <div class="col-md-12 ">
+    <div class="col-md-7 offset-md-3 ">
         <div class="row bg-succes no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col  p-4 d-flex flex-column position-static">
                 <strong class="d-inline-block mb-2 ">
@@ -139,56 +91,74 @@ color: #f1f1f1;
                 </strong>
                 <div class="preview">
                 For <b>{{post.medium}}</b>'s student
-                     {% comment %}  for subject:
-                <b>
-                    {% for sub in subject %}
-                    {{sub}}
-                    {% if not forloop.last %}
-                    and
-                    {% endif %}
-                    {% endfor %}
-                </b>
-                for <b>
-                    {% for cls in class_in %}
-                    {{cls}}
-                    {% if not forloop.last %}
-                    and
-                    {% endif %}
-                    {% endfor %}
-                </b>
-                in
-                
-                    {% for place in preferedPlace %}
-                    <b>
-                    {{place}}</b>
-                    {% if not forloop.last %}
-                    or
-                    {% endif %}
-                    {% endfor %}, of  {% endcomment %}
-                   in {{post.district}} District
-                
+                   in {{post.district}} District                
                 <br>
                 <b>Salary:</b>{{post.salary}}
                 <br>
                     <p class="card-text mb-auto"> <a href="{% url 'posts:blogPost' sno=post.sno %}"
                             class="stretched-link">...Details</a></p>
-                    <br>
-                
+                    <br>                
                 </div>
             </div>
         </div>
     </div>
     {% endfor %}
-</div>
-</div>
+
+
 {% else %}
 <div class="mt-3">
     <h3>Please Login to see posts </h3>
 </div>
 {% endif %}
 {% endblock %}
-<!-- <div class="col-auto d-none d-lg-block">
-                    <img src="/media/{{item.image}}" class="bd-placeholder-img" width="200" height="250"
-                        aria-label="Placeholder:thumbnail">
-                    </img>
-                </div> -->
+{% block css %}
+  .col-md-7{
+    color:white;
+  }
+.sidebar {
+margin: 0;
+width: 180px;
+background-color: #f1f1f1;
+height: 95%;
+overflow: auto;
+overflow-y: scroll;
+display: block;
+color: black;
+padding: 16px;
+text-decoration: none;
+}
+
+/* The sidebar menu */
+.sidenav {
+height: 90%; /* Full-height: remove this if you want "auto" height */
+width: 190px; /* Set the width of the sidebar */
+position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+z-index: 1; /* Stay on top */
+top:10; /* Stay at the top */
+left: 0;
+
+display: block;
+overflow: auto;
+margin: 0;
+overflow-y: scroll;
+background-color: #3132e6;
+overflow-x: scroll;
+padding-top: 200px;
+}
+
+
+/* The navigation menu links */
+.sidenav a {
+padding: 6px 8px 6px 16px;
+text-decoration: none;
+font-size: 25px;
+color: #818181;
+display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+color: #f1f1f1;
+}
+
+{% endblock %}

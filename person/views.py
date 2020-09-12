@@ -161,7 +161,14 @@ def markasread(request):
     qs.mark_all_as_read()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-
+def home(request):
+    teachers = TuitionClass.objects.all().order_by('district__name')
+    template = "person/home.html"
+    context = {
+        'teachers': teachers,
+        
+    }
+    return render(request, template, context)
 class homeView(View):
     template_name= "person/home.html"
     def get(self, request, *args, **kwargs):

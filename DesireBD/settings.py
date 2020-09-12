@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'person',
     'tolet',
     'posts',
+    'extra_views',
     'crispy_forms',
     'django.contrib.humanize',
     'multiselectfield',
