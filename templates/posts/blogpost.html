@@ -5,7 +5,7 @@
 {% block body %}
 <div class="container">
     <div class="row mt-1">
-        <div class="col-md-8 blog-main">
+        <div class="col-md-12 blog-main">
             <div class="blog-post">
                 <div>
                     <a href="/profile/otherprofile/{{post.author.username}}">
@@ -109,7 +109,7 @@
     {% for comment in comments %}
     <div class="row my-3">
         <div class="col-md-1">
-            <img class="rounded mx-auto my-3 d-block w-50 border border-dark" src="{{comment.image.url}}" alt="">
+            <img class="rounded     border border-dark" src="{{comment.image.url}}" alt="">
         </div>
         <div class="col md 11">
              <a href="/profile/otherprofile/{{comment.user.username}}">
@@ -179,7 +179,7 @@
                 {% for reply in replyDict|get_val:comment.sno %}
                 <div class="row my-3">
                     <div class="col-md-1 ">
-                        <img class="rounded mx-auto my-3 d-block w-50 border border-dark" src="{{reply.image.url}}"
+                        <img class="rounded border border-dark" src="{{reply.image.url}}"
                             alt="user">
                     </div>
                     <div class="col-md-9 ">
@@ -234,3 +234,24 @@
 // <input type="button"  value="Sure" />
 </script>
 {% endblock js %}
+{% block css %}
+.blog-post, .col-md-11, div{
+    text-align:left;
+}
+.col-md-1 img{
+    height:30px;
+    width:30px;
+}
+.replies.col-md-1 img{
+    height:20px;
+    width:40px;
+}
+.card{
+    background:none;
+    height:100%;
+    width:100%;
+}
+.btn{
+    width:auto;
+}
+{% endblock  %}

@@ -3,6 +3,7 @@
 {% block title%} Create Post{% endblock %}
  {% block homeactive %} active{% endblock homeactive %}
 {% block body %}
+{% load static %}
     {% load crispy_forms_tags %}
 {% if user.is_authenticated %}
 <div class="col-md-6 offset-md-3">
@@ -22,3 +23,12 @@
 <h2>Please Log in to Create a Post</h2>
 {% endif %}
 {% endblock body %}
+{% block css %}
+textarea.form-control {
+    height: auto;
+    width:100%;
+    color:white;
+    background: none;
+    }
+
+{% endblock  %}

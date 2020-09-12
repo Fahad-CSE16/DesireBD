@@ -51,6 +51,9 @@
       display: block !important;
   
     }
+    ul li:active ul li{
+        display: block !important;
+    }
 
 
 
@@ -106,7 +109,7 @@
       text-align: center;
     }
 
-    .textbox label {
+    .textbox label,.textbox input {
       border: none;
       outline: none;
       background: none;
@@ -117,28 +120,7 @@
       font-size: 18px;
       overflow: hidden;
     }
-
-    .textbox input {
-      width: 100%;
-      border: none;
-      outline: none;
-      background: none;
-      color: white;
-      float: left;
-      margin: 0 10px;
-      font-size: 18px;
-    }
     input {
-      width: 100%;
-      border: none;
-      outline: none;
-      background: none;
-      color: white;
-      float: left;
-      margin: 0 10px;
-      font-size: 18px;
-    }
-    .form-group {
       width: 100%;
       border: none;
       outline: none;
@@ -191,7 +173,11 @@
       margin: 0 10px;
       font-size: 18px;
     }
-    textarea {
+    textarea.form-control {
+    height: auto;
+    background: none ;
+    }
+    .form-group textarea ,.form-control textarea, textarea, .textarea form-control{
       width: 100%;
       border: none;
       outline: none;
@@ -242,7 +228,7 @@
     h5,
     h6 {
       background: none;
-      color: white;
+      color:aquamarine;
     }
     .navbar-brand img{
       height:50px;

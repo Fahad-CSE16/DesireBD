@@ -252,7 +252,7 @@ def postComment(request):
         else:
             messages.warning(request, 'Error! Please make a profile  first to comment')
             return redirect(f"/profile/updateprofile/")
-    return redirect(f"/posts/{post.sno}")
+    return redirect(f"/posts/post/{post.sno}")
     
 def deletecomment(request):
     if request.method == "POST":
