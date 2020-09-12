@@ -136,7 +136,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-DATE_INPUT_FORMATS=('%d-%m-%Y','%Y-%m-%d')
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 STATICFILES_DIRS = (

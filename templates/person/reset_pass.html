@@ -9,7 +9,7 @@
             {% csrf_token %}
             <fieldset class="form-group mx-auto">
                 <legend class="border-bottom text-center mb-4"><h2>Reset  Password</h2></legend>
-                {{ form|crispy }}
+                <div class="textbox">{{ form|crispy }}</div>
                 
             </fieldset>
             <button class="btn btn-outline-info " type="submit" value="submit">Reset Password </button>

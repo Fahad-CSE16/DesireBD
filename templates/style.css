@@ -3,7 +3,7 @@
       padding: 0;
       font-family: sens-serif;
       height: 100vh;
-      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/static/images/bg1.jpg');
+      background: url('/static/images/map.jpg');
       background-size: cover;
       background-attachment: fixed;
       background-position: top;
@@ -22,8 +22,9 @@
       margin: 0px;
       padding: 0px;
       list-style:none;
-
+      width: auto;
     }
+   
     ul li{
       float:left ;
       height: 30px;
@@ -43,6 +44,9 @@
     }
     ul li a:hover{
       background-color: green;
+    }
+    .alert{
+      background-color: none;
     }
     ul li ul li{
       display: none;
@@ -94,6 +98,17 @@
       outline: none;
       background: none;
       color: white;
+      width: 80px;
+      float: left;
+      margin: 0 10px;
+      font-size: 18px;
+    }
+    label {
+      border: none;
+      outline: none;
+      background: none;
+      color: white;
+      text-shadow: cornsilk;
       width: 80px;
       float: left;
       margin: 0 10px;

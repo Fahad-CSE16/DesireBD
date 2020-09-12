@@ -19,7 +19,9 @@
   <title>{% block title %} {% endblock %}</title>
   <link href="{% static 'css/style.css'  %}" rel='stylesheet'>
   <style>
-{% block css %} {% endblock %}
+    {% block css %}
+
+ {% endblock %}
   </style>
 </head>
 
@@ -33,96 +35,78 @@
     </button>
 
     <div>
-      <ul >
+      <ul>
         <li class="{% block blogactive %}
       {% endblock blogactive %} ">
-          <a  href="/profile/">Home</a>
+          <a href="/profile/">Home</a>
         </li>
-        <li >
+        <li>
           <a class="{% block viewactive %}
       {% endblock viewactive %}" href="#"> View</a>
           <ul>
-             <li><a  href="/posts/viewpost/">Tuition Posts</a></li>
-            <li><a  href="/tolet/viewtolet/">To-let Posts</a></li>
-            <li><a  href="/profile/addsubject/">Subjects List</a></li>
-            <li><a  href="/profile/userlist/">Users List</a></li>
+            <li><a href="/posts/viewpost/">Tuition Posts</a></li>
+            <li><a href="/tolet/viewtolet/">To-let Posts</a></li>
+            <li><a href="/profile/addsubject/">Subjects List</a></li>
+            <li><a href="/profile/userlist/">Users List</a></li>
           </ul>
         </li>
-        <li >
+        <li>
           <a href="#">Create</a>
           <ul>
-             <li><a  href="/posts/createpost/">Tuition Posts</a></li>
-            <li><a  href="/tolet/posttolet/">To-let Posts</a></li>
-            
+            <li><a href="/posts/createpost/">Tuition Posts</a></li>
+            <li><a href="/tolet/posttolet/">To-let Posts</a></li>
+
           </ul>
         </li>
         <li class=" {% block contactactive %}
       {% endblock contactactive %}">
-          <a  href="/profile/contact/">Contact</a>
+          <a href="/profile/contact/">Contact</a>
         </li>
 
         <li class="  {% block aboutactive %}
       {% endblock aboutactive %}">
-          <a  href="/profile/about_us/">About</a>
+          <a href="/profile/about_us/">About</a>
         </li>
-        {% comment %} <div>{% now "SHORT_DATETIME_FORMAT" %}</div> {% endcomment %}
-      </ul>
-      <ul class="navbar-nav ml-auto">
-        {% if user.is_authenticated %}
 
+        {% if user.is_authenticated %}
+        <li>
+          <a href="#"> {{request.user}} </a>
+          <ul>
+            <li><a href="/profile/userprofile/">Profile</a></li>
+            <li><a href="/profile/notification/">Notifications</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+          </ul>
+        </li>
         <form method="GET" action="/posts/search/" class="form-inline my-2 my-lg-0">
           {% csrf_token %}
-          <input class="in " type="search" placeholder="Search" aria-label="Search" name="q"
-            id="search">
+          <input class="in " type="search" placeholder="Search" aria-label="Search" name="q" id="search">
           <button class="btn  btn-sm" type="submit" value="{{ query|escape }}">Search</button>
         </form>
-        <li class="nav-item {% block notifications %}
-      {% endblock notifications %} ">
-          <a class="nav-link" href="/profile/notification/">
-
-            <i class="globe red ">{% live_notify_badge %}</i>
-            {% comment %} {% notifications_unread %} {% endcomment %}
-            Notifications
-
-          </a>
-        </li>
-        <li class=" {% block userprofile %}
-      {% endblock userprofile %} ">
-          <a  href="/profile/userprofile/">Profile</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            {{request.user}}
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
-          </div>
-        </li>
+        
       </ul>
       {% else %}
-      <ul class="navbar-nav ml-auto">
-        <li class=" {% block SignUp %}
-      {% endblock SignUp %} ">
-          <a  href="{% url 'signup' %}">SignUp</a>
-        </li>
-        <li class=" {% block Login %}
-      {% endblock Login %} ">
-          <a href="{% url 'login' %}">Login</a>
-        </li>
-        {% endif %}
-        <li >
-          <a  href="">
 
-            {% now "h:i A" as current_time %}
-            {{ current_time|center:"150"  }}
-            {% now "D jS F Y" %}
-          </a>
-        </li>
-        
+      <li class=" {% block SignUp %}
+      {% endblock SignUp %} ">
+        <a href="{% url 'signup' %}">SignUp</a>
+      </li>
+      <li class=" {% block Login %}
+      {% endblock Login %} ">
+        <a href="{% url 'login' %}">Login</a>
+      </li></ul>
+      {% endif %}
+      
+
     </div>
-    </ul>
+      
   </nav>
+  <div class="alert alert-info alert-dismissible" role="alert">
+    <strong></strong> {% now "h:i A" as current_time %}
+    {{ current_time|center:"150"  }}  {% now "D, F jS, Y" %}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
   {% for message in messages  %}
   <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
     <strong></strong> {{ message }}

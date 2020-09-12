@@ -96,21 +96,18 @@ class TuitionClassUpdateForm(ModelForm):
 
 class UserProfileForm(ModelForm):
     # birth_date = forms.DateInput(input_formats=DATE_INPUT_FORMATS)
-    # birth_date= forms.DateField(localize=True, widget=forms.DateInput(format='%Y-%m-%D', attrs={'type':'date'}))
+    birth_date = forms.DateField(
+        widget=forms.TextInput(
+            attrs={'type': 'date', 'class': 'form-control'}))
     class Meta:
         model = UserProfile
         fields = ['birth_date', 'blood_group', 'genre', 'address', 'phone',
                   'nationality', 'religion', 'marital_status', 'biodata', 'profession', 'image']
-        # exclude = ['user']
-        # fields='__all__'
         widgets = {
-
-            'birth_date': DateInput(attrs={'type': 'date', format: '%Y-%m-%D', 'placeholder': 'Enter your Birthday'}),
             'user': forms.HiddenInput(),
             'address': forms.TextInput(attrs={'placeholder': 'Enter your Address'})
-            #  'locatity':
         }
-        label = {
+        labels = {
             'genre':'Gender'
         }
 
