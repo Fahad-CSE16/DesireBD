@@ -6,12 +6,9 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% if user.is_authenticated %}
-<div class="col-md-18 ">
-    
-        {% for u in userp %}
-        {% if forloop.last  %}
+<div class="col-md-18 ">    
         <div class="media">
-            <img class="rounded-circle account-img my-2 mx-3 mr-3" src="{{u.image.url}}" alt="...">
+            <img class="rounded-circle account-img my-2 mx-3 mr-3" src="{{user.userprofile.image.url}}" alt="...">
             <div class="media-body">            
                 <ul>
                 <li><a href="/profile/changepass/">ChangePass</a></li>
@@ -20,7 +17,8 @@
                 Edit
                 </a>
                     <ul>
-                        <li><a href="/profile/updateprofile/">SSC</a></li>
+                        <li><a href="{% url 'updateprofile' %}">UserProfile</a></li>
+                        <li><a href="{% url 'updatessc' %}">SSC</a></li>
                         <li><a href="/profile/updatehsc/">HSC</a></li>
                         <li><a href="/profile/afterhsc/">UnderGraduation</a></li>
                         <li><a href="/profile/postgraduate/">PostGraduation</a></li>
@@ -35,13 +33,12 @@
                 <br>
                 Email:{{user.email}}
                 <br>
-                Blood Group: {{u.blood_group}}
+                Blood Group: {{user.userprofile.blood_group}}
                 <br>
                 
             </div>
         </div>
-        {% endif %}
-        {% endfor %}
+
     </div>
 
 

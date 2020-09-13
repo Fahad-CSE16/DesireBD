@@ -294,52 +294,7 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def otherprofile(request, slug):
     user = User.objects.get(username=slug)
-    try:
-        uSsc = user.ssc
-    except:
-        uSsc = None
-    try:
-        uHsc = user.hsc
-    except:
-        uHsc = None
-    try:
-        afterhsc = user.afterhsc
-    except:
-        afterhsc = None
-    try:
-        higherstudies = user.higherstudies
-    except:
-        higherstudies = None
-    try:
-        userp = user.userprofile
-    except:
-        userp = None
-    try:
-        tuitionprofile = user.tuitionclass
-    except:
-        tuitionprofile = None
-    try:
-        subject = tuitionprofile.subject.all()
-    except:
-        subject = None
-    try:
-        places = tuitionprofile.preferedPlace.all()
-    except:
-        places = None
-    try:
-        class_in = tuitionprofile.level.all()
-    except:
-        class_in = None
     context = {
         'user': user,
-        'uSsc': uSsc,
-        'uHsc': uHsc,
-        'afterhsc': afterhsc,
-        'higherstudies': higherstudies,
-        'tuitionprofile': tuitionprofile,
-        'subject': subject,
-        'places': places,
-        'class_in': class_in,
-        'userp': userp
     }
     return render(request, 'person/otherprofile.html', context)
