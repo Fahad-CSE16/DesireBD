@@ -57,8 +57,7 @@
 
 
 
-    @import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
-
+    
     .container {
       width: 550px;
       text-align: center;
@@ -71,7 +70,7 @@
     .container b{
       color:white;
     }
-
+    
     .conatiner h1 {
       float: left;
       font-size: 40px;
@@ -79,7 +78,7 @@
       margin-bottom: 50px;
       padding: 13px 0;
     }
-
+    
     .textbox {
       width: 100%;
       overflow: hidden;
@@ -112,35 +111,30 @@
       padding: 8px 0;
       margin: 8px 0;
       color: rgb(129, 15, 236);}
-
-    .textbox i {
-      width: 40px;
-      float: left;
-      text-align: center;
-    }
-
-    .textbox label,.textbox input {
-      border: none;
-      outline: none;
-      background: none;
-      color: white;
-      width: 80px;
-      float: left;
-      margin: 0 10px;
-      font-size: 18px;
-      overflow: hidden;
-    }
-    input {
-      width: 100%;
-      border: none;
-      outline: none;
-      background: none;
-      color: white;
-      float: left;
+      
+      
+      .textbox label,.textbox input {
+        border: none;
+        outline: none;
+        background: none;
+        color: white;
+        width: 80px;
+        float: left;
+        margin: 0 10px;
+        font-size: 18px;
+        overflow: hidden;
+      }
+      input {
+        width: 100%;
+        border: none;
+        outline: none;
+        background: none;
+        color: white;
+        float: left;
       margin: 0 10px;
       font-size: 18px;
     }
-   
+    
     .textinput {
       width: 100%;
       border: none;
@@ -173,12 +167,14 @@
       width:auto;
     }
     
-    .ab{
-      background:blanchedalmond;
+    .row .col-md-3{
+      background:none;
       text-shadow: brown;
       width:280px;
-
-      
+      position: absolute;
+      float: right;
+      text-align: right;
+      color:white;
     }
     .textbox textarea,.emailinput,.textarea form-control,.asteriskField {
       width: 100%;
@@ -191,8 +187,8 @@
       font-size: 18px;
     }
     textarea.form-control {
-    height: auto;
-    background: none ;
+      height: auto;
+      background: none ;
     }
     .form-group textarea ,.form-control textarea, textarea, .textarea form-control{
       width: 100%;
@@ -214,7 +210,7 @@
       margin: 0 10px;
       font-size: 18px;
     }
-
+    
     .btn {
       width: 100%;
       background: none;
@@ -225,14 +221,14 @@
       cursor: pointer;
       margin: 12px 0;
     }
-
+    
     .col-md-6 a {
       background: none;
       color: solid #282356;
       font-size: 18px;
       cursor: pointer;
     }
-
+    
     .col-md-6 p,b {
       background: none;
       color: white;
@@ -241,7 +237,7 @@
       background: none;
       color: white;
     }
-
+    
     .col-md-6 h1,
     h2,
     h3,
@@ -254,3 +250,10 @@
     .navbar-brand img{
       height:50px;
     }
+    @import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+    .textbox i {
+      width: 40px;
+      float: left;
+      text-align: center;
+    }
+    

@@ -10,12 +10,8 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   {% load notifications_tags %}
-
-
   {% load static %}
   <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
-
-
   <title>{% block title %} {% endblock %}</title>
   <link href="{% static 'css/style.css'  %}" rel='stylesheet'>
   <style>
@@ -100,10 +96,13 @@
     </div>
       
   </nav>
-  <div class="ab">
-   {% now "h:i A" as current_time %}
-    {{ current_time|center:"150"  }}  {% now "D, F jS, Y" %}
-  </div>
+  <div class="row">
+  <div class="col-md-3 offset-md-6">{% now "h:i A" as current_time %}
+    {{ current_time|center:"150"  }} </div>
+  <div class="col-md-3">{% now "D, F jS, Y" %}</div>
+ 
+</div>
+  
   {% for message in messages  %}
   <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
     <strong></strong> {{ message }}
