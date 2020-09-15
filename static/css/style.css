@@ -23,6 +23,7 @@
       padding: 0px;
       list-style: none;
     }
+   
     ul li{
       float: left ;
       height: 30px;
@@ -33,6 +34,7 @@
       text-align: center;
       font-size: 20px;
       margin-right: 2px;
+      color:white;
     }
     ul li a{
       text-decoration: none;
@@ -47,15 +49,17 @@
       display: none;
 
     }
-    ul li:hover ul li{
+    ul li:hover ul li:focus{
       display: block !important;
   
     }
-    ul li:active ul li{
+    ul li:focus-visible ul li{
         display: block !important;
     }
 
-
+order-1,order-6{
+  color:white;
+}
 
     
     .container {

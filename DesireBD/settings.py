@@ -34,9 +34,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # 'DesireBD.apps.SuitConfig',
-    'material.admin',
-    'material.admin.default',
+    'DesireBD.apps.SuitConfig',
+    'django.contrib.admin',
+    # 'material.admin',
+    # 'material.admin.default',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

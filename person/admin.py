@@ -49,6 +49,7 @@ class DistrictAdmin(admin.ModelAdmin):
     ]
 admin.site.site_header = 'DesireBD Admin Panel'
 admin.site.site_title = 'DesireBD Admin Panel'
+admin.site.index_title = ''
 
 
 class UserProfileAdmin(admin.ModelAdmin):
