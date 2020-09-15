@@ -6,6 +6,13 @@ from . models import TuitionClass,District,SubDistrict,Subject,Classes
 from django.urls import path
 from django.http import HttpResponseRedirect
 from django.utils.html import format_html
+from django.contrib.admin import ModelAdmin, register
+
+
+
+@register(SSC)
+class MaterialSSCAdmin(ModelAdmin):
+    icon_name = 'person'
 
 class HSCInline(admin.TabularInline):
     model = HSC
@@ -41,6 +48,7 @@ class DistrictAdmin(admin.ModelAdmin):
         SubDistrictInline,
     ]
 admin.site.site_header = 'DesireBD Admin Panel'
+admin.site.site_title = 'DesireBD Admin Panel'
 
 
 class UserProfileAdmin(admin.ModelAdmin):
@@ -69,7 +77,7 @@ class UserProfileAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Contact)
 admin.site.register(UserProfile, UserProfileAdmin)
-admin.site.register(SSC)
+# admin.site.register(SSC)
 admin.site.register(HSC)
 admin.site.register(AfterHsc)
 admin.site.register(HigherStudies)
