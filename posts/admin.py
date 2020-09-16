@@ -6,14 +6,15 @@ from django.utils import timezone
 
 
 class TuitionPostAdmin(admin.ModelAdmin):
-    list_display = ('author', 'district', 'created_since','get_subjects','salary')
+    list_display = ('author', 'district', 'get_preferedPlace', 'created_since',
+                    'get_subjects', 'get_class_in', 'salary', 'time_available')
     list_filter = ('author', 'district', 'subject', 'class_in')
     actions = ('set_district_gazipur',)
     search_fields = ('content', 'author__username', 'subject__name', 'district__name', 'class_in__name')
-    # list_select_related=('district',)
     list_display_links = ('author', 'district',)
-    list_editable = ('salary',)
-    filter_vertical= ('subject','class_in','preferedPlace','views','likes')
+    filter_horizontal= ('subject','class_in','preferedPlace','views','likes')
+    # list_select_related=('district',)
+    # list_editable = ('salary',)
     def created_since(self, TuitionPost):
         diff = timezone.now() - TuitionPost.timeStamp
         return diff.days
@@ -25,8 +26,20 @@ class TuitionPostAdmin(admin.ModelAdmin):
     def get_subjects(self, obj):
         return ", ".join([p.name for p in obj.subject.all()])
     get_subjects.short_description = 'Subjects'
+
+    def get_class_in(self, obj):
+        return ", ".join([p.name for p in obj.class_in.all()])
+    get_class_in.short_description = 'Class'
+
+    def get_preferedPlace(self, obj):
+        return ", ".join([p.name for p in obj.preferedPlace.all()])
+    get_preferedPlace.short_description = 'Places'
     
 
-admin.site.register(BlogComment)
+class BlogCommentAdmin(admin.ModelAdmin):
+    list_display=('comment','user','tuitionpost','parent','timestamp')
+    list_filter=('parent','user','tuitionpost')
+
+admin.site.register(BlogComment, BlogCommentAdmin)
 admin.site.register(TuitionPost, TuitionPostAdmin)
 

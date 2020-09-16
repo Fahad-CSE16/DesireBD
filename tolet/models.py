@@ -8,16 +8,16 @@ from django.utils.timezone import now
 # Create your models here.
 class Post(models.Model):
     CATEGORY=(
-        ('a', 'Flat'),
-        ('b', 'Room'),
-        ('c', 'Any_space'),
-        ('d', 'Land'),
-        ('e', 'Shop'),
-        ('f', 'Hostel_seat'),
-        ('g', 'Company'),
-        ('h', 'Building'),
-        ('i', 'Bill_board'),
-        ('j', 'Media_advertisement'),
+        ('Flat', 'Flat'),
+        ('Room', 'Room'),
+        ('Any_space', 'Any_space'),
+        ('Land', 'Land'),
+        ('Shop', 'Shop'),
+        ('Hostel_seat', 'Hostel_seat'),
+        ('Company', 'Company'),
+        ('Building', 'Building'),
+        ('Bill_board', 'Bill_board'),
+        ('Media_advertisement', 'Media_advertisement'),
     )
     user=models.ForeignKey(User, on_delete=models.CASCADE, related_name='feeds')
     house_no=models.CharField(max_length=40, default="")
@@ -28,7 +28,7 @@ class Post(models.Model):
     Zilla=models.CharField(max_length=50, default="")
     division=models.CharField(max_length=50, default="")
     country=models.CharField(max_length=50, default="")
-    category=models.CharField(max_length=1,choices=CATEGORY, default="")
+    category=models.CharField(max_length=100,choices=CATEGORY, default="")
     rent=models.IntegerField()
     no_of_img=models.IntegerField(default=0)
     area=models.CharField(max_length=50, default="")
@@ -47,7 +47,7 @@ class Post(models.Model):
         return self.views.count()
     
     def __str__(self):
-        return  self.house_no + " " + self.road_no  + " " + self.village + " " + self.area
+        return  self.category + " in " + self.upozila  + " , " + self.Zilla 
     
 
 class PostFile(models.Model):
