@@ -29,37 +29,10 @@
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active ">
       <div class="col-md-12 offset-md-3">
-        <div class="card" style="width: 40rem;">
-          <div class="card-body">
-            <h5>Users</h5>
-            <h6>See all the users</h6>
-            <p>Go and find out the user list and Teacher by Filtering With your Wish</p>
-            <a href="{% url 'userlist' %}" class="btn">Users</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <div class="col-md-12 offset-md-3">
-        <div class="card" style="width: 40rem;">
-          <div class="card-body">
-            <h5>Subjects</h5>
-            <h6>See all the Subjects</h6>
-            <p>Go and find out the Subject list and Add your subject if not listed </p>
-            <a href="{% url 'addsubject' %}" class="btn">Subjects</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <div class="carousel-item">
-      <div class="col-md-12 offset-md-3">
-
         <div class="card" style="width: 40rem;">
           <div class="card-body">
             <h5>Tuition Post</h5>
@@ -69,12 +42,10 @@
             <a href="{% url 'posts:createpost' %}" class="btn">Create </a>
           </div>
         </div>
-        </div>
       </div>
     </div>
     <div class="carousel-item">
       <div class="col-md-12 offset-md-3">
-
         <div class="card" style="width: 40rem;">
           <div class="card-body">
             <h5>TO-Let Post</h5>
@@ -84,9 +55,25 @@
             <a href="{% url 'posttolet' %}" class="btn">Create </a>
           </div>
         </div>
+      </div>
+
+    </div>
+    <div class="carousel-item">
+      <div class="col-md-12 offset-md-3">
+
+        <div class="card" style="width: 40rem;">
+          <div class="card-body">
+            <h5>Users</h5>
+            <h6>See all the users</h6>
+            <p>Go and find out the user list and Teacher by Filtering With your Wish</p>
+            <a href="{% url 'userlist' %}" class="btn">Users</a>
+          </div>
+        </div>
+        
         </div>
       </div>
     </div>
+    
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -186,7 +173,12 @@ color:white;
 overflow-x: scroll;
 
 }
-
+.btn{
+  width:auto;
+}
+.carousel-item {
+  height:200px;
+}
 
 /* The navigation menu links */
 .sidenav a {

@@ -23,61 +23,63 @@
 
 <body>
   {% comment %} {% load notification_tags %} {% endcomment %}
-  <nav class="navbar navbar-expand-lg navbar-dark">
+  {% comment %} <nav class="navbar navbar-expand-lg navbar-dark">
     <a class="navbar-brand" href="/profile/"><img src="/static/images/logo.png" alt=""></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div>
-      <ul>
-        <li class="{% block blogactive %}
-      {% endblock blogactive %} ">
-          <a href="/profile/">Home</a>
-        </li>
-        <li>
-          <a class="{% block viewactive %}
-      {% endblock viewactive %}" href="#"> View</a>
-          <ul>
-            <li><a href="/posts/viewpost/">Tuition Posts</a></li>
-            <li><a href="/tolet/viewtolet/">To-let Posts</a></li>
-            <li><a href="/profile/addsubject/">Subjects List</a></li>
-            <li><a href="/profile/userlist/">Users List</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#">Create</a>
-          <ul>
-            <li><a href="/posts/createpost/">Tuition Posts</a></li>
-            <li><a href="/tolet/posttolet/">To-let Posts</a></li>
-
-          </ul>
-        </li>
-        <li class=" {% block contactactive %}
-      {% endblock contactactive %}">
+    </button> {% endcomment %}
+<div class="menu-bar">
+        <ul>
+            <li><a href="/profile/"><i class="fa fa-home"></i> Home</a></li>
+            <li><a href=""><i class="fa fa-user"></i>View</a>
+                <div class="sub-menu-1">
+                    <ul>
+                        <li><a href="/posts/viewpost/">Tuition Posts</a></li>
+                        <li><a href="/tolet/viewtolet/">To-let Posts</a></li>
+                        <li><a href="/profile/addsubject/">Subjects List</a></li>
+                        <li><a href="/profile/userlist/">Users List</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li><a href=""><i class="fa fa-users"></i>Create</a>
+                <div class="sub-menu-1">
+                    <ul>
+                        <li><a href="/posts/createpost/">Tuition Posts</a></li>
+                        <li><a href="/tolet/posttolet/">To-let Posts</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
           <a href="/profile/contact/">Contact</a>
         </li>
 
-        <li class="  {% block aboutactive %}
-      {% endblock aboutactive %}">
+        <li>
           <a href="/profile/about_us/">About</a>
         </li>
-
         {% if user.is_authenticated %}
-        <li>
-          <a href="#"> {{request.user}} </a>
-          <ul>
-            <li><a href="/profile/userprofile/">Profile</a></li>
-            <li><a href="/profile/notification/">Notifications</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-          </ul>
-        </li>
+            <li><a href=""><i class="fa fa-users"></i>{{request.user}}</a>
+                <div class="sub-menu-1">
+                    <ul>
+                        <li><a href="/profile/userprofile/">Profile</a></li>
+                        <li><a href="/profile/notification/">Notifications</a></li>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
+                </div>
+            </li>
         <form method="GET" action="/posts/search/" class="form-inline my-2 my-lg-0">
           {% csrf_token %}
-          <input class="in " type="search" placeholder="Search" aria-label="Search" name="q" id="search">
-          <button class="btn  btn-sm" type="submit" value="{{ query|escape }}">Search</button>
+          <li>
+          <input class="in " type="search" placeholder="Search" aria-label="Search" name="q" id="search"></li>
+          <li><button class="btn  btn-sm" type="submit" value="{{ query|escape }}">Search</button></li>
         </form>
+        <li>
+        <a href="">{% now "h:i A" as current_time %}
+    {{ current_time|center:"150"  }} {% now "D, F jS, Y" %}
+        </a>
+        </li>
+        </ul>
+    </div>
         
       </ul>
       {% else %}
@@ -96,10 +98,10 @@
     </div>
       
   </nav>
-  <div class="row">
+  {% comment %} <div class="row">
   <div class="col order-1">{% now "h:i A" as current_time %}
     {{ current_time|center:"150"  }} </div>
-  <div class="col order-6 ">{% now "D, F jS, Y" %}</div>
+  <div class="col order-6 ">{% now "D, F jS, Y" %}</div> {% endcomment %}
  
 </div>
   
