@@ -1,0 +1,22 @@
+{% extends 'basic.html' %}
+
+{% block title%} Expectaion Of your Would be{% endblock %}
+{% block body %}
+{% load crispy_forms_tags %}
+{% if user.is_authenticated %}
+<div class="col-md-7 offset-md-3">
+ 
+        <form action="/metrimony/expectaion/" method="post" enctype="multipart/form-data" >
+            {% csrf_token %}
+            <fieldset class="form-group mx-auto">
+                <legend class="border-bottom text-center mb-4"><h2>Add Your expectation</h2></legend>
+                {{ form|crispy }}
+                
+            </fieldset>
+            <button class="btn btn-outline-info " type="submit" value="submit">Save</button>
+            {% comment %} <input type="submit" value="Submit"> {% endcomment %}
+        </form>
+
+</div>
+{% endif %}
+{% endblock %}

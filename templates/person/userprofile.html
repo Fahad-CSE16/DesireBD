@@ -1,6 +1,7 @@
 {% extends 'basic.html' %}
 {% load humanize %}
 {% block title%} Update Your Profile{% endblock %}
+
 {% block userprofile %} active{% endblock userprofile %}
 {% block body %}
 {% load static %}
@@ -16,6 +17,7 @@
                 <a href="">
                 Edit
                 </a>
+                <div class="sub-menu-1">
                     <ul>
                         <li><a href="{% url 'updateprofile' %}">UserProfile</a></li>
                         <li><a href="{% url 'updatessc' %}">SSC</a></li>
@@ -24,6 +26,7 @@
                         <li><a href="/profile/postgraduate/">PostGraduation</a></li>
                         <li><a href="/profile/tuitionprofile/">Tuition Profile</a></li>                        
                     </ul>
+                    </div>
                 </li> 
                 </ul>
                 <br>
@@ -76,21 +79,24 @@
 
 
     {% for item in mytolet %}
-    <div class="col-md-14 ">
+    <div class="col-md-8 offset-md-2 ">
         <div class="row bg-succes no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col  p-4 d-flex flex-column position-static">
                 <strong class="d-inline-block mb-2 text-primary">
-                    <h5><b>{{item.user}}</b></h5>
+                    <a href="/profile/otherprofile/{{item.user.username}}">
+                        <h4>{{item.user.first_name}} {{item.user.last_name}}</h4>
                 </strong>
                 <div class="preview">
-                    <p class="card-text mb-auto">{{item.text|safe|truncatechars:350}}</p>
-                    <a href="/tolet/toletpost/{{item.id}}"
+                     is giving To-let of a <b> <i> {{item.category}} </i></b> in <i><b>{{item.district}} </b></i>
+                
+                <br>
+                <b>Rent:</b>{{item.rent}}
+                    <p class="card-text mb-auto"> <a href="/tolet/toletpost/{{item.id}}"
                             class="stretched-link">...Details</a></p>
                     <br>
                    
-                     <strong
-                        class="d-inline-block mb-2 text-primary">
-                        <span>- {{item.view}} seen</span></strong>
+                   
+                        
                 </div>
             </div>
         </div>
@@ -122,4 +128,54 @@ div.media-body {
             color:white;
     }
     
+
+ .media-body ul{
+    display: inline-flex;
+    list-style: none;
+    color: aqua;
+    
+}
+ .media-body ul li{
+    width: 420px;
+    padding: 15px;
+}
+ .media-body ul li a{
+    text-decoration: none;
+    color: whitesmoke;
+}
+ .media-body ul li a:hover{
+    background: rgb(7, 241, 27);
+    border-radius: 3px;
+    display: block;
+}
+ .media-body .fa{
+    margin-right: 8px;
+}
+.sub-menu-1{
+    display: none;
+}
+ .media-body  ul li:hover .sub-menu-1{
+    display: block;
+    position: absolute;
+    background: none;
+    margin-top: -05px;
+    margin-left: -15px;
+}
+ .media-body  ul li:hover .sub-menu-1 ul{
+    display: block;
+}
+ .media-body  ul li:hover .sub-menu-1 ul li{
+    width: 220px;
+    padding: 10px;
+    border-bottom: 1px dotted black;
+    background: transparent;
+    border-radius: 0;
+    text-align: left;
+}
+ .media-body  ul li:hover .sub-menu-1 ul li:last-child{
+    border-bottom: none;
+}
+ .media-body  ul li:hover .sub-menu-1 ul li a:hover{
+    color: blue;
+}
 {% endblock  %}

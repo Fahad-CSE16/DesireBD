@@ -1,0 +1,20 @@
+from django.contrib import admin
+from .models import (Country, Education, Expectaion, Address, Body, Family, Height, Hobby, Language, Occupation, Personal_Info, Profession, Religion, Sir_name, State,Weight
+)
+# Register your models here.
+admin.site.register(Country)
+admin.site.register(Expectaion)
+admin.site.register(Education)
+admin.site.register(Address)
+admin.site.register(Body)
+admin.site.register(Family)
+admin.site.register(Height)
+admin.site.register(Hobby)
+admin.site.register(Language)
+admin.site.register(Occupation)
+admin.site.register(Profession)
+admin.site.register(Personal_Info)
+admin.site.register(Religion)
+admin.site.register(Sir_name)
+admin.site.register(Weight)
+admin.site.register(State)

@@ -14,6 +14,7 @@ urlpatterns = [
     path('profile/', include('person.urls')),
     path('tolet/', include('tolet.urls')),
     path('posts/', include('posts.urls')),
+    path('metrimony/', include('metrimony.urls', namespace='metrimony')),
     path('rest/', include('rest_api_create.urls')),
     path('api/', include('rest_framework.urls')),
     path('inbox/notifications/',include(notifications.urls, namespace='notifications')),

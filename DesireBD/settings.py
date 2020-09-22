@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'person',
     'tolet',
     'posts',
+    'metrimony',
     'extra_views',
     'crispy_forms',
     'django.contrib.humanize',
