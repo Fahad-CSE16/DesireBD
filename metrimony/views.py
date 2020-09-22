@@ -35,14 +35,54 @@ def expectaion(request):
         else:
             form = ExpectaionForm(request.POST)
         if form.is_valid():
+
+            education = form.cleaned_data['education']
+            educheck = Education.objects.filter(name=education)
+            if not educheck:
+                Education.objects.create(name=education)
+
+            religion = form.cleaned_data['religion']
+            relcheck = Religion.objects.filter(name=religion)
+            if not relcheck:
+                Religion.objects.create(name=religion)
+
+            profession = form.cleaned_data['profession']
+            procheck = Profession.objects.filter(name=profession)
+            if not procheck:
+                Profession.objects.create(name=profession)
+
+            height = form.cleaned_data['max_height']
+            heicheck = Height.objects.filter(name=height)
+            if not heicheck:
+                Height.objects.create(name=height)
+
+            height2 = form.cleaned_data['min_height']
+            hei2check = Height.objects.filter(name=height2)
+            if not hei2check:
+                Height.objects.create(name=height2)
+
+            weight = form.cleaned_data['max_age']
+            weicheck = Weight.objects.filter(name=weight)
+            if not weicheck:
+                Weight.objects.create(name=weight)
+
+            weight2 = form.cleaned_data['min_age']
+            wei2check = Weight.objects.filter(name=weight2)
+            if not wei2check:
+                Weight.objects.create(name=weight2)
+
             profile_obj = form.save(commit=False)
             profile_obj.user = request.user
             profile_obj.save()
             messages.success(request, 'Successfully updated.')
             return redirect('userprofile')
     else:
-        eduacion=Education.objects.all()
-        form = ExpectaionForm(instance=instance)
+        education = Education.objects.all().order_by('name')
+        profession = Profession.objects.all().order_by('name')
+        religion = Religion.objects.all().order_by('name')
+        height=Height.objects.all().order_by('name')
+        weight=Weight.objects.all().order_by('name')
+        form = ExpectaionForm(instance=instance, data_list=education, a_list=profession, r_list=religion, h_list=height, w_list=weight)
     context = {
         'form': form
     }
