@@ -1,13 +1,13 @@
 from django.contrib import admin
-from .models import Post,PostFile ,ToletComment
+from .models import Post,PostFile ,ToletComment, Area, Category
 
 
 class PostFileInline(admin.TabularInline):
     model = PostFile
 class PostAdmin(admin.ModelAdmin):
-    list_display=('user','category','rent','house_no','road_no','village','post_code','upozila','Zilla')
-    search_fields=('user__username','category','rent','house_no','road_no','village','post_code','upozila','Zilla')
-    list_filter=('user','category','upozila','Zilla')
+    list_display=('user','category','rent','district','area')
+    search_fields=('user__username','category__name','rent')
+    list_filter=('user','category')
     inlines = [
         PostFileInline,
     ]
@@ -18,3 +18,5 @@ class ToletCommentAdmin(admin.ModelAdmin):
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(ToletComment, ToletCommentAdmin)
+admin.site.register(Area)
+admin.site.register(Category)

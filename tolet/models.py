@@ -3,36 +3,42 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from PIL import Image
 from django.utils.timezone import now
+from person.models import District, SubDistrict
 # from main.models import Store
 
 # Create your models here.
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    def __str__(self):
+        return self.name
+    
+    # CATEGORY=(
+    #     ('Bill_board', 'Bill_board'),
+    #     ('Commercial Space', 'Commercial Space'),
+    #     ('Flat/Apartment', 'Flat/Apartment'),
+    #     ('Garage', 'Garage'),
+    #     ('House', 'House'),
+    #     ('Land', 'Land'),
+    #     ('Media_advertisement', 'Media_advertisement'),
+    #     ('Mess/Hostel_seat', 'Mess/Hostel_seat'),
+    #     ('Office', 'Office'),
+    #     ('Room', 'Room'),
+    #     ('Shop', 'Shop'),
+    #     ('Sublet', 'Sublet'),
+    # )
+class Area(models.Model):
+    name = models.CharField(max_length=200)
+    def __str__(self):
+        return self.name
+    
 class Post(models.Model):
-    CATEGORY=(
-        ('Flat', 'Flat'),
-        ('Room', 'Room'),
-        ('Any_space', 'Any_space'),
-        ('Land', 'Land'),
-        ('Shop', 'Shop'),
-        ('Hostel_seat', 'Hostel_seat'),
-        ('Company', 'Company'),
-        ('Building', 'Building'),
-        ('Bill_board', 'Bill_board'),
-        ('Media_advertisement', 'Media_advertisement'),
-    )
-    user=models.ForeignKey(User, on_delete=models.CASCADE, related_name='feeds')
-    house_no=models.CharField(max_length=40, default="")
-    post_code=models.CharField(max_length=50, default="")
-    road_no=models.CharField(max_length=50, default="")
-    village=models.CharField(max_length=50, default="")
-    upozila=models.CharField(max_length=50, default="")
-    Zilla=models.CharField(max_length=50, default="")
-    division=models.CharField(max_length=50, default="")
-    country=models.CharField(max_length=50, default="")
-    category=models.CharField(max_length=100,choices=CATEGORY, default="")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='feeds')
+    district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='districts_set')
+    category=models.ForeignKey(Category, on_delete=models.CASCADE, related_name='category_set')
+    area=models.CharField(max_length=300)    
+    location=models.CharField(max_length=500)
     rent=models.IntegerField()
-    no_of_img=models.IntegerField(default=0)
-    area=models.CharField(max_length=50, default="")
-    text=models.TextField(blank=False, max_length=500)
+    details=models.TextField(blank=False, max_length=500)
     timestamp=models.DateTimeField(default=now)
     views = models.ManyToManyField(User, related_name='tpost_view')
     likes = models.ManyToManyField(User, related_name='tolet_post')
@@ -44,12 +50,8 @@ class Post(models.Model):
         return self.likes.count()
 
     def total_views(self):
-        return self.views.count()
+        return self.views.count() 
     
-    def __str__(self):
-        return  self.category + " in " + self.upozila  + " , " + self.Zilla 
-    
-
 class PostFile(models.Model):
     file = models.ImageField(upload_to="tolet/images")
     feed = models.ForeignKey(

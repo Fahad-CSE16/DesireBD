@@ -5,7 +5,9 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import View
 import time
-from .models import PostFile, Post, ToletComment
+from .models import PostFile, Post, ToletComment,Area, Category
+from person.models import District
+
 from .forms import PostModelForm, FileModelForm
 # from .models import FeedFile
 from person.models import UserProfile
@@ -26,17 +28,13 @@ def likepost(request, sno):
 
 def viewtolet(request):
     post= Post.objects.all()
-    n=len(post)
-    nSlides = ceil(n/4)
-    allProds = []
-    catprods= Post.objects.values('category', 'id')
-    cats = { item ['category'] for item in catprods}
-    for cat in cats:
-        post= Post.objects.filter(category = cat)
-        n = len(post)
-        nSlides = ceil(n / 4)
-        allProds.append([post, range(1, nSlides), nSlides])
-    params = {'allProds': allProds}
+    params = {
+        'district': District.objects.all(),
+        'category': Category.objects.all(),
+        'area': Area.objects.all(),
+        'post':post,
+
+    }
     return render(request, 'tolet/viewtolet.html', params)
 
 
@@ -45,43 +43,55 @@ def posttolet(request):
     user = request.user
     if request.method == 'POST':
         form = PostModelForm(request.POST)
-        if form.is_valid():
+        file_form = FileModelForm(request.POST, request.FILES)
+        files = request.FILES.getlist('file')
+        if form.is_valid() and file_form.is_valid():
+            area = form.cleaned_data['area']
+            print(area)
+            subcheck = Area.objects.filter(name=area)
+            if not subcheck:
+                Area.objects.create(name=area)
             feed_instance = form.save(commit=False)
             feed_instance.user = user
             feed_instance.save()
-            messages.success(request, 'Details Added. Now add some of Image that number of image you mentioned. ')
-            messages.success(request, 'If you entered number of image is none. then press submit button again')
-            return redirect(f"/tolet/imgup/{feed_instance.id}")
+            for f in files:
+                file_instance = PostFile(file=f, feed=feed_instance)
+                file_instance.save()
+            messages.success(request, 'Post Created Successfully. ')
+            return redirect(f"/tolet/toletpost/{feed_instance.id}")
         
     else:
-        form = PostModelForm()
+        area_list=Area.objects.all().order_by('name')
+        file_form = FileModelForm()
+        form = PostModelForm(data_list=area_list)
     context={
         'form': form,
+        'file_form': file_form,
     }
     return render(request, 'tolet/posttolet.html',context)
 
-def imgup(request,id):
-    instance=Post.objects.get(id=id)
-    if request.method =='POST':
-        form = PostModelForm(instance=instance)
-        file_form = FileModelForm(request.POST, request.FILES)
-        files = request.FILES.getlist('file') #field name in model
-        if file_form.is_valid():
-            for f in files:
-                file_instance = PostFile(file=f, feed=instance)
-                file_instance.save()
-            messages.success(request, 'Successfully Added your post with image')
-            return redirect(f"/tolet/toletpost/{instance.id}")
-    else:
-        file_form = FileModelForm()
-        form = PostModelForm(instance=instance)
-    context={
-        'instance': instance.no_of_img,
-        'id': instance.id,
-        'file_form': file_form,
-        'form': form,
-    }
-    return render(request, 'tolet/imgup.html',context)
+# def imgup(request,id):
+#     instance=Post.objects.get(id=id)
+#     if request.method =='POST':
+#         form = PostModelForm(instance=instance)
+#         file_form = FileModelForm(request.POST, request.FILES)
+#         files = request.FILES.getlist('file') #field name in model
+#         if file_form.is_valid():
+#             for f in files:
+#                 file_instance = PostFile(file=f, feed=instance)
+#                 file_instance.save()
+#             messages.success(request, 'Successfully Added your post with image')
+#             return redirect(f"/tolet/toletpost/{instance.id}")
+#     else:
+#         file_form = FileModelForm()
+#         form = PostModelForm(instance=instance)
+#     context={
+#         'instance': instance,
+#         'id': instance.id,
+#         'file_form': file_form,
+#         'form': form,
+#     }
+#     return render(request, 'tolet/imgup.html',context)
 def addphoto(request,id):
     instance=Post.objects.get(id=id)
     if request.method == 'POST':
@@ -97,7 +107,7 @@ def addphoto(request,id):
         file_form = FileModelForm()
         form = PostModelForm(instance=instance)
     context={
-        'instance': instance.no_of_img,
+        
         'id': instance.id,
         'file_form': file_form,
         'form': form,
@@ -147,6 +157,7 @@ def toletpost(request, sno):
             replyDict[reply.parent.sno]=[reply]
         else:
             replyDict[reply.parent.sno].append(reply)
+    file_form=FileModelForm()
     context = {
         'like': like,
         'liked': liked,
@@ -155,7 +166,8 @@ def toletpost(request, sno):
         'pic': p,
         'comments': comments,
         'replyDict': replyDict,
-        'userp': userp
+        'userp': userp,
+        'file_form':file_form,
     }
     return render(request, 'tolet/toletpost.html', context)
 def deletecomment(request): 

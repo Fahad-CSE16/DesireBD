@@ -3,6 +3,7 @@ from django.forms import ModelForm, DateInput
 from .models import UserProfile, Contact, SSC, HSC, HigherStudies, AfterHsc, SubDistrict, Subject, District, TuitionClass, Classes
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .fields import ListTextWidget
 
 
 class SignUpForm(UserCreationForm):

@@ -13,9 +13,9 @@
             <fieldset class="form-group mx-auto">
                 <legend class="border-bottom text-center mb-4"><h2>Creat a Post For To-let</h2></legend>
                 {{ form|crispy }}
-            {% for i in instance|times %}
+            
                 {{ file_form|crispy }}
-            {% endfor %}
+            
                 <p></p>
             </fieldset>
             <button class="btn btn-outline-info " type="submit" id="add" value="submit">Submit</button>

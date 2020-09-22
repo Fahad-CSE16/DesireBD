@@ -3,7 +3,107 @@
 {% block title%} View Post{% endblock %}
 {% block homeactive %} active{% endblock homeactive %}
 
+
+{% block body %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% if user.is_authenticated %}
+<div class="sidenav">
+    <a class="nav-link" href="/posts/createpost/">Create a Tuition Post</a>
+</div>
+
+
+<div class="col-md-7 offset-md-3">
+  <form action="/tolet/filterpost/" method="post">
+    {% csrf_token %}
+
+    <div class="input-group mb-3">
+      <select class="custom-select" id="inputGroupSelect01" name="district_i" >
+        <option ></option>
+        {% for i in district %}
+        <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+      </select>
+      <div class="input-group-append">
+        <label class="input-group-text" for="inputGroupSelect01">District</label>
+      </div>
+    </div>
+
+    <div class="input-group mb-3">
+      <select class="custom-select" id="inputGroupSelect03" name="category_i" >
+        <option ></option>
+        {% for i in category %}
+        <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+      </select>
+      <div class="input-group-append">
+        <label class="input-group-text" for="inputGroupSelect03">Category</label>
+      </div>
+    </div>
+
+    <div class="input-group mb-3">
+      <select class="custom-select" id="inputGroupSelect02" name="area_i" >
+        <option ></option>
+        {% for i in area %}
+        <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+      </select>
+      <div class="input-group-append">
+        <label class="input-group-text" for="inputGroupSelect02"> Area</label>
+      </div>
+    </div>
+
+    <button class="btn btn-outline-info " type="submit" value="submit">Filter Posts </button>
+
+  </form>
+</div>
+
+
+
+
+
+
+    
+    {% for post in post %}
+    <div class="col-md-7 offset-md-3 ">
+        <div class="row bg-succes no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col  p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 ">
+                    <div>
+                    <a href="/profile/otherprofile/{{post.user.username}}">
+                        <h4>{{post.user.first_name}} {{post.user.last_name}}</h4>
+                    </a>
+                    <span class="badge badge-secondary">
+                        {{post.timestamp|naturaltime}}</span>
+                </div>
+                 -Searching for a Teacher.
+                </strong>
+                <div class="preview">
+                For <b>{{post.medium}}</b>'s student
+                   in {{post.district}} District                
+                <br>
+                <b>Salary:</b>{{post.salary}}
+                <br>
+                    <p class="card-text mb-auto"> <a href="/tolet/toletpost/{{post.id}}"
+                            class="stretched-link">...Details</a></p>
+                    <br>                
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+
+{% else %}
+<div class="mt-3">
+    <h3>Please Login to see posts </h3>
+</div>
+{% endif %}
+{% endblock %}
 {% block css %}
+  .col-md-7{
+    color:white;
+  }
 .sidebar {
 margin: 0;
 width: 180px;
@@ -34,12 +134,7 @@ background-color: #3132e6;
 overflow-x: scroll;
 padding-top: 200px;
 }
-.container{
 
-overflow: auto;
-overflow-y: scroll;
-overflow-x: scroll; /* Disable horizontal scroll */
-}
 
 /* The navigation menu links */
 .sidenav a {
@@ -56,62 +151,3 @@ color: #f1f1f1;
 }
 
 {% endblock %}
-
-{% block body %}
-{% load crispy_forms_tags %}
-{% load static %}
-{% comment %} <div class="sidebar">
-    <a class="active" href="#home">Home</a>
-    <a class="nav-link" href="/createpost">Create Post</a>
-    <div class="nav-item my-2">
-        <div class="btn btn-outline-dark my-2 my-sm-0 mx-3"> {% now "h:i A" as current_time %}
-            {{ current_time|center:"150"  }}
-        </div>
-        <div class="btn btn-outline-dark my-2 my-sm-0 ml-auto"> {% now "D jS F Y" %}
-        </div>
-    </div>
-</div> {% endcomment %}
-{% if user.is_authenticated %}
-<div class="sidenav">
-    <a class="nav-link" href="/tolet/posttolet">Create Post For To-let</a>
-</div>
-
-
-<div class="container">
-    {% for product, range, nSlides in allProds %}
-    <div>
-    {% for item in product %}
-    <div class="col-md-12 ">
-        <div class="row bg-succes no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="col  p-4 d-flex flex-column position-static">
-                <strong class="d-inline-block mb-2  text-primary">
-                    <h5><b>{{item.user}}</b></h5>
-                </strong>
-                <div class="preview">
-                    <p class="card-text mb-auto">{{item.text|safe|truncatechars:350}}</p>
-                    <br>
-                     <a href="/tolet/toletpost/{{item.id}}"
-                            class="stretched-link">...Details</a></p>
-                    <br>
-                    <span class="badge badge-secondary"> {{item.timestamp|naturaltime}} </span> <strong
-                        class="d-inline-block mb-2 text-primary">
-                        <span></span></strong>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
-    </div>
-    {% endfor %}
-</div>
-{% else %}
-<div class="mt-3">
-    <h3>Please Login to see posts </h3>
-</div>
-{% endif %}
-{% endblock %}
-<!-- <div class="col-auto d-none d-lg-block">
-                    <img src="/media/{{item.image}}" class="bd-placeholder-img" width="200" height="250"
-                        aria-label="Placeholder:thumbnail">
-                    </img>
-                </div> -->

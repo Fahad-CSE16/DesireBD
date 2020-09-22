@@ -3,157 +3,105 @@
 {% load my_filters %}
 {% block title%} Blog Post {% endblock %}
 {% block css %}
-table {
-border: 3px solid black;
-}
-th {
-background-color: #4CAF50;
-color: white;
-padding: 15px;
-text-align: center;
-border: 1px solid black;
-}
-tr:nth-child(even) {background-color: #e4bb3d;}
-tr:nth-child(odd) {background-color: #17a2b8;}
-tr:hover {background-color: #f5f5f5;}
-td {
-height: 50px;
-vertical-align: center;
-horizontal-align:center;
-text-align: center;
-border: 1px solid black;
+.btn{
+    width:auto;
 }
 #image{
     visibility:hidden;
 }
+.modal-body, .modal-fade, .modal-content{
+    background:none;
+    color:white;
+    border:solid white 1px;
+}
+.col-md-10{
+    text-align:center;
+}
 {% endblock css %}
 {% block body %}
+{% load crispy_forms_tags %}
 
 <!-- <img src='/media/{{user.userprofile.image}}' alt="..." width="auto" height="300px"> -->
 {% for i in pic %}
 <img src='/media/{{i.file}}' alt="..." width="auto" height="300px">
 
 {% if user == post.user %}
-<a href="/tolet/deletephoto/{{i.id}}">Delete THIS photo</a>
-
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+<a>Delete THIS photo</a>
+</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Photo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       Are You sure To delete this photo?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"><a href="">Close</a></button>
+        <button type="button" class="btn btn-primary"><a href="/tolet/deletephoto/{{i.id}}/">Delete</a></button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endif %}
 
 {% endfor %}
 
 
-<div class="container">
-    <div class="row mt-1">
-        <div class="col-md-8 blog-main">
+
+        <div class="col-md-10 offset-md-1">
             <div class="blog-post">
 
                 <h2><b>{{post.user}}</b> </h2>
                 <h5 class="pb-4 mb-2 font-italic ">
                     {{post.title|safe}}
                 </h5>
-                <p>{{post.text|safe}}</p>
+                <p>{{post.details|safe}}</p>
                 <br>
-                <div style="overflow-x:auto;">
-                    <table>
-                        <tr>
-                            <th>Field</th>
-                            <th>Value</th>
-
-                        </tr>
-                        <tr>
-                            {% if post.category == "a" %}
-                            <td><b> Category:</b></td>
-                            <td> Flat</td>
-
-                            {% elif post.category == "b" %}
-                            <td><b> Category:</b></td>
-                            <td>Room</td>
-
-                            {% elif post.category == "c" %}
-                            <td><b> Category:</b></td>
-                            <td>Any_space</td>
-
-                            {% elif post.category == "Land" %}
-                            <td> <b> Category:</b></td>
-                            <td>Room</td>
-
-                            {% elif post.category == "Shop" %}
-                            <td> <b> Category:</b></td>
-                            <td> Room</td>
-
-                            {% elif post.category == "Hostel_seat" %}
-                            <b> Category:</b></td> Room</td>
-
-                            {% elif post.category == "Company" %}
-                            <b> Category:</b> </td> Room</td>
-
-                            {% elif post.category == "Building" %}
-                            <b> Category:</b></td> Room</td>
-
-                            {% elif post.category == "Bill_board" %}
-                            <b> Category:</b> </td>Room</td>
-
-                            {% elif post.category == "Media_advertisement" %}
-                            <b> Category:</b> </td>Room</td>
-                            {% endif %}
-                        </tr>
-                        <tr>
-                            <td><b> House_no:</b></td>
-                            <td> {{post.house_no|safe}}</td>
-
-                        </tr>
-                        <tr>
-                            <td><b> post_code:</b></td>
-                            <td> {{post.post_code|safe}} </td>
-                        </tr>
-                        <tr>
-                            <td><b>road_no: </b></td>
-                            <td> {{post.road_no|safe}}</td>
-                        </tr>
-                        <tr>
-                            <td><b> village: </b></td>
-                            <td> {{post.village|safe}} </td>
-                        </tr>
-                        <tr>
-                            <td><b> upozila: </b></td>
-                            <td> {{post.upozila|safe}}</td>
-                        </tr>
-                        <tr>
-                            <td><b> Zilla: </b></td>
-                            <td> {{post.Zilla|safe}} </td>
-                        </tr>
-                        <tr>
-                            <td><b> division: </b></td>
-                            <td> {{post.division|safe}} </td>
-                        </tr>
-                        <tr>
-                            <td><b> country: </b></td>
-                            <td> {{post.country|safe}} </td>
-                        </tr>
-                        <tr>
-                            <td><b> phone: </b></td>
-                            <td> {{post.phone|safe}} </td>
-                        </tr>
-                        <tr>
-                            <td><b>email:</b></td>
-                            <td> {{post.email|safe}} </td>
-                        </tr>
-                        <tr>
-                            <td><b> rent: </b></td>
-                            <td> {{post.rent|safe}}TK </td>
-                        </tr>
-                        <tr>
-                            <td><b> area: </b></td>
-                            <td> {{post.area|safe}}</td>
-                        </tr>
-                    </table>
-                </div>
+                
                 <a href="#"><span>- {{view}} seens</span></a>
 
                 {% if user == post.user %}
                 <div>
                     <a href="/tolet/edittolet/{{post.id}}/">Edit Post</a>
                     <br>
-                    <a href="/tolet/addphoto/{{post.id}}/"> Add</a> a Photo to this post
+                    
+                    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+  <a href=""> Add Photo</a>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add Photo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Add Photos of Your Property To Your Post
+      </div>
+      <div class="modal-footer">
+        <form action="/tolet/addphoto/{{post.id}}/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+                {{ file_form|crispy }}
+            <button class="btn btn-outline-info " type="submit" id="add" value="submit">Submit </button>
+            {% comment %} <input type="submit" value="Submit"> {% endcomment %}
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
                     <div id="btnOne"><a href="#" onClick="javascript:addBtn();">Delete</a> </div>
                 </div>
                 <div id="btnHolder"></div>
@@ -170,8 +118,6 @@ border: 1px solid black;
                 {{like}} People Likes The Post
             </div><!-- /.blog-post -->
         </div><!-- /.blog-main -->
-    </div>
-</div>
 
 <div class="container">
     {% if user.is_authenticated %}
