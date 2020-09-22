@@ -6,6 +6,8 @@ from .views import *
 app_name = 'metrimony'
 urlpatterns = [
 
-    path('expectaion/',expectaion, name='expectation'),
+    path('expectation/',expectaion, name='expectation'),
+    path('hobby/', hobby, name='hobby'),
+    path('body/', body, name='body'),
 
 ]

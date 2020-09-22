@@ -20,10 +20,29 @@
                 <div class="sub-menu-1">
                     <ul>
                         <li><a href="{% url 'updateprofile' %}">UserProfile</a></li>
-                        <li><a href="{% url 'updatessc' %}">SSC</a></li>
-                        <li><a href="/profile/updatehsc/">HSC</a></li>
-                        <li><a href="/profile/afterhsc/">UnderGraduation</a></li>
-                        <li><a href="/profile/postgraduate/">PostGraduation</a></li>
+                        <li class="hover-me"><a href="">Education Profile</a>
+                                <div class="sub-menu-2">
+                                    <ul>
+                                        <li><a href="{% url 'updatessc' %}">SSC</a></li>
+                                        <li><a href="/profile/updatehsc/">HSC</a></li>
+                                        <li><a href="/profile/afterhsc/">UnderGraduation</a></li>
+                                        <li><a href="/profile/postgraduate/">PostGraduation</a></li>
+                                    </ul>
+                                </div>
+
+                        </li>
+                        <li class="hover-me"><a href="">Metrimony Profile</a>
+                                <div class="sub-menu-2">
+                                    <ul>
+                                        <li><a href="">Personal Info</a></li>
+                                        <li><a href="/metrimony/expectation/">Expectation</a></li>
+                                        <li><a href="/metrimony/hobby/">Hobby</a></li>
+                                        <li><a href="/metrimony/body/">Body Information</a></li>
+                                        <li><a href="/profile/postgraduate/">PostGraduation</a></li>
+                                    </ul>
+                                </div>
+
+                        </li>
                         <li><a href="/profile/tuitionprofile/">Tuition Profile</a></li>                        
                     </ul>
                     </div>
@@ -178,4 +197,18 @@ div.media-body {
  .media-body  ul li:hover .sub-menu-1 ul li a:hover{
     color: blue;
 }
+
+ .fa-angle-right{
+     float: right;
+ }
+ .sub-menu-2{
+     display: none;
+ }
+ .hover-me:hover .sub-menu-2{
+     position: absolute;
+     display: block;
+margin-top: -40px;
+margin-left:140px;
+background: none;
+ }
 {% endblock  %}

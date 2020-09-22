@@ -7,16 +7,23 @@ from django.contrib.auth.forms import UserCreationForm
 from person.fields import ListTextWidget
 
 class BodyForm(ModelForm):
+    height=forms.CharField(required=True)
     class Meta:
         model = Body
-        exclude=['user']
-class FamilyForm(ModelForm):
-    class Meta:
-        model = Family
-        exclude=['user']
+        exclude = ['user']
+    def __init__(self, *args, **kwargs):
+        _height_list = kwargs.pop('data_list', None)
+        super(BodyForm, self).__init__(*args, **kwargs)
+        self.fields['height'].widget = ListTextWidget(data_list=_height_list, name='height-list')
 class HobbyForm(ModelForm):
     class Meta:
         model = Hobby
+        exclude = ['user']
+        
+
+class FamilyForm(ModelForm):
+    class Meta:
+        model = Family
         exclude=['user']
 class OccupationForm(ModelForm):
     class Meta:
@@ -29,7 +36,9 @@ class PersonalForm(ModelForm):
 class AddressForm(ModelForm):
     class Meta:
         model = Address
-        exclude=['user']
+        exclude = ['user']
+        
+        
 class ExpectaionForm(ModelForm):
     education = forms.CharField(required=True)
     profession = forms.CharField(required=True)

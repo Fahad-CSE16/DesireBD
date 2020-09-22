@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import (Country, Education, Expectaion, Address, Body, Family, Height, Hobby, Language, Occupation, Personal_Info, Profession, Religion, Sir_name, State, Weight
                      )
-from .forms import ExpectaionForm
+from .forms import *
 from django.db.models import Q
 #basic import
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
@@ -28,7 +28,6 @@ def expectaion(request):
         instance = Expectaion.objects.get(user=request.user)
     except Expectaion.DoesNotExist:
         instance = None
-    print(instance)
     if request.method == 'POST':
         if instance:
             form = ExpectaionForm(request.POST, instance=instance)
@@ -87,3 +86,51 @@ def expectaion(request):
         'form': form
     }
     return render(request, 'metrimony/expectation.html', context)
+
+
+def hobby(request):
+    try:
+        instance = Hobby.objects.get(user=request.user)
+    except Hobby.DoesNotExist:
+        instance = None
+    if request.method == 'POST':
+        if instance:
+            form = HobbyForm(request.POST, instance=instance)
+        else:
+            form = HobbyForm(request.POST)
+        if form.is_valid():
+            profile_obj = form.save(commit=False)
+            profile_obj.user = request.user
+            profile_obj.save()
+            messages.success(request, 'Successfully updated.')
+            return redirect('userprofile')
+    else:
+
+        form = HobbyForm(instance=instance)
+    context = {
+        'form': form
+    }
+    return render(request, 'metrimony/hobby.html', context)
+def body(request):
+    try:
+        instance = Body.objects.get(user=request.user)
+    except Body.DoesNotExist:
+        instance = None
+    if request.method == 'POST':
+        if instance:
+            form = BodyForm(request.POST, instance=instance)
+        else:
+            form = BodyForm(request.POST)
+        if form.is_valid():
+            profile_obj = form.save(commit=False)
+            profile_obj.user = request.user
+            profile_obj.save()
+            messages.success(request, 'Successfully updated.')
+            return redirect('userprofile')
+    else:
+        height=Height.objects.all().order_by('name')
+        form = BodyForm(instance=instance,data_list=height)
+    context = {
+        'form': form
+    }
+    return render(request, 'metrimony/body.html', context)
