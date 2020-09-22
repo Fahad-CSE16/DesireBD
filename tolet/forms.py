@@ -33,4 +33,7 @@ class FileModelForm(forms.ModelForm):
         widgets = {
             'file': ClearableFileInput(attrs={'multiple': True}),
            }
+        labels = {
+            'file': 'Property Photo'
+        }
         # widget is important to upload multiple files

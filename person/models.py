@@ -131,17 +131,25 @@ class Subject(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['name']
+
 class Classes(models.Model):
     name=models.CharField(max_length=150)
 
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['name']
 class District(models.Model):
     name = models.CharField(max_length=150)
 
     def __str__(self):
         return self.name
+    class Meta:
+        ordering = ['name']
+    
 
     
 class SubDistrict(models.Model):

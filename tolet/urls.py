@@ -13,4 +13,5 @@ urlpatterns = [
     path('addphoto/<int:id>/', views.addphoto, name='addphoto'),
     path('edittolet/<int:id>/', views.edittolet, name='edittolet'),
     path('toletpost/<int:sno>/', views.toletpost, name='toletpost'),
+    path('filterpost/', views.filterpost, name='filterpost'),
 ]

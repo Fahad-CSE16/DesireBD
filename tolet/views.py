@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, HttpResponse,redirect,get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -27,17 +28,14 @@ def likepost(request, sno):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def viewtolet(request):
-    post= Post.objects.all()
+    post = Post.objects.all().order_by('-timestamp')
     params = {
-        'district': District.objects.all(),
-        'category': Category.objects.all(),
-        'area': Area.objects.all(),
+        'district': District.objects.all().order_by('name'),
+        'category': Category.objects.all().order_by('name'),
+        'area': Area.objects.all().order_by('name'),
         'post':post,
-
     }
     return render(request, 'tolet/viewtolet.html', params)
-
-
     
 def posttolet(request):
     user = request.user
@@ -70,28 +68,6 @@ def posttolet(request):
     }
     return render(request, 'tolet/posttolet.html',context)
 
-# def imgup(request,id):
-#     instance=Post.objects.get(id=id)
-#     if request.method =='POST':
-#         form = PostModelForm(instance=instance)
-#         file_form = FileModelForm(request.POST, request.FILES)
-#         files = request.FILES.getlist('file') #field name in model
-#         if file_form.is_valid():
-#             for f in files:
-#                 file_instance = PostFile(file=f, feed=instance)
-#                 file_instance.save()
-#             messages.success(request, 'Successfully Added your post with image')
-#             return redirect(f"/tolet/toletpost/{instance.id}")
-#     else:
-#         file_form = FileModelForm()
-#         form = PostModelForm(instance=instance)
-#     context={
-#         'instance': instance,
-#         'id': instance.id,
-#         'file_form': file_form,
-#         'form': form,
-#     }
-#     return render(request, 'tolet/imgup.html',context)
 def addphoto(request,id):
     instance=Post.objects.get(id=id)
     if request.method == 'POST':
@@ -221,3 +197,18 @@ def edittolet(request, id):
             }
         # redirect to a new URL:
     return render(request, 'tolet/updatetolet.html',context )
+
+
+def filterpost(request):
+    if request.method == "POST":
+        district = request.POST['district_i']
+        category = request.POST['category_i']
+        area = request.POST['area_i']
+        # print(district, subject, classes)
+        if district or subject or classes:
+            queryset = (Q(district__name__icontains=district)) & (
+                Q(area__icontains=area)) & (Q(category__name__icontains=category))
+            results = Post.objects.filter(queryset).distinct().order_by('-timestamp')
+        else:
+            results = []
+    return render(request, "tolet/filterpost.html", {'results': results})

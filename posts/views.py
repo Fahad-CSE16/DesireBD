@@ -21,6 +21,8 @@ from notifications.signals import notify
 # Create your views here.
 from django.views import generic, View
 from django.urls import reverse_lazy
+from django.db.models import Q
+
 def filterpost(request):
     if request.method == "POST":
         district = request.POST['district_i']
@@ -147,7 +149,7 @@ class UpdatePostView(generic.UpdateView):
         id = self.kwargs['pk']
         return reverse_lazy('posts:blogPost', kwargs={'sno': id})
 
-from django.db.models import Q
+
 
 def search(request):
     query = request.GET.get('q', '')
@@ -200,10 +202,10 @@ def blogPost(request, sno):
 
 
 def viewpost(request):
-    posts = TuitionPost.objects.all()
-    district = District.objects.all()
-    subject = Subject.objects.all()
-    classes = Classes.objects.all()
+    posts = TuitionPost.objects.all().order_by('timeStamp')
+    district = District.objects.all().order_by('name')
+    subject = Subject.objects.all().order_by('name')
+    classes = Classes.objects.all().order_by('name')
     params = {
         'posts': posts,
         'subject': subject,
