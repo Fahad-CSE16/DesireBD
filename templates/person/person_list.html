@@ -1,7 +1,7 @@
 {% extends 'basic.html' %}
 {% block title%} UserList {% endblock %}
 {% block body %}
-
+{% if user.is_authenticated %}
 <div class="col-md-6 offset-md-3">
   <form action="/profile/teacherlist/" method="post">
     {% csrf_token %}
@@ -10,7 +10,7 @@
       <select class="custom-select" id="inputGroupSelect01" name="district_i" >
         <option ></option>
         {% for i in district %}
-        <option value="{{i}}">{{i.id}}:{{i}}</option>
+        <option value="{{i}}">{{i}}</option>
         {% endfor %}
       </select>
       <div class="input-group-append">
@@ -22,7 +22,7 @@
       <select class="custom-select" id="inputGroupSelect03" name="subject_i" >
         <option ></option>
         {% for i in subject %}
-        <option value="{{i}}">{{i.id}}:{{i}}</option>
+        <option value="{{i}}">{{i}}</option>
         {% endfor %}
       </select>
       <div class="input-group-append">
@@ -34,7 +34,7 @@
       <select class="custom-select" id="inputGroupSelect02" name="class_i" >
         <option ></option>
         {% for i in classes %}
-        <option value="{{i}}">{{i.id}}:{{i}}</option>
+        <option value="{{i}}">{{i}}</option>
         {% endfor %}
       </select>
       <div class="input-group-append">
@@ -69,4 +69,12 @@
     </div>
     {% endfor %}
   </div>
+  {% else %}
+  <h1>Please Login First</h1>
+  {% endif %}
   {% endblock %}
+  {% block css %}
+  h1{
+    color:white
+  }
+  {% endblock  %}

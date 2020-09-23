@@ -1,16 +1,9 @@
 {% extends 'basic.html' %}
 {% block body %}
-<div class="col-md-8 offset-md-2">
-{% if user.is_authenticated %}
 
-
-   <button class="btn"><a href="/metrimony/allmetri/">View all Profile</a></button>
-
-
-        {% for u in userss %}
-                {% if not forloop.last %}
+        {% for u in user %}
+                {% if u.personal_info or u.expectation or u.hobby or u.family or u.body or u.occupation or u.address  %}
         <div class="col-md-8 offset-md-2">
-
             <div
                 class="row bg-succes no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="media">
@@ -29,18 +22,8 @@
             </div>
         </div>
                 {% endif %}
-                <h1> No More Matches</h1>
         {% endfor %}
-{% else %}
-Please Login To find Your Matches
-{% endif %}
-</div>
-    {% endblock  %}
-    {% block css %}
-    .btn{
-        width:auto;
-    }
-    h1{
-        color:white;
-    }
+
+
+
     {% endblock  %}

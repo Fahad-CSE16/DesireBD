@@ -374,7 +374,9 @@ def partner(request):
     else:
         return HttpResponseRedirect('/metrimony/personal/')
 
-
+def allMetri(request):
+    user = User.objects.all().order_by('username')
+    return render(request, 'metrimony/allmetri.html', {'user':user})
 
 @login_required
 def metrimony_profile(request, slug):
