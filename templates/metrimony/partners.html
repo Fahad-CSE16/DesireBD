@@ -1,9 +1,11 @@
 {% extends 'basic.html' %}
 {% block body %}
     {% for u in userss %}
+    {% if not forloop.last %}
         {{u.username}}
         <b>b</b>
         <br>
+    {% endif %}
     {% endfor %}
 
 {% endblock  %}

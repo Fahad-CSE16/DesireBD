@@ -333,7 +333,6 @@ def partnerchoose(u, expectation,user):
     except:
         personal = None
     if personal and use:
-        print(use.gender)
         if personal.marital_status == expectation.marital_status:
             count = count + 1
         if personal.age >= expectation.min_age and personal.age <= expectation.max_age:
@@ -352,25 +351,21 @@ def partnerchoose(u, expectation,user):
             count = count + 1
         if personal.highest_degree_of_education == expectation.education:
             count = count + 1
-
-    print(count)
     if count >= 9:
         return True
 def partner(request):
     user = request.user
     users = User.objects.all().exclude(username=user.username)
-    
     try:
         expect = user.ecpectation
     except:
         expect = None
     if expect:
+        n=User.objects.filter(username=user.username)
         for u in users:
-            print(u.username)
-            if partnerchoose(u, expect,user):
-               n = u.union(u)
-                
-        
+            if partnerchoose(u, expect, user):
+                m=User.objects.filter(username=u.username)
+                n = n.union(m)
         context = {
             'userss': n,
         }
