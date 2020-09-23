@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .models import (Country, Education, Expectaion, Address, Body, Family, Height, Hobby, Language, Occupation, Personal_Info, Profession, Religion, Sir_name, State, Weight,Age,Company
                      )
@@ -372,5 +373,13 @@ def partner(request):
         return render(request, 'metrimony/partners.html', context)
     else:
         return HttpResponseRedirect('/metrimony/personal/')
-    
-    
+
+
+
+@login_required
+def metrimony_profile(request, slug):
+    user = User.objects.get(username=slug)
+    context = {
+        'user': user,
+    }
+    return render(request, 'metrimony/metrimony_profile.html', context)

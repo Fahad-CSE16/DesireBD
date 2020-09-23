@@ -1,0 +1,158 @@
+{% extends 'basic.html' %}
+
+{% block title%} Users Profile{% endblock %}
+{% block userprofile %} active{% endblock userprofile %}
+{% block body %}
+{% load crispy_forms_tags %}
+{% if user.is_authenticated %}
+<div class="col-md-6 offset-md-3">
+    <div class="media">
+        <img class="rounded-circle account-img my-2 mx-3 mr-3" src="{{user.personal_info.profile_photo.url}}" alt="...">
+        <div class="media-body">
+            <h5 class="mt-0">UserName:{{user.username}}</h5>
+            Name: {{user.first_name}} {{user.last_name}}
+            <br>
+            Email:{{user.email}}
+            <br>
+        </div>
+    </div>
+    {% if user.userprofile %}
+    <div class="ab">
+        <b>
+            <h3>
+                <legend class="border-bottom mb-4">Personal Information</legend>
+            </h3>
+        </b>
+        <b>Gender &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i>
+            {{user.personal_info.gender}}</i> <br>
+        <b>Full Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.personal_info.full_name}}</i> <br>
+        <b>SIr Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.personal_info.sir_name}}</i> <br>
+        <b>Blood Group&nbsp; &nbsp;: </b> <i> {{user.personal_info.blood_group}}</i> <br>
+        <b>Birth Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> {{user.personal_info.birth_date}}</i> <br>
+        <b>Age&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> {{user.personal_info.age}}</i> <br>
+        <b>Marital Status : </b> <i> {{user.personal_info.marital_status}}</i> <br>
+        <b>Religion&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i>{{user.personal_info.religion}}</i> <br>
+        {% if  user.personal_info.is_phone_public %}<b>Phone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;: </b> <i>{{user.personal_info.phone}}</i><br>{% endif %}
+        <b>Education&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> {{user.personal_info.highest_degree_of_education}}</i> <br>
+        <b>Mother Tongue&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> {{user.personal_info.mother_tongue}}</i> <br>
+        <b>Language Knows:&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> {% for cls in user.personal_info.languages.all %}{{cls}}{% if not forloop.last %}  , &nbsp;   {% endif %}{% endfor %}</i> <br>
+        <b>DIET Plan:&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> {{user.personal_info.diet}}</i> <br>
+        <b>Smoking Habit?&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i>{% if user.personal_info.do_u_smoke %}Yes {% else %} No {% endif %}</i> <br>
+        <b>Drinking Havit?&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i>{% if user.personal_info.do_u_drink %}Yes {% else %} No {% endif %}</i> <br>
+        <b>Have Child?&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i>{% if user.personal_info.have_child %}Yes {% else %} No {% endif %}</i> <br>
+        <b>
+            <div class="border-bottom text-center mb-4">Biodata</div>
+        </b> <i>
+            <p> {{user.personal_info.biodata}}</p>
+        </i> <br>
+    </div>
+    <br><br>{% endif %} 
+
+
+{% if user.address %}
+    <div class="ab">
+        <b><h3> <legend class="border-bottom mb-4">Address</legend></h3></b>
+        <b>District &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i>
+            {{user.address.district}}</i> <br>
+        <b>State : </b> <i> {{user.address.state}}</i> <br>
+        <b>Residency Country&nbsp; &nbsp;: </b> <i> {{user.address.residency_country}}</i> <br>
+        <b>Birth Country &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> {{user.address.birth_country}}</i> <br>
+        <b>Grow Up Country&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i>{{user.address.grow_up_country}}</i> <br>
+        <b>Present Address &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.address.present_address}}</i> <br>
+        <b>Permanent Address &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.address.permanent_address}}</i> <br>
+   <br><br> {% endif %} 
+
+{% if user.family %}
+    <div class="ab">
+        <b><h3> <legend class="border-bottom mb-4">Family</legend></h3></b>
+        <b>Father Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i>
+            {{user.family.father_name}}</i> <br>
+        <b>Father's Occupation : </b> <i> {{user.family.fathers_occupation}}</i> <br>
+        <b>Mother Name&nbsp; &nbsp;: </b> <i> {{user.family.mother_name}}</i> <br>
+        <b>Mother's Occupation &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> {{user.family.mothers_occupation}}</i> <br>
+        <b>Number Of Brothers and Sisters : </b> <i>{{user.family.no_of_bro_sis}}</i> <br>
+        <b>Family Type &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.family.family_type}}</i> <br>
+        <b>Family Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.family.family_status}}</i> <br>
+    <br><br>{% endif %} 
+
+{% if user.occupation %}
+    <div class="ab">
+        <b><h3> <legend class="border-bottom mb-4">Work Information</legend></h3></b>
+        <b>Profession&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i>
+            {{user.occupation.occupation}}</i> <br>
+        <b>Work Location : </b> <i> {{user.occupation.work_location}}</i> <br>
+        <b>Employed By&nbsp; &nbsp;: </b> <i> {{user.occupation.employed_by}}</i> <br>
+        <b>Company&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> {{user.occupation.company}}</i> <br>
+        <b>Salary &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i>{{user.occupation.salary}}</i> <br>
+        <b>Work From &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.occupation.work_from}}</i> <br>
+  <br><br>  {% endif %} 
+
+{% if user.body %}
+    <div class="ab">
+        <b><h3> <legend class="border-bottom mb-4">Body Structure</legend></h3></b>
+        <b>Height&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.body.height}}</i> <br>
+        <b>Weight : </b> <i> {{user.body.weight}}</i> <br>
+        <b>Eye Color&nbsp; &nbsp;: </b> <i> {{user.body.eye_color}}</i> <br>
+        <b>Hair Color&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> {{user.body.hair_color}}</i> <br>
+        <b>Hair Style &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i>{{user.body.hair_style}}</i> <br>
+        <b>Complexion &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.body.complexion}}</i> <br>
+        <b>Body Type &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.body.body_type}}</i> <br>
+        <b>Physically?&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i>{% if user.body.any_disability %} have Disability {% else %} Strong{% endif %}</i> <br>
+<br><br>
+    {% endif %} 
+
+{% if user.hobby %}
+    <div class="ab">
+        <b><h3> <legend class="border-bottom mb-4">Hobbies and Interests</legend></h3></b>
+        <b>Hobbies&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.hobby.hobbies}}</i> <br>
+        <b>Interests : </b> <i> {{user.hobby.interest}}</i> <br>
+        <b>Music&nbsp; &nbsp;: </b> <i> {{user.hobby.music}}</i> <br>
+        <b>Read Books&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i> {{user.hobby.read_books}}</i> <br>
+        <b>Tv Show(s) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i>{{user.hobby.tv_shows}}</i> <br>
+        <b>Sport Show(s) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.hobby.sports_shows}}</i> <br>
+        <b>Sport&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.hobby.sports}}</i> <br>
+        <b>Favourite Dress Style  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.hobby.fav_dress_style}}</i> <br>
+        <b>Favourite Color &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.hobby.fav_color}}</i> <br>
+        <b>Can Sing?&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i>{% if user.hobby.know_singing %} Yes {% else %} No{% endif %}</i> <br>
+        <b>Can Dance?&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i>{% if user.hobby.know_dancing %} Yes {% else %} No{% endif %}</i> <br>
+
+    <br><br>{% endif %} 
+
+{% if user.ecpectation %}
+    <div class="ab">
+        <b><h3> <legend class="border-bottom mb-4">Expectaion From Life Partner</legend></h3></b>
+        <b>Age&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.ecpectation.min_age}}</i> ----- {{user.ecpectation.max_age}} <br>
+        <b>Height : </b> <i> {{user.ecpectation.min_height}}</i> ----- <i>{{user.ecpectation.max_height}}</i> <br>
+        <b>Matital Status&nbsp; &nbsp;: </b> <i> {{user.ecpectation.marital_status}}</i> <br>
+        <b>Will Accept Children ?  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :  </b> <i>{% if user.ecpectation.with_chilern %} Yes {% else %} No{% endif %}</i> <br>
+        <b>Religion &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i>{{user.ecpectation.religion}}</i> <br>
+        <b>Residency Country &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.ecpectation.residency_country}}</i> <br>
+        <b>Complexion&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.ecpectation.complexion}}</i> <br>
+        <b>Education  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.ecpectation.education}}</i> <br>
+        <b>Profession &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.ecpectation.profession}}</i> <br>
+        <b>DIET &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <i> {{user.ecpectation.diet}}</i> <br>
+        <b>Can Have Drinking Habit?&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i>{% if user.ecpectation.drinking_havits %} Yes {% else %} No{% endif %}</i> <br>
+        <b>Can Have Smoking Habit?&nbsp;&nbsp;&nbsp;&nbsp; : </b> <i>{% if user.ecpectation.smoking_havits %} Yes {% else %} No{% endif %}</i> <br>
+<br><br>
+    {% endif %} 
+
+
+
+</div>
+
+
+{% else %}
+<H1>Please Login To see details</H1>
+{% endif %}
+
+{% endblock %}
+{% block css %}
+div.ab {
+height: auto;
+width:100%;
+color:white;
+background: none;}
+.media-body{
+color:white;
+}
+{% endblock  %}

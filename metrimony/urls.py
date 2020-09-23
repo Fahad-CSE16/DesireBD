@@ -14,5 +14,7 @@ urlpatterns = [
     path('family/', family, name='family'),
     path('occupation/', occupation, name='occupation'),
     path('partners/', partner, name='partners'),
+    path('metrimony_profile/<str:slug>/',  metrimony_profile, name='metrimony_profile'),
+
 
 ]

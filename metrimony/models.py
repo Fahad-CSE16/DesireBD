@@ -1,3 +1,4 @@
+from PIL import Image
 from django.db import models
 from django.contrib.auth.models import User
 from person.models import District
@@ -113,6 +114,7 @@ class Address(models.Model):
     present_address=models.CharField(max_length=300)
     permanent_address = models.CharField(max_length=300)
 
+
 class Personal_Info(models.Model):
     MARITAL_STATUS_CHOICES = (
         ('Married', 'Married'),
@@ -160,7 +162,15 @@ class Personal_Info(models.Model):
     diet = models.CharField(max_length=100, choices=DIET)
     do_u_smoke = models.BooleanField(default=False)
     do_u_drink=models.BooleanField(default=False)
-    have_child=models.BooleanField(default=False)
+    have_child = models.BooleanField(default=False)
+
+    def save(self):
+        super().save()
+        img = Image.open(self.profile_photo.path)
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.profile_photo.path)
 
 class Body(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='body')

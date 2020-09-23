@@ -1,11 +1,32 @@
 {% extends 'basic.html' %}
 {% block body %}
-    {% for u in userss %}
-    {% if not forloop.last %}
-        {{u.username}}
-        <b>b</b>
-        <br>
-    {% endif %}
-    {% endfor %}
+    
 
-{% endblock  %}
+
+        {% for u in userss %}
+        <div class="col-md-8 offset-md-2">
+
+            <div
+                class="row bg-succes no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                {% if not forloop.last %}
+                <div class="media">
+                    <img class="rounded-circle account-img my-2 mx-3 mr-3" src="{{u.userprofile.image.url}}" style="width: 200px; max-height: fit-content;"
+                        alt="...">
+                    <div class="media-body">
+                        <a href="/metrimony/metrimony_profile/{{u.username}}/">
+                            <h4>{{u.username}} </h4>
+                        </a>
+                        Name: {{u.first_name}} {{u.last_name}}
+                        <br>
+                        Email:{{u.email}}
+                        <br>
+                    </div>
+                </div>                
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+
+
+
+    {% endblock  %}
