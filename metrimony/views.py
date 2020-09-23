@@ -297,3 +297,85 @@ def occupation(request):
         'form': form
     }
     return render(request, 'metrimony/occupation.html', context)
+
+
+def partnerchoose(u, expectation,user):
+    try:
+        use = user.personal_info
+    except:
+        use=None
+    count = 0
+    try:
+        body = u.body
+    except:
+        body = None
+    if body:
+        if body.height >= expectation.min_height and body.height <= expectation.max_height:
+            count = count + 1
+        if body.complexion == expectation.complexion:
+            count = count + 1
+    try:
+        address = u.address
+    except:
+        address = None
+    if address:
+        if address.residency_country == expectation.residency_country:
+            count = count + 1
+    try:
+        occupation = u.occupation
+    except:
+        occupation = None
+    if occupation:
+        if occupation.occupation == expectation.profession:
+            count = count + 1
+    try:
+        personal= u.personal_info
+    except:
+        personal = None
+    if personal and use:
+        print(use.gender)
+        if personal.marital_status == expectation.marital_status:
+            count = count + 1
+        if personal.age >= expectation.min_age and personal.age <= expectation.max_age:
+            count = count + 1
+        if personal.have_child == expectation.with_childern:
+            count = count + 1
+        if personal.religion == expectation.religion:
+            count = count + 1
+        if personal.gender != use.gender:
+            count = count + 1
+        if personal.diet == expectation.diet:
+            count = count + 1
+        if personal.do_u_smoke == expectation.smoking_havits:
+            count = count + 1
+        if personal.do_u_drink == expectation.drinking_havits:
+            count = count + 1
+        if personal.highest_degree_of_education == expectation.education:
+            count = count + 1
+
+    print(count)
+    if count >= 9:
+        return True
+def partner(request):
+    user = request.user
+    users = User.objects.all().exclude(username=user.username)
+    
+    try:
+        expect = user.ecpectation
+    except:
+        expect = None
+    if expect:
+        for u in users:
+            print(u.username)
+            if partnerchoose(u, expect,user):
+               n = u.union(u)
+                
+        
+        context = {
+            'userss': n,
+        }
+        return render(request, 'metrimony/partners.html', context)
+    else:
+        return HttpResponseRedirect('/metrimony/personal/')
+    
+    

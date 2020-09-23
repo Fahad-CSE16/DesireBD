@@ -149,6 +149,8 @@ class Personal_Info(models.Model):
     is_phone_public = models.BooleanField(default=False)
     religion = models.CharField(max_length=100)
     birth_date = models.DateField()
+    age=models.CharField(max_length=30, default='')
+    highest_degree_of_education=models.CharField(max_length=30, default='')
     blood_group = models.CharField(max_length=3, choices=BLOOD_GROUP)
     gender = models.CharField(max_length=50, choices=GENRE_CHOICES)
     biodata = models.TextField()
@@ -158,6 +160,7 @@ class Personal_Info(models.Model):
     diet = models.CharField(max_length=100, choices=DIET)
     do_u_smoke = models.BooleanField(default=False)
     do_u_drink=models.BooleanField(default=False)
+    have_child=models.BooleanField(default=False)
 
 class Body(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='body')

@@ -13,5 +13,6 @@ urlpatterns = [
     path('address/', address, name='address'),
     path('family/', family, name='family'),
     path('occupation/', occupation, name='occupation'),
+    path('partners/', partner, name='partners'),
 
 ]
