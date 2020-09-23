@@ -6,10 +6,10 @@
 {% if user.is_authenticated %}
 <div class="col-md-7 offset-md-3">
  
-        <form action="/metrimony/expectaion/" method="post" enctype="multipart/form-data" >
+        <form  method="post" enctype="multipart/form-data" >
             {% csrf_token %}
             <fieldset class="form-group mx-auto">
-                <legend class="border-bottom text-center mb-4"><h2>Add Your expectation</h2></legend>
+                <legend class="border-bottom text-center mb-4"><h2> Expectation From Your Would be</h2></legend>
                 {{ form|crispy }}
                 
             </fieldset>

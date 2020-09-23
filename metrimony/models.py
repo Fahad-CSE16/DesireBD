@@ -44,7 +44,20 @@ class Weight(models.Model):
     def __str__(self):
         return self.name
     class Meta:
-        ordering= ['name']
+        ordering = ['name']
+class Age(models.Model):
+    name = models.CharField(max_length=100)
+    def __str__(self):
+        return self.name
+    class Meta:
+        ordering = ['name']
+class Company(models.Model):
+    name = models.CharField(max_length=100)
+    def __str__(self):
+        return self.name
+    class Meta:
+        ordering = ['name']
+
 class Religion(models.Model):
     name = models.CharField(max_length=100)
     def __str__(self):
@@ -92,11 +105,11 @@ class Family(models.Model):
 
 class Address(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='address')
-    district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='address_district')
+    district = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
-    residency_country = models.ForeignKey(Country, on_delete=models.CASCADE,related_name='resi_country')
-    birth_country = models.ForeignKey(Country, on_delete=models.CASCADE,related_name='birth_country')
-    grow_up_country = models.ForeignKey(Country, on_delete=models.CASCADE ,related_name='growup_country')
+    residency_country = models.CharField(max_length=100)
+    birth_country = models.CharField(max_length=100)
+    grow_up_country = models.CharField(max_length=100)
     present_address=models.CharField(max_length=300)
     permanent_address = models.CharField(max_length=300)
 
