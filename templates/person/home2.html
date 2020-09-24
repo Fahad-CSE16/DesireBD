@@ -1,149 +1,78 @@
 {% extends 'basic.html' %}
 {% block body %}
-
-    <!-- <div class="col-md-14 ">
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-                <div class="carousel-item active " style="background:linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/static/images/bg.jpg');">
-                    <div class="col-md-12 offset-md-3">
-                        <div class="card" style="width: 40rem;">
-                            <div class="card-body">
-                                <h5>Tuition Post</h5>
-                                <h6>They are searching for teachers.Who?Where? For Whom?</h6>
-                                <p>Go and find out the tuition searching post and by Filtering find your desired
-                                    tuition.</p>
-                                <a href="{% url 'posts:viewpost' %}" class="btn">View Tuition Post</a>
-                                <a href="{% url 'posts:createpost' %}" class="btn">Create </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item" style="background:linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/static/images/bg.jpg');">
-                    <div class="col-md-12 offset-md-3">
-                        <div class="card" style="width: 40rem;">
-                            <div class="card-body">
-                                <h5>TO-Let Post</h5>
-                                <h6>They are searchinf for to-let</h6>
-                                <p>Go and find out the tolet post and book your desired property for a while.</p>
-                                <a href="{% url 'viewtolet' %}" class="btn">View Tolet Post</a>
-                                <a href="{% url 'posttolet' %}" class="btn">Create </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item" style="background:linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/static/images/bg.jpg');">
-                    <div class="col-md-12 offset-md-3">
-                        <div class="card" style="width: 40rem;">
-                            <div class="card-body">
-                          <h5>Users</h5>
-                            <h6>See all the users</h6>
-                            <p>Go and find out the user list and Teacher by Filtering With your Wish</p>
-                            <a href="{% url 'userlist' %}" class="btn">Users</a>
-                            </div>
-                        </div>
-                    </div  >
-                </div>
-            </div>
-            
-        </div>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      1 of 2
     </div>
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
- -->
-
+    <div class="col">
+      2 of 2
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      1 of 3
+    </div>
+    <div class="col">
+      2 of 3
+    </div>
+    <div class="col">
+      3 of 3
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
 
 <div class="row " style="position: absolute;
 top: 350px;
 ">
-
-    <div class="col " style=" background:url('/static/images/bg.jpg');
-      height:160px;
-      width:340px;     
-      ">1</div>
-    <div class="col " style=" background: url('/static/images/architect.jpg');
-      height:160px;
-      width:340px;      
-      ">2</div>
-    <div class="col" style=" background: url('/static/images/bg1.jpg');
-      height:160px;
-      width:340px;      
-      ">2</div>
-    <div class="col " style=" background: url('/static/images/bg1.jpg');
+    <a href="/posts/viewpost/">
+    <div class="col" >
+      <p>TuitionProfile</p>
+      <img src="/static/images/student.png" style=" display: block; max-height:auto; max-width:auto;object-fit: fill;
+  margin-left: auto;
+  margin-right: auto;
+" alt="">
+      </div></a>
+      <a href="/metrimony/partners/">
+    <div class="col" >
+      <p>Metrimony</p>
+        <img src="/static/images/couple.png" style=" display: block;
+  margin-left: auto;
+  margin-right: auto;
+" alt="">
+      </div></a>
+      <a href="/tolet/viewtolet/">
+    <div class="col"      >
+      <p>To-let</p>
+      <img src="/static/images/property.png" style=" display: block;
+  margin-left: auto;
+  margin-right: auto;
+" alt="">
+      </div></a>
+    {% comment %} <div class="col " style=" background:linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('/static/images/architect.jpg');
       height:160px;
      width:340px;
-      ">2</div>
+      ">2</div> {% endcomment %}
 </div>
-<div class="row" style=" background:white;">
+</div>
+<div  style=" position: absolute;
+top: 510px; width:1360px; height: 170px; background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)),white; color:black; text-align:center;">
+<h1>Welcome To Desirebd</h1>
+<p style="text-align:justify; color:black; text-shadow:1px 1px blue; padding-right:40px; padding-left:30px;">
+We are here to meet you with your Desire. You have to just create a profile and just need to add approriate data 
+to your profile.Our Program will automatically does its task and you will meet with your desire. Stay with us, be happy!
+</p>
+
 </div>
 {% endblock  %}
 {% block css %}
-
-
-.col-md-14,.col-md-12,.card-body,.card{
-background:none;
-color:white;
+p{
+    
+    color:white;
+    text-shadow:1px 1px blue;
+    text-align:center;
+    vertical-align:bottom;
+    
 }
-
-.carousel-indicators .active {
-background-color: blue;
-}
-body .carousel-indicator li{
-background-color: blue;
-}
-body .carousel-indicators{
-bottom: -20px;
-}
-.carousel-indicators li{
-background-color:black;
-}
-body .carousel-control-prev-icon,
-.sr-only{
-background-color: blue;
-width: auto;
-position: absolute;
-left:5px;
-top:00px;
-padding-top: 20px;
-padding-left: 20px;
-padding-right: 20px;
-margin-left: 300px;
-margin-right: 300px;
-}
-body .carousel-control-next-icon,
-.sr-only{
-background-color: blue;
-width: auto;
-position: absolute;
-right:30px;
-padding-top: 20px;
-padding-left: 20px;
-padding-right: 20px;
-margin-left: 300px;
-margin-right: 300px;
-}
-.carousel-control-prev,
-.carousel-control-next{
-top: auto;
-bottom: auto;
-left:auto;
-padding-top: 0px;
-}
-.btn{
-width:auto;
-}
-.carousel-item{
-height: 300px;
-}
-
 {% endblock %}

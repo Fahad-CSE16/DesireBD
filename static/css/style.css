@@ -3,10 +3,10 @@
       padding: 0;
       font-family: sens-serif;
       height: 100vh;
-      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/static/images/map.jpg');
+      /* background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/static/images/background.jpg');
       background-size: cover;
       background-attachment: fixed;
-      background-position: top;
+      background-position: top; */
     }
     .navbar .navbar-nav .nav-item .nav-link:link, .navbar .navbar-nav .nav-item .nav-link:visited{
       color:#26f1fb;
@@ -23,7 +23,7 @@
     margin: 0;
     border-radius:border-box;
 }
-.menu-bar
+/* .menu-bar
 {
     background: none;
     text-align: center;
@@ -87,7 +87,7 @@
      position: absolute;
 display: block;
 background: none;
- }
+ } */
 order-1,order-6{
   color:white;
   text-shadow: 1px 2px blue;

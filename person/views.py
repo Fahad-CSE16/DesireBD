@@ -163,7 +163,7 @@ def markasread(request):
 
 def home(request):
     teachers = TuitionClass.objects.all().order_by('district__name')
-    template = "person/home.html"
+    template = "person/home2.html"
     context = {
         'teachers': teachers,
         
