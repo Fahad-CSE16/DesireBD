@@ -163,7 +163,6 @@ class Personal_Info(models.Model):
     do_u_smoke = models.BooleanField(default=False)
     do_u_drink=models.BooleanField(default=False)
     have_child = models.BooleanField(default=False)
-
     def save(self):
         super().save()
         img = Image.open(self.profile_photo.path)
@@ -217,7 +216,7 @@ class Expectaion(models.Model):
     max_height = models.CharField(max_length=20)
     marital_status = models.CharField(max_length=100, choices=MARITAL_STATUS_CHOICES)
     with_childern = models.BooleanField(default=False)
-    residency_country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='expectaion_country')
+    residency_country = models.CharField(max_length=100)
     religion = models.CharField(max_length=100)
     complexion = models.CharField(max_length=100)
     education = models.CharField(max_length=100)

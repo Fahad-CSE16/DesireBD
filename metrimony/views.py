@@ -71,6 +71,10 @@ def expectaion(request):
             wei2check = Weight.objects.filter(name=weight2)
             if not wei2check:
                 Weight.objects.create(name=weight2)
+            weight2 = form.cleaned_data['residency_country']
+            wei2check = Country.objects.filter(name=weight2)
+            if not wei2check:
+                Country.objects.create(name=weight2)
 
             profile_obj = form.save(commit=False)
             profile_obj.user = request.user
@@ -82,8 +86,9 @@ def expectaion(request):
         profession = Profession.objects.all().order_by('name')
         religion = Religion.objects.all().order_by('name')
         height=Height.objects.all().order_by('name')
-        weight=Weight.objects.all().order_by('name')
-        form = ExpectaionForm(instance=instance, data_list=education, a_list=profession, r_list=religion, h_list=height, w_list=weight)
+        weight = Weight.objects.all().order_by('name')
+        country=Country.objects.all().order_by('name')
+        form = ExpectaionForm(instance=instance, data_list=education, a_list=profession, r_list=religion, h_list=height, w_list=weight,c_list=country)
     context = {
         'form': form
     }

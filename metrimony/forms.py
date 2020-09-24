@@ -82,13 +82,6 @@ class AddressForm(ModelForm):
         
         
 class ExpectaionForm(ModelForm):
-    education = forms.CharField(required=True)
-    profession = forms.CharField(required=True)
-    religion = forms.CharField(required=True)
-    min_age = forms.CharField(required=True)
-    max_age = forms.CharField(required=True)
-    min_height = forms.CharField(required=True)
-    max_height = forms.CharField(required=True)
     class Meta:
         model = Expectaion
         exclude = ['user']
@@ -98,6 +91,7 @@ class ExpectaionForm(ModelForm):
         _religion_list = kwargs.pop('r_list', None)
         _height_list = kwargs.pop('h_list', None)
         _age_list = kwargs.pop('w_list', None)
+        _country_list = kwargs.pop('c_list', None)
         super(ExpectaionForm, self).__init__(*args, **kwargs)
         self.fields['education'].widget = ListTextWidget(data_list=_company_list, name='educaion-list')
         self.fields['profession'].widget = ListTextWidget(data_list=_profession_list, name='profession-list')
@@ -106,3 +100,5 @@ class ExpectaionForm(ModelForm):
         self.fields['max_age'].widget = ListTextWidget(data_list=_age_list, name='max_age-list')
         self.fields['min_height'].widget = ListTextWidget(data_list=_height_list, name='min_height-list')
         self.fields['max_height'].widget = ListTextWidget(data_list=_height_list, name='max_height-list')
+        self.fields['residency_country'].widget = ListTextWidget(
+            data_list=_country_list, name='residency_country-list')
