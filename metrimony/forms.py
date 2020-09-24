@@ -19,12 +19,22 @@ class HobbyForm(ModelForm):
     class Meta:
         model = Hobby
         exclude = ['user']
-        
+        labels = {
+            'fav_dress_style': 'Favourite Dress Style',
+            'fav_color':'Favourite Color'
+        }
 
 class FamilyForm(ModelForm):
     class Meta:
         model = Family
         exclude = ['user']
+        # widgets = {
+        #     'user': forms.HiddenInput(),
+        #     'address': forms.TextInput(attrs={'placeholder': 'Enter your Address'})
+        # }
+        labels = {
+            'no_of_bro_sis': 'Number Of Brother and Sister'
+        }
     def __init__(self, *args, **kwargs):
         _profession_list = kwargs.pop('data_list', None)
         super(FamilyForm, self).__init__(*args, **kwargs)
@@ -50,6 +60,11 @@ class PersonalForm(ModelForm):
         widgets = {
             'languages': forms.CheckboxSelectMultiple(attrs={'multiple': True}),
             
+        }
+        labels = {
+            'do_u_smoke':'Have Smoking Habit?',
+            'do_u_drink':'Have Drinking Habit?',
+            'have_child':'Do you have any Child?',
         }
 
     def __init__(self, *args, **kwargs):
@@ -85,6 +100,14 @@ class ExpectaionForm(ModelForm):
     class Meta:
         model = Expectaion
         exclude = ['user']
+        labels = {
+            'min_age': 'Minimum Age',
+            'max_age': 'Maximum Age',
+            'min_height': 'Minimum Height',
+            'max_height': 'Maximum Height',
+            'drinking_havits':'Will you allow Drinking Habits',
+            'smoking_havits':'Will you allow Smoking Habits',
+        }
     def __init__(self, *args, **kwargs):
         _company_list = kwargs.pop('data_list', None)
         _profession_list = kwargs.pop('a_list', None)
