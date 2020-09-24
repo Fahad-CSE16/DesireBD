@@ -40,6 +40,7 @@
 .menu-bar ul li a{
     text-decoration: none;
     color: whitesmoke;
+    text-shadow: 1px 2px blue;
 }
 .menu-bar ul li a:hover{
     background: rgb(7, 241, 27);
@@ -89,6 +90,7 @@ background: none;
  }
 order-1,order-6{
   color:white;
+  text-shadow: 1px 2px blue;
 }
 
     
@@ -99,10 +101,12 @@ order-1,order-6{
       left: 50%;
       transform: translate (-50%, -50%);
       color: white;
+      text-shadow: 1px 2px blue;
       
     }
     .container b{
       color:white;
+      text-shadow: 1px 2px blue;
     }
     
     .conatiner h1 {
@@ -121,6 +125,7 @@ order-1,order-6{
       margin: 8px 0;
       border-bottom: 1px solid #4caf50;
       color: white;
+      text-shadow: 1px 2px blue;
     }
     .asteriskField{
       display: none;
@@ -133,6 +138,7 @@ order-1,order-6{
       margin: 8px 0;
       border-bottom: 1px solid #4caf50;
       color: white;
+      text-shadow: 1px 2px blue;
       background: none;
     }
     .form-group label{
@@ -152,6 +158,7 @@ order-1,order-6{
         outline: none;
         background: none;
         color: white;
+        text-shadow: 1px 2px blue;
         width: 80px;
         float: left;
         margin: 0 10px;
@@ -164,6 +171,7 @@ order-1,order-6{
         outline: none;
         background: none;
         color: white;
+        text-shadow: 1px 2px blue;
         float: left;
       margin: 0 10px;
       font-size: 18px;
@@ -175,6 +183,7 @@ order-1,order-6{
       outline: none;
       background: none;
       color: white;
+      text-shadow: 1px 2px blue;
       float: left;
       margin: 0 10px;
       font-size: 18px;
@@ -188,6 +197,7 @@ order-1,order-6{
       outline: none;
       background: none;
       color: white;
+      text-shadow: 1px 2px blue;
       float: left;
       margin: 0 10px;
       font-size: 18px;
@@ -209,6 +219,7 @@ order-1,order-6{
       float: right;
       text-align: right;
       color:white;
+      text-shadow: 1px 2px blue;
     }
     .textbox textarea,.emailinput,.textarea form-control,.asteriskField {
       width: 100%;
@@ -216,6 +227,7 @@ order-1,order-6{
       outline: none;
       background: none;
       color: white;
+      text-shadow: 1px 2px blue;
       float: left;
       margin: 0 10px;
       font-size: 18px;
@@ -230,6 +242,7 @@ order-1,order-6{
       outline: none;
       background: none;
       color: white;
+      text-shadow: 1px 2px blue;
       float: left;
       margin: 0 10px;
       font-size: 18px;
@@ -240,6 +253,7 @@ order-1,order-6{
       outline: none;
       background: none;
       color: white;
+      text-shadow: 1px 2px blue;
       float: left;
       margin: 0 10px;
       font-size: 18px;
@@ -250,6 +264,7 @@ order-1,order-6{
       background: none;
       border: 2px solid #4caf50;
       color: white;
+      text-shadow: 1px 2px blue;
       padding: 5px;
       font-size: 18px;
       cursor: pointer;
@@ -266,10 +281,12 @@ order-1,order-6{
     .col-md-6 p,b {
       background: none;
       color: white;
+      text-shadow: 1px 2px blue;
     }
     .col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-md-10 {
       background: none;
       color: white;
+      text-shadow: 1px 2px blue;
     }
     
     .col-md-6 h1,

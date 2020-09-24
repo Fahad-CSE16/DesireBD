@@ -123,7 +123,7 @@ def updatessc(request):
             profile_obj.user = request.user
             profile_obj.save()
             messages.success(request, 'Successfully updated.')
-            return redirect('userprofile')
+            return redirect('updatehsc')
     else:
         form = SSCForm(instance=instance)
 
@@ -149,7 +149,7 @@ def updatehsc(request):
             profile_obj.user = request.user
             profile_obj.save()
             messages.success(request, 'Successfully updated.')
-            return redirect('userprofile')
+            return redirect('afterhsc')
     else:
         form = HSCForm(instance=instance)
 
@@ -174,7 +174,7 @@ def afterhsc(request):
             profile_obj.user = request.user
             profile_obj.save()
             messages.success(request, 'Successfully updated.')
-            return redirect('userprofile')
+            return redirect('postgraduate')
     else:
         form = AfterHscForm(instance=instance)
 
@@ -199,7 +199,7 @@ def postgraduate(request):
             profile_obj.user = request.user
             profile_obj.save()
             messages.success(request, 'Successfully updated.')
-            return redirect('userprofile')
+            return redirect('tuitionprofile')
     else:
         form = HigherStudiesForm(instance=instance)
 
@@ -212,9 +212,12 @@ def postgraduate(request):
 def tuitionprofile(request):
     try:
         instance = TuitionClass.objects.get(user=request.user)
-        obj = TuitionClass.objects.get(user=request.user)
     except TuitionClass.DoesNotExist:
         instance = None
+    try:
+        obj = TuitionClass.objects.get(user=request.user)
+    except:
+        obj=None
 
     if request.method == 'POST':
         if instance:
@@ -224,11 +227,12 @@ def tuitionprofile(request):
         if form.is_valid():
             profile_obj = form.save(commit=False)
             profile_obj.user = request.user
-            if obj.district == form.cleaned_data['district']:
-                pass
-            else:
-                profile_obj.preferedPlace.set([])
-                profile_obj.save()
+            if obj:
+                if obj.district == form.cleaned_data['district']:
+                    pass
+                else:
+                    profile_obj.preferedPlace.set([])
+            profile_obj.save()
             level = form.cleaned_data['level']
             profile_obj.level.set([])
             for l in level:

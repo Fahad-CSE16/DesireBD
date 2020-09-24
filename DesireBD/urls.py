@@ -4,12 +4,13 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from . import views
-from .views import homeView
+from .views import homeView, WorkView
 from person.views import home
 import notifications.urls
 
 urlpatterns = [
     path('', home, name='home'),
+    path('works/', WorkView.as_view(), name='works'),
     path('admin/', admin.site.urls),
     path('profile/', include('person.urls')),
     path('tolet/', include('tolet.urls')),
