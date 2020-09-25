@@ -76,6 +76,8 @@ width:auto;
 {% endfor %}
 
 
+<div class="container-fluid">
+
 
 
 <div class="col-md-8 offset-md-2">
@@ -150,8 +152,9 @@ width:auto;
         {{like}} People Likes The Post
     </div><!-- /.blog-post -->
 </div><!-- /.blog-main -->
-
-<div class="container">
+</div>
+<div class="container-fluid">
+<div class="col-md-8 offset-md-2">
     {% if user.is_authenticated %}
 
     <h4>{{comments.count}}-Comments</h4>
@@ -276,6 +279,7 @@ width:auto;
         </div>
     </div>
     {% endfor %}
+</div>
 </div>
 
 {% endblock %}
