@@ -3,8 +3,11 @@
 {% block title%} Cntact{% endblock %}
 {% block contactactive %} active{% endblock contactactive %}
 {% block body %}
+
 {% load crispy_forms_tags %}
+<button class="btn btn-primary" style="width:auto;"><a href="/posts/post/{{post.sno}}/">Go Back <--</a></button>
 {% if user.is_authenticated %}
+
 <div class="col-md-6 offset-md-3">
     
         <form action="/posts/authorcontact/{{post.sno}}/" method="post" enctype="multipart/form-data">

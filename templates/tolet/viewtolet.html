@@ -9,11 +9,13 @@
 {% load static %}
 {% if user.is_authenticated %}
 <div class="sidenav">
-    <a  href="/posts/createpost/">Create a Tuition Post</a>
+    <a  href="/tolet/posttolet/">Create a TO-LET Post</a>
 </div>
 
 
 <div class="col-md-7 offset-md-3">
+<h1 style="text-align:center;">TO-LET Posts</h1>
+
   <form action="/tolet/filterpost/" method="post">
     {% csrf_token %}
 

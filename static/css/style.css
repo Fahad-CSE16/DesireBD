@@ -16,7 +16,10 @@
       color:blueviolet;
       margin-right: 1px;
       border-bottom: 2px solid blueviolet;
-      transition; border-bottom 0.2s: 
+      transition: border-bottom 0.2s;
+    }
+    a .dropdown-item:hover{
+      background-color: salmon;
     }
 *{
     padding: 0;

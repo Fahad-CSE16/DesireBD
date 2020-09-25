@@ -157,6 +157,7 @@ def personal(request):
             if not lancheck:
                 Language.objects.create(name=language)
 
+                
             sir_name = form.cleaned_data['sir_name']
             sircheck = Sir_name.objects.filter(name=sir_name)
             if not sircheck:

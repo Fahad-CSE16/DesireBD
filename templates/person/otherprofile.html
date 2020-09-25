@@ -5,6 +5,8 @@
 {% block body %}
 {% load crispy_forms_tags %}
 {% if user.is_authenticated %}
+<button class="btn " style="width:auto; color:white;"><a href="/metrimony/metrimony_profile/{{user.username}}/">User Profile</a></button>
+
 <div class="col-md-6 offset-md-3">
     <div class="media">
         <img class="rounded-circle account-img my-2 mx-3 mr-3" src="{{user.userprofile.image.url}}" alt="...">
