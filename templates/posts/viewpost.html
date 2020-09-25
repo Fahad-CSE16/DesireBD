@@ -7,17 +7,7 @@
 {% block body %}
 {% load crispy_forms_tags %}
 {% load static %}
-{% comment %} <div class="sidebar">
-    <a class="active" href="#home">Home</a>
-    <a class="nav-link" href="/createpost">Create Post</a>
-    <div class="nav-item my-2">
-        <div class="btn btn-outline-dark my-2 my-sm-0 mx-3"> {% now "h:i A" as current_time %}
-            {{ current_time|center:"150"  }}
-        </div>
-        <div class="btn btn-outline-dark my-2 my-sm-0 ml-auto"> {% now "D jS F Y" %}
-        </div>
-    </div>
-</div> {% endcomment %}
+
 {% if user.is_authenticated %}
 <div class="sidenav">
     <a class="nav-link" href="/posts/createpost/">Create a Tuition Post</a>

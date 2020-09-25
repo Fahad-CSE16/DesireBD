@@ -155,7 +155,6 @@ class Personal_Info(models.Model):
     highest_degree_of_education=models.CharField(max_length=30, default='')
     blood_group = models.CharField(max_length=3, choices=BLOOD_GROUP)
     gender = models.CharField(max_length=50, choices=GENRE_CHOICES)
-    biodata = models.TextField()
     profile_photo = models.ImageField(default='default.jpg', upload_to='metrimony/images')
     mother_tongue = models.CharField(max_length=150)
     languages = models.ManyToManyField(Language)
@@ -163,6 +162,7 @@ class Personal_Info(models.Model):
     do_u_smoke = models.BooleanField(default=False)
     do_u_drink=models.BooleanField(default=False)
     have_child = models.BooleanField(default=False)
+    biodata = models.TextField()
     def save(self):
         super().save()
         img = Image.open(self.profile_photo.path)
