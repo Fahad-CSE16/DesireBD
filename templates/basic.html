@@ -46,9 +46,10 @@ background-size: cover;
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown" style= "background:none; text-color:#26f1fb;">
           <a class="dropdown-item"  style= " color:#26f1fb;" href="/posts/viewpost/">Tuition Posts</a>
+          <a class="dropdown-item"  style= " color:#26f1fb;" href="/metrimony/partners/">Life Partner</a>
           <a class="dropdown-item"  style= " color:#26f1fb;" href="/tolet/viewtolet/">To-let Posts</a>
           <a class="dropdown-item"   style= " color:#26f1fb;" href="/profile/addsubject/">Subjects List</a>
-          <a class="dropdown-item"  style= " color:#26f1fb;" href="/metrimony/partners/">Life Partner</a>
+          <a class="dropdown-item"   style= " color:#26f1fb;" href="/profile/userlist/">Users List</a>
         </div>
         
       </li>
@@ -79,7 +80,7 @@ background-size: cover;
         {% comment %} <div>{% now "SHORT_DATETIME_FORMAT" %}</div> {% endcomment %}
       
         {% if user.is_authenticated %}
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav">
         <form method="post" action="/posts/search/" class="form-inline my-2 my-lg-0">
         {% csrf_token %}
         <li>
