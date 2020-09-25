@@ -10,11 +10,11 @@
     }
     .navbar .navbar-nav .nav-item .nav-link:link, .navbar .navbar-nav .nav-item .nav-link:visited{
       color:#26f1fb;
-      margin-right: 20px;
+      margin-right: 1px;
     }
     .navbar .navbar-nav .nav-item .nav-link:hover, .navbar .navbar-nav .nav-item .nav-link:active{
       color:blueviolet;
-      margin-right: 20px;
+      margin-right: 1px;
       border-bottom: 2px solid blueviolet;
       transition; border-bottom 0.2s: 
     }
@@ -118,7 +118,7 @@ order-1,order-6{
       text-shadow: 1px 2px blue;
     }
     
-    .conatiner h1,  .container-fluid h1 {
+    .conatiner h1,  {
       float: center;
       font-size: 40px;
       border-bottom: 6px solid #4caf50;

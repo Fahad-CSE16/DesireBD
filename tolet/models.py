@@ -42,6 +42,7 @@ class Post(models.Model):
     timestamp=models.DateTimeField(default=now)
     views = models.ManyToManyField(User, related_name='tpost_view')
     likes = models.ManyToManyField(User, related_name='tolet_post')
+    phone = models.CharField(max_length=17, default='')
 
     # class Meta:
     #     ordering = ['timestamp']

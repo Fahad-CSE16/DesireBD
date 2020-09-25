@@ -119,3 +119,10 @@ class ContactForm(ModelForm):
     class Meta:
         model = Contact
         fields = ['name', 'email', 'phone', 'content']
+        widgets = {
+            
+            'content': forms.Textarea(attrs={'placeholder': 'Say Anything you want to say.'})
+        }
+        labels = {
+            'content':'Your Words',
+        }

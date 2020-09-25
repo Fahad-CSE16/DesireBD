@@ -4,20 +4,40 @@
 {% block title%} View Post {% endblock %}
 {% block css %}
 .btn{
-    width:auto;
+width:auto;
 }
 #image{
-    visibility:hidden;
+visibility:hidden;
 }
 .modal-body, .modal-fade, .modal-content{
-    background:none;
-    color:white;
-    border:solid white 1px;
+background:none;
+color:white;
+border:solid white 1px;
 }
 .col-md-10{
-    text-align:center;
+text-align:center;
 }
-{% endblock css %}
+
+.blog-post, .col-md-11, div{
+text-align:left;
+}
+.col-md-1 img{
+height:30px;
+width:30px;
+}
+.replies.col-md-1 img{
+height:20px;
+width:40px;
+}
+.card{
+background:none;
+height:100%;
+width:100%;
+}
+.btn{
+width:auto;
+}
+{% endblock  %}
 {% block body %}
 {% load crispy_forms_tags %}
 
@@ -28,27 +48,28 @@
 {% if user == post.user %}
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-<a>Delete THIS photo</a>
+    <a>Delete THIS photo</a>
 </button>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete Photo</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-       Are You sure To delete this photo?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal"><a href="">Close</a></button>
-        <button type="button" class="btn btn-primary"><a href="/tolet/deletephoto/{{i.id}}/">Delete</a></button>
-      </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Photo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are You sure To delete this photo?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><a href="">Close</a></button>
+                <button type="button" class="btn btn-primary"><a href="/tolet/deletephoto/{{i.id}}/">Delete</a></button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 {% endif %}
 
@@ -56,68 +77,79 @@
 
 
 
-        <div class="col-md-10 offset-md-1">
-            <div class="blog-post">
 
-                <h2><b>{{post.user}}</b> </h2>
-                <h5 class="pb-4 mb-2 font-italic ">
-                    {{post.title|safe}}
-                </h5>
-                <p>{{post.details|safe}}</p>
-                <br>
-                
-                <a href="#"><span>- {{view}} seens</span></a>
+<div class="col-md-8 offset-md-2">
+    <div class="blog-post">
+        <div>
+            <a href="/profile/otherprofile/{{post.author.username}}">
+                <h4>{{post.user.first_name}} {{post.user.last_name}}</h4>
+            </a>
+            <span class="badge badge-secondary">
+                {{post.timestamp|naturaltime}}</span>
+        </div>
+        <br> -Giving a to-let of property type: {{post.category}}
+        
+        at  <b>{{post.district}}</b> in <b>{{post.area}}</b> <br>
 
-                {% if user == post.user %}
-                <div>
-                    <a href="/tolet/edittolet/{{post.id}}/">Edit Post</a>
-                    <br>
-                    
-                    <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-  <a href=""> Add Photo</a>
-</button>
+        The Loacation is : <b><i> {{post.location}}</i></b> <br>
+        Rent: <b><i> {{post.rent}}</i></b> <br>
+        Details: <p><i> {{post.details}}</i></p> <br>
+        Contact: <p><i> {{post.details}}</i></p> <br>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Add Photo</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Add Photos of Your Property To Your Post
-      </div>
-      <div class="modal-footer">
-        <form action="/tolet/addphoto/{{post.id}}/" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-                {{ file_form|crispy }}
-            <button class="btn btn-outline-info " type="submit" id="add" value="submit">Submit </button>
-            {% comment %} <input type="submit" value="Submit"> {% endcomment %}
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-                    <div id="btnOne"><a href="#" onClick="javascript:addBtn();">Delete</a> </div>
+        <a href="#"><span>- {{view}} seens</span></a>
+
+        {% if user == post.user %}
+        <div>
+            <a href="/tolet/edittolet/{{post.id}}/">Edit Post</a>
+            <br>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                <a > Add Photo</a>
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Add Photo</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Add Photos of Your Property To Your Post
+                        </div>
+                        <div class="modal-footer">
+                            <form action="/tolet/addphoto/{{post.id}}/" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ file_form|crispy }}
+                                <button class="btn btn-outline-info " type="submit" id="add" value="submit">Submit
+                                </button>
+                                {% comment %} <input type="submit" value="Submit"> {% endcomment %}
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div id="btnHolder"></div>
-                {% endif %}
-                <br>
-                <form action="/tolet/likepost/{{post.id}}/" method="post"> 
-                {% csrf_token %}
-                {% if liked %}
-                     <button type="submit" name="like_post" value="{{post.id}}" class="btn  btn-primary btn-sm">UnLike</button>
-                {% else %}
-                    <button type="submit" name="like_post" value="{{post.id}}" class="btn  btn-primary btn-sm">Like</button>
-                {% endif %}
-                </form>
-                {{like}} People Likes The Post
-            </div><!-- /.blog-post -->
-        </div><!-- /.blog-main -->
+            </div>
+            <div id="btnOne"><a href="#" onClick="javascript:addBtn();">Delete</a> </div>
+        </div>
+        <div id="btnHolder"></div>
+        {% endif %}
+        <br>
+        <form action="/tolet/likepost/{{post.id}}/" method="post">
+            {% csrf_token %}
+            {% if liked %}
+            <button type="submit" name="like_post" value="{{post.id}}" class="btn  btn-primary btn-sm">UnLike</button>
+            {% else %}
+            <button type="submit" name="like_post" value="{{post.id}}" class="btn  btn-primary btn-sm">Like</button>
+            {% endif %}
+        </form>
+        {{like}} People Likes The Post
+    </div><!-- /.blog-post -->
+</div><!-- /.blog-main -->
 
 <div class="container">
     {% if user.is_authenticated %}

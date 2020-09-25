@@ -36,7 +36,7 @@ def viewtolet(request):
         'post':post,
     }
     return render(request, 'tolet/viewtolet.html', params)
-    
+
 def posttolet(request):
     user = request.user
     if request.method == 'POST':
@@ -189,7 +189,9 @@ def edittolet(request, id):
             messages.success(request, 'Successfully Edited')
             return redirect(f"/tolet/toletpost/{feed.id}")
     else:
-        form = PostModelForm(instance=instance)
+        area_list=Area.objects.all().order_by('name')
+        
+        form = PostModelForm(instance=instance,data_list=area_list)
        
     context = {
             'form':form,
