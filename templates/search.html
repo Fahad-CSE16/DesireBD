@@ -11,7 +11,7 @@
     <h1>
         <legend class="border-bottom mb-4">Your Search result for "<b>{{query}}</b>" in TuitionPosts</legend>
     </h1>
-    <br>
+    <br> 
     {% for post in results %}
         <div
             class="row bg-succes no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -54,19 +54,25 @@
     {% for post in mytolet %}
         <div class="row bg-succes no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col  p-4 d-flex flex-column position-static">
-                <strong class="d-inline-block mb-2 ">
+                 <strong class="d-inline-block mb-2 ">
                     <div>
-                        <a href="/profile/otherprofile/{{post.user.username}}/">
-                            <h4>{{post.user.first_name}} {{post.user.last_name}}</h4>
-                        </a>
-                        <span class="badge badge-secondary">
-                            {{post.timestamp|naturaltime}}</span>
-                    </div>
-                    <p class="card-text mb-auto">{{post.text|safe|truncatechars:350}}</p>
-                    <p class="card-text mb-auto"> <a href="/tolet/toletpost/{{post.id}}/"
-                            class="stretched-link">...Details</a></p>
-                    <br>
+                    <a href="/profile/otherprofile/{{post.user.username}}">
+                        <h4>{{post.user.first_name}} {{post.user.last_name}}</h4>
+                    </a>
+                    <span class="badge badge-secondary">
+                        {{post.timestamp|naturaltime}}</span>
+                </div>
+                
                 </strong>
+                <div class="preview">
+                is giving To-let of a <b> <i> {{post.category}} </i></b> in <i><b>{{post.district}} </b></i>
+                
+                <br>
+                <b>Rent:</b>{{post.rent}}
+                    <p class="card-text mb-auto"> <a href="/tolet/toletpost/{{post.id}}"
+                            class="stretched-link">...Details</a></p>
+                    <br>                
+                </div>
             </div>
         </div>
     {% endfor %}

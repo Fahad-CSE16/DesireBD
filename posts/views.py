@@ -152,7 +152,9 @@ class UpdatePostView(generic.UpdateView):
 
 
 def search(request):
-    query = request.GET.get('q', '')
+    query = request.POST.get('q', '')
+    print(query)
+    print('f')
     if query:
         queryset = (Q(medium__icontains=query)) | (
             Q(content__icontains=query)) | (Q(subject__name__icontains=query)) | (Q(preferedPlace__name__icontains=query)) | (Q(class_in__name__icontains=query)) | (Q(district__name__icontains=query))
@@ -160,7 +162,7 @@ def search(request):
     else:
        results = []
     if query:
-        queryset = (Q(text__icontains=query)) | (Q(village__icontains=query)) | (Q(upozila__icontains=query)) | (Q(division__icontains=query)) | (Q(area__icontains=query)) | (Q(Zilla__icontains=query))
+        queryset = (Q(details__icontains=query)) | (Q(category__name__icontains=query)) | (Q(area__icontains=query)) | (Q(location__icontains=query)) | (Q(rent__icontains=query)) | (Q(district__name__icontains=query))
         mytolet = Post.objects.filter(queryset).distinct()
     else:
         mytolet = []

@@ -34,19 +34,19 @@
                     {% endfor %}
                 </b>
                 in
-                
-                    {% for place in preferedPlace %}
-                    <b>
+
+                {% for place in preferedPlace %}
+                <b>
                     {{place}}</b>
-                    {% if not forloop.last %}
-                    or
-                    {% endif %}
-                    {% endfor %}, of {{post.district}} District
-                
+                {% if not forloop.last %}
+                or
+                {% endif %}
+                {% endfor %}, of {{post.district}} District
+
                 <br>
                 <b>Salary:</b>{{post.salary}}
                 <br><b>Free Time for Student:</b> {{post.time_available}}<b>
-                   <br> Days Per Week:</b> {{post.days}}<br>
+                    <br> Days Per Week:</b> {{post.days}}<br>
 
                 Teacher May follow Appproaches: <b>{{post.approach}}</b><br>
                 Teacher May Have to teach : <b>{{post.style}}</b><br>
@@ -112,10 +112,10 @@
             <img class="rounded     border border-dark" src="{{comment.image.url}}" alt="">
         </div>
         <div class="col md 11">
-             <a href="/profile/otherprofile/{{comment.user.username}}">
-                       <b>{{comment.user.first_name}} {{comment.user.last_name}}</b> 
-                    </a>
-             <span class="badge badge-secondary">
+            <a href="/profile/otherprofile/{{comment.user.username}}">
+                <b>{{comment.user.first_name}} {{comment.user.last_name}}</b>
+            </a>
+            <span class="badge badge-secondary">
                 {{comment.timestamp | naturaltime}}</span>
             <div>
                 {{comment.comment}}
@@ -179,13 +179,13 @@
                 {% for reply in replyDict|get_val:comment.sno %}
                 <div class="row my-3">
                     <div class="col-md-1 ">
-                        <img class="rounded border border-dark" src="{{reply.image.url}}"
-                            alt="user">
+                        <img class="rounded border border-dark" src="{{reply.image.url}}" alt="user">
                     </div>
                     <div class="col-md-9 ">
 
                         <a href="/profile/otherprofile/{{reply.user.username}}">
-                       <b>{{reply.user.first_name}} {{reply.user.last_name}}</b> </a> <span class="badge badge-secondary">
+                            <b>{{reply.user.first_name}} {{reply.user.last_name}}</b> </a> <span
+                            class="badge badge-secondary">
                             {{reply.timestamp|naturaltime}}</span>
                         <div>
                             {{reply.comment}}
@@ -236,22 +236,22 @@
 {% endblock js %}
 {% block css %}
 .blog-post, .col-md-11, div{
-    text-align:left;
+text-align:left;
 }
 .col-md-1 img{
-    height:30px;
-    width:30px;
+height:30px;
+width:30px;
 }
 .replies.col-md-1 img{
-    height:20px;
-    width:40px;
+height:20px;
+width:40px;
 }
 .card{
-    background:none;
-    height:100%;
-    width:100%;
+background:none;
+height:100%;
+width:100%;
 }
 .btn{
-    width:auto;
+width:auto;
 }
 {% endblock  %}
