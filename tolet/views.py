@@ -18,6 +18,8 @@ from django.core.exceptions import PermissionDenied
 
 def likepost(request, sno):
     post = get_object_or_404(Post, id=sno)
+    user = request.user
+    receiver = User.objects.filter(username=post.user).first()
     liked = False
     if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
@@ -25,6 +27,8 @@ def likepost(request, sno):
     else:
         post.likes.add(request.user)
         liked = True
+        if user != receiver:
+            notify.send(user, recipient=receiver,verb=" has liked your post" + f''' <a class =" btn btn-primary btn-sm " href="/tolet/toletpost/{post.id}/">go</a> ''')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def viewtolet(request):
@@ -89,27 +93,47 @@ def addphoto(request,id):
         'form': form,
     }
     return render(request, 'tolet/addphoto.html',context)
+from notifications.signals import notify
 
 def toletcomment(request):
     if request.method=="POST":
         comment= request.POST.get("comment")
-        user = request.user 
         postsno=request.POST.get("postsno")
-        post =  Post.objects.get(id=postsno) 
         parentsno =  request.POST.get("parentsno") 
-        image=user.userprofile.image 
-        print(image)
-        if parentsno == "":
-            print("if")
-            comments= ToletComment(comment=comment, user= user, post= post,image=image)
-            comments.save()
-            messages.success(request, 'Success! your comment have been posted successfully.')
+        post = Post.objects.get(id=postsno)
+        user = request.user
+        receiver = User.objects.filter(username=post.user).first() 
+        try:
+            j = request.user.userprofile
+        except:
+            j = None
+        if j:
+            image = j.image
+            if parentsno == "":
+                comments = ToletComment(
+                    comment=comment, user=user, post=post, image=image)
+                comments.save()
+                if receiver != request.user:
+                    notify.send(user, recipient=receiver, verb=" has commented on your post" + f''' <a class =" btn btn-primary btn-sm " href="/tolet/toletpost/{post.id}">go</a> ''')
+                    messages.success(request, 'Success! your comment have been posted successfully.')
+            else:
+                parent = ToletComment.objects.get(sno=parentsno)
+                comments = ToletComment(
+                    image=image, comment=comment, user=user, post=post, parent=parent)
+                comments.save()
+                receiver2 = parent.user
+
+                if receiver != receiver2 and receiver != request.user:
+                    notify.send(user, recipient=receiver,
+                            verb=" has replied  on someones comment in your post" +f''' <a class =" btn btn-primary btn-sm " href="/tolet/toletpost/{post.id}">go</a> ''')
+                    messages.success(request, 'Success! your comment have been posted successfully.')
+                if  receiver2  != request.user:
+                    notify.send(user, recipient=receiver2,
+                            verb=" has replied to your comment" +f''' <a class =" btn btn-primary btn-sm " href="/tolet/toletpost/{post.id}">go</a> ''')
+                    messages.success(request, 'Success! your reply have been posted successfully.')
         else:
-            print("else")
-            parent=ToletComment.objects.get(sno=parentsno)
-            comments= ToletComment(comment=comment, user= user, post= post, parent=parent,image=image)
-            comments.save()
-            messages.success(request, 'Success! your reply have been posted successfully.')
+            messages.warning(request, 'Error! Please make a profile  first to comment')
+            return redirect(f"/profile/updateprofile/")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 def toletpost(request, sno):
     feed= Post.objects.filter(id=sno).first()
@@ -207,7 +231,7 @@ def filterpost(request):
         category = request.POST['category_i']
         area = request.POST['area_i']
         # print(district, subject, classes)
-        if district or subject or classes:
+        if district or category or area:
             queryset = (Q(district__name__icontains=district)) & (
                 Q(area__icontains=area)) & (Q(category__name__icontains=category))
             results = Post.objects.filter(queryset).distinct().order_by('-timestamp')

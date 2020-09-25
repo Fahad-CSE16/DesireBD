@@ -50,8 +50,8 @@ def likepost(request, sno):
     else:
         post.likes.add(request.user)
         liked = True
-        notify.send(user, recipient=receiver,
-                verb=' has liked your post')
+        if user != receiver:
+            notify.send(user, recipient=receiver,verb=" has liked your post" + f''' <a class =" btn btn-primary btn-sm " href="/posts/post/{post.sno}/">go</a> ''')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
@@ -68,9 +68,9 @@ def authorcontact(request, sno):
             phone=form.cleaned_data['phone']
             # form.save()
             notify.send(user, recipient=receiver,  verb="is applying for your tuition teacher, EMail: "+str(email)+" Phone: " + str(
-                phone)+" Says:  " + str(content))
+                phone)+" Says:  " + str(content)+ f''' <a class =" btn btn-primary btn-sm " href="/profile/otherprofile/{user.username}/"> View</a> Teachers profile ''')
             messages.success(request, 'successfully Sent.')
-            return redirect('userprofile')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
         form = ContactForm()
     context = {
@@ -225,7 +225,6 @@ def postComment(request):
         user = request.user
         receiver = User.objects.filter(username=post.author).first()
         parentsno = request.POST.get("parentsno")
-        print(user)
         try:
             j = request.user.userprofile
         except:
@@ -237,7 +236,7 @@ def postComment(request):
                     comment=comment, user=user, tuitionpost=post, image=image)
                 comments.save()
                 if receiver != request.user:
-                    notify.send(user, recipient=receiver,verb=' has commented on your post')
+                    notify.send(user, recipient=receiver,verb=" has commented on your post" +f''' <a class =" btn btn-primary btn-sm " href="/posts/post/{post.sno}">go</a> ''') 
                 messages.success(request, 'Success! your comment have been posted successfully.')
             else:
                 parent = BlogComment.objects.get(sno=parentsno)
@@ -248,10 +247,10 @@ def postComment(request):
 
                 if receiver != receiver2 and receiver != request.user:
                     notify.send(user, recipient=receiver,
-                            verb=' has replied  on someones comment in your post')
+                            verb=" has replied  on someones comment in your post" +f''' <a class =" btn btn-primary btn-sm " href="/posts/post/{post.sno}">go</a> ''')
                 if  receiver2  != request.user:
                     notify.send(user, recipient=receiver2,
-                            verb=' has replied to your comment')
+                            verb=" has replied to your comment" +f''' <a class =" btn btn-primary btn-sm " href="/posts/post/{post.sno}">go</a> ''')
                 messages.success(request, 'Success! your reply have been posted successfully.')
         else:
             messages.warning(request, 'Error! Please make a profile  first to comment')
