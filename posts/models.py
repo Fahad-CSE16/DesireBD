@@ -34,14 +34,15 @@ class TuitionPost(models.Model):
     Choice_Place = (
         ('Class_Rooms', 'Class Rooms'),
         ('Coaching_Center', 'Coaching Center'),
-        ('Home_Visit', 'Home Visit'),
+        ('Students Home', 'Students Home'),
+        ('Teachers Place', 'Teachers Place'),
     )
     district = models.ForeignKey(District, on_delete=models.SET_NULL, null=True, related_name='district_set')
     preferedPlace = models.ManyToManyField(SubDistrict, related_name='place_set')
-    style = MultiSelectField(choices=Choice_style, max_choices=3, max_length=100)
-    place = MultiSelectField(choices=Choice_Place, max_choices=3, max_length=100)
-    approach = MultiSelectField(choices=Choice_Approach,max_choices=3, max_length=100)
-    medium = MultiSelectField(choices=Choice_Medium,max_choices=3, max_length=100)
+    style = MultiSelectField(choices=Choice_style, max_choices=4, max_length=100)
+    place = MultiSelectField(choices=Choice_Place, max_choices=4, max_length=100)
+    approach = MultiSelectField(choices=Choice_Approach,max_choices=4, max_length=100)
+    medium = MultiSelectField(choices=Choice_Medium,max_choices=10, max_length=200)
     sno = models.AutoField(primary_key=True)
     subject = models.ManyToManyField(Subject, related_name='subject_set')
     class_in = models.ManyToManyField(Classes, related_name='classes_set')

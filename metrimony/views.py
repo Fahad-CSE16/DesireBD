@@ -175,7 +175,7 @@ def personal(request):
                 profile_obj.save()
             messages.success(request, 'Successfully updated.')
             return HttpResponseRedirect('/metrimony/address/')
-    else:
+    else: 
         height=Sir_name.objects.all().order_by('name')
         language = Language.objects.all().order_by('name')
         religion=Religion.objects.all().order_by('name')
@@ -377,8 +377,12 @@ def partner(request):
             'userss': n,
         }
         return render(request, 'metrimony/partners.html', context)
-    else:
+    elif request.user.is_authenticated:
         return HttpResponseRedirect('/metrimony/personal/')
+        
+    else:
+        messages.warning(request, 'Please login First')
+        return redirect('login')
 
 def allMetri(request):
     user = User.objects.all().order_by('username')

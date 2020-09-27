@@ -29,9 +29,6 @@ class TuitionPostForm(ModelForm):
         }
         help_texts = {
             'days': 'How much day per week a teacher have to teach your student?',
-            'subject': 'Maximum 3 subjects you can choose!',
-            'medium': 'Maximum 3 mediums you can choose!',
-            'class_in': 'Maximum 3 class you can choose!',
         }
 class TuitionPostUpdateForm(ModelForm):
     class Meta:
@@ -58,9 +55,6 @@ class TuitionPostUpdateForm(ModelForm):
         }
         help_texts = {
                 'days': 'How much day per week a teacher have to teach your student?',
-                'subject': 'Maximum 3 subjects you can choose!',
-                'medium': 'Maximum 3 mediums you can choose!',
-                'class_in': 'Maximum 3 class you can choose!',
                 'preferedPlace': 'Choose your nearest Area',
         }
 
