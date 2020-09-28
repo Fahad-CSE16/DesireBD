@@ -2,7 +2,11 @@
 
 {% block title%} How Works{% endblock %}
 {% block body %}
-<div class="sidenav">
+ {% comment %} <button class="navbar-toggler" type="button" data-toggle="sidenav" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon" style= " color:white; text-color:white;">Menu</span>
+    </button> {% endcomment %}
+{% comment %} <div class="sidenav" id="navbarSupportedContent">
   <nav id="navbar-example3" class="navbar navbar-light ">
     <a class="navbar-brand" href="#"></a>
     <nav class="nav  flex-column">
@@ -27,7 +31,7 @@
       </nav>
     </nav>
   </nav>
-</div>
+</div> {% endcomment %}
 <div class="container-fluid">
 <div class="col-md-7 offset-md-3 " style="border:1px dotted blue;">
   <div data-spy="scroll" data-target="#navbar-example3" data-offset="0">
@@ -121,7 +125,7 @@ height:200px;
 p{
 text-align:justify;
 line-height:25px;
-text-shadow: 1px 2px blue;
+{% comment %} text-shadow: 1px 2px blue; {% endcomment %}
 text-indent:30px;
 padding-left:30px;
 text-transformation: capitalize;
@@ -147,7 +151,7 @@ color:white;
 }
 .nav .nav-link{
   color:aquamarine;
-  text-shadow: 1px 2x blue;
+  {% comment %} text-shadow: 1px 2x blue; {% endcomment %}
 }
 
 

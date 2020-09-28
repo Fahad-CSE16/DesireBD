@@ -7,79 +7,100 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% if user.is_authenticated %}
-<div class="col-md-18 ">
-    <div class="media">
-        <img class="rounded-circle account-img my-2 mx-3 mr-3" src="{{user.userprofile.image.url}}" alt="...">
-        <div class="media-body">
-            <ul>
-                <li><a href="/profile/changepass/">ChangePass</a></li>
-                <li>
-                    <a href="">
+<div class="container-fluid">
+    <div class="col-md-8 offset-md-2">
+        <nav class="navbar navbar-expand-lg navbar-light "
+        style="background:none; color:white;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" style=" color:white;">Edit</span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item "><a class="nav-link" href="/profile/changepass/">ChangePass</a></li>
+                <li class="nav-item "><a class="nav-link" href="/profile/tuitionprofile/"> Edit Tuition
+                        Profile</a></li>
+                <li class="nav-item "><a class="nav-link" href="{% url 'updateprofile' %}"> Edit
+                        UserProfile</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Edit Metrimony Profile
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background:none;">
+                        <a class="dropdown-item" style=" color:#26f1fb;"
+                            href="/metrimony/personal/">Personal Info</a>
+                        <a class="dropdown-item" style=" color:#26f1fb;"
+                            href="/metrimony/occupation/">Occupation</a>
+                        <a class="dropdown-item" style=" color:#26f1fb;"
+                            href="/metrimony/address/">Address</a>
+                        <a class="dropdown-item" style=" color:#26f1fb;"
+                            href="/metrimony/family/">Family</a>
+                        <a class="dropdown-item" style=" color:#26f1fb;" href="/metrimony/body/">Body
+                            Information</a>
+                        <a class="dropdown-item" style=" color:#26f1fb;" href="/metrimony/hobby/">Hobby</a>
+                        <a class="dropdown-item" style=" color:#26f1fb;"
+                            href="/metrimony/expectation/">Expectation</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Education Profile
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background:none;">
+                        <a class="dropdown-item" style=" color:#26f1fb;"
+                            href="{% url 'updatessc' %}">SSC</a>
+                        <a class="dropdown-item" style=" color:#26f1fb;" href="/profile/updatehsc/">HSC</a>
+                        <a class="dropdown-item" style=" color:#26f1fb;"
+                            href="/profile/afterhsc/">UnderGraduation</a></a>
+                        <a class="dropdown-item" style=" color:#26f1fb;"
+                            href="/profile/postgraduate/">PostGraduation</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         As Visitors
                     </a>
-                    <div class="sub-menu-1">
-                        <ul>
-                            <li><a href="/profile/otherprofile/{{user.username}}/">UserProfile</a></li>
-                            <li><a href="/metrimony/metrimony_profile/{{user.username}}/">Metrimony Profile</a></li>
-                        </ul>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background:none;">
+                        <a class="dropdown-item" style=" color:#26f1fb;"
+                            href="/profile/otherprofile/{{user.username}}/">UserProfile</a>
+                        <a class="dropdown-item" style=" color:#26f1fb;"
+                            href="/metrimony/metrimony_profile/{{user.username}}/">Metrimony Profile</a>
                     </div>
                 </li>
-                <li>
-                    <a href="">
-                        Edit
-                    </a>
-                    <div class="sub-menu-1">
-                        <ul>
-                            <li class="hover-me"><a href="">Metrimony Profile</a>
-                                <div class="sub-menu-2">
-                                    <ul>
-                                        <li><a href="/metrimony/personal/">Personal Info</a></li>
-                                        <li><a href="/metrimony/occupation/">Occupation</a></li>
-                                        <li><a href="/metrimony/address/">Address</a></li>
-                                        <li><a href="/metrimony/family/">Family</a></li>
-                                        <li><a href="/metrimony/body/">Body Information</a></li>
-                                        <li><a href="/metrimony/hobby/">Hobby</a></li>
-                                        <li><a href="/metrimony/expectation/">Expectation</a></li>
-                                    </ul>
-                                </div>
-
-                            </li>
-                            <li><a href="{% url 'updateprofile' %}">UserProfile</a></li>
-                            <li class="hover-me"><a href="">Education Profile</a>
-                                <div class="sub-menu-2">
-                                    <ul>
-                                        <li><a href="{% url 'updatessc' %}">SSC</a></li>
-                                        <li><a href="/profile/updatehsc/">HSC</a></li>
-                                        <li><a href="/profile/afterhsc/">UnderGraduation</a></li>
-                                        <li><a href="/profile/postgraduate/">PostGraduation</a></li>
-                                    </ul>
-                                </div>
-
-                            </li>
-
-                            <li><a href="/profile/tuitionprofile/">Tuition Profile</a></li>
-                        </ul>
-                    </div>
-                </li>
-                
             </ul>
-            <br>
-            <br>
-            <h5 class="mt-0">UserName:{{user.username}}</h5>
-            Name: {{user.first_name}} {{user.last_name}}
-            <br>
-            Email:{{user.email}}
-            <br>
-            Blood Group: {{user.userprofile.blood_group}}
-            <br>
+        </div>
+    </nav>
+    <br><br>
+</div>
+    <div class="col-md-12 ">
+        <div class="row">
+            <div class="col">
 
+            
+            <img class="rounded-circle account-img my-2 mx-3 mr-3" src="{{user.userprofile.image.url}}" alt="...">
+        </div>
+
+                
+                <div class="col">
+                <h5 class="mt-0">UserName:{{user.username}}</h5>
+                Name: {{user.first_name}} {{user.last_name}}
+                <br>
+                Email:{{user.email}}
+                <br>
+                Blood Group: {{user.userprofile.blood_group}}
+                <br>
+            
+            </div>
         </div>
     </div>
 
+
 </div>
-
-
-
 {% for post in post %}
 <div class="col-md-8 offset-md-2  ">
     <div
@@ -146,84 +167,20 @@ height: auto;
 width:100%;
 color:white;
 background: none;}
-.col-md-18{
-text-align:left;
+
+nav .navbar {
+float:left;
 }
-.media-body ul li{
-width:200px;
-text-align:center;
+nav .nav-link{
+    float:left;
 }
-.media-body ul li ul li{
-width:120px;
-float:center;
-text-align:right;
-}
-.col-md-8{
+
+.col-md-12{
 color:white;
 }
 
 
-.media-body ul{
-display: inline-flex;
-list-style: none;
-color: aqua;
 
-}
-.media-body ul li{
-width: 200px;
-padding: 15px;
-}
-.media-body ul li a{
-text-decoration: none;
-color: whitesmoke;
-}
-.media-body ul li a:hover{
-background: rgb(7, 241, 27);
-border-radius: 3px;
-display: block;
-}
-.media-body .fa{
-margin-right: 8px;
-}
-.sub-menu-1{
-display: none;
-}
-.media-body ul li:hover .sub-menu-1{
-display: block;
-position: absolute;
-background: none;
-margin-top: -05px;
-margin-left: -15px;
-}
-.media-body ul li:hover .sub-menu-1 ul{
-display: block;
-}
-.media-body ul li:hover .sub-menu-1 ul li{
-width: 160px;
-padding: 5px;
-border-bottom: 1px dotted black;
-background: transparent;
-border-radius: 0;
-text-align: left;
-}
-.media-body ul li:hover .sub-menu-1 ul li:last-child{
-border-bottom: none;
-}
-.media-body ul li:hover .sub-menu-1 ul li a:hover{
-color: blue;
-}
 
-.fa-angle-right{
-float: right;
-}
-.sub-menu-2{
-display: none;
-}
-.hover-me:hover .sub-menu-2{
-position: absolute;
-display: block;
-margin-top: -30px;
-margin-left:140px;
-background: none;
-}
+
 {% endblock  %}

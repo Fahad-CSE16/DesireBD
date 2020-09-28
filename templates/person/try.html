@@ -1,67 +1,61 @@
-<!DOCTYPE html>
-<html>
+<nav class="navbar navbar-expand-lg navbar-light " style="background:none; color:white; text-color:white;">
+    <a class="navbar-brand" style=" color:white; text-color:white;" href="/profile/">DesireBD</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon" style=" color:white; text-color:white;">Menu</span>
+    </button>
 
-<body>
-    <style style="text/css">
-        .marquee {
-            height: 50px;
-            overflow: hidden;
-            position: relative;
-            background: #fefefe;
-            color: #333;
-            border: 1px solid #4a4a4a;
-        }
-        
-        .marquee p {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            line-height: 50px;
-            text-align: center;
-            -moz-transform: translateX(100%);
-            -webkit-transform: translateX(100%);
-            transform: translateX(100%);
-            -moz-animation: scroll-left 2s linear infinite;
-            -webkit-animation: scroll-left 2s linear infinite;
-            animation: scroll-left 20s linear infinite;
-        }
-        
-        @-moz-keyframes scroll-left {
-            0% {
-                -moz-transform: translateX(100%);
-            }
-            100% {
-                -moz-transform: translateX(-100%);
-            }
-        }
-        
-        @-webkit-keyframes scroll-left {
-            0% {
-                -webkit-transform: translateX(100%);
-            }
-            100% {
-                -webkit-transform: translateX(-100%);
-            }
-        }
-        
-        @keyframes scroll-left {
-            0% {
-                -moz-transform: translateX(100%);
-                -webkit-transform: translateX(100%);
-                transform: translateX(100%);
-            }
-            100% {
-                -moz-transform: translateX(-100%);
-                -webkit-transform: translateX(-100%);
-                transform: translateX(-100%);
-            }
-        }
-    </style>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item "><a class="nav-link" href="/profile/changepass/">ChangePass</a></li>
+            <li class="nav-item "><a class="nav-link" href="/profile/tuitionprofile/"> Edit Tuition Profile</a></li>
+            <li class="nav-item "><a class="nav-link" href="{% url 'updateprofile' %}"> Edit UserProfile</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Edit Metrimony Profile
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown"
+                    style="background:none;">
+                    <a class="dropdown-item" style=" color:#26f1fb;" href="/metrimony/personal/">Personal Info</a>
+                    <a class="dropdown-item" style=" color:#26f1fb;" href="/metrimony/occupation/">Occupation</a>
+                    <a class="dropdown-item" style=" color:#26f1fb;" href="/metrimony/address/">Address</a>
+                    <a class="dropdown-item" style=" color:#26f1fb;" href="/metrimony/family/">Family</a>
+                    <a class="dropdown-item" style=" color:#26f1fb;" href="/metrimony/body/">Body Information</a>
+                    <a class="dropdown-item" style=" color:#26f1fb;" href="/metrimony/hobby/">Hobby</a>
+                    <a class="dropdown-item" style=" color:#26f1fb;" href="/metrimony/expectation/">Expectation</a>
+                </div>
 
-    <div class="marquee">
-        <p> Marquee in CSS </p>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Education Profile
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown"
+                    style="background:none;">
+                    <a class="dropdown-item" style=" color:#26f1fb;" href="{% url 'updatessc' %}">SSC</a>
+                    <a class="dropdown-item" style=" color:#26f1fb;" href="/profile/updatehsc/">HSC</a>
+                    <a class="dropdown-item" style=" color:#26f1fb;"  href="/profile/afterhsc/">UnderGraduation</a></a>
+                    <a class="dropdown-item" style=" color:#26f1fb;" href="/profile/postgraduate/">PostGraduation</a>
+                </div>
+
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    As Visitors
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown"
+                    style="background:none;">
+                    <a class="dropdown-item" style=" color:#26f1fb;" href="/profile/otherprofile/{{user.username}}/">UserProfile</a>
+                    <a class="dropdown-item" style=" color:#26f1fb;" href="/metrimony/metrimony_profile/{{user.username}}/">Metrimony Profile</a>
+                </div>
+
+            </li>
+            
+
+        </ul>
     </div>
-</body>
 
-</html>
+</nav>
