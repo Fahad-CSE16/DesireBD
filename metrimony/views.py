@@ -378,6 +378,7 @@ def partner(request):
         }
         return render(request, 'metrimony/partners.html', context)
     elif request.user.is_authenticated:
+        messages.warning(request,'Please make profile first to give your information and expectation!')
         return HttpResponseRedirect('/metrimony/personal/')
         
     else:

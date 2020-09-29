@@ -8,7 +8,7 @@ active
 {% endblock Login %}
 {% block body %}
 {% load crispy_forms_tags %}
-<div class="col-md-6 offset-md-3">
+<div class="col-md-8 offset-md-2">
 <div class="container">
     {% if form.errors %}
     <p>Your username and password didn't match. Please try again.</p>
@@ -25,18 +25,10 @@ active
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
         <h1>Login</h1>
-        <div class="textbox">
-            <i class="fa fa-user" aria-hidden="true"></i>
-            {{ form.username.label_tag }}
-            {{ form.username.help_text }}
-
-            {{ form.username }}
-        </div>
-        <div class="textbox">
-            <i class="fa fa-lock" aria-hidden="true"></i>
-            {{ form.password.label_tag }}
-            {{ form.password }}
-        </div>
+         <fieldset class="form-group mx-auto">
+                {{ form|crispy }}
+               
+            </fieldset>
         {% comment %} <input type="submit" value="login"> {% endcomment %}
         <button class="btn btn-primary" type="submit" value="submit">Login</button>
         {% comment %} <input type="hidden" name="next" value="{{ next }}"> {% endcomment %}
@@ -104,13 +96,7 @@ font-size: 18px;
 }
 .btn{
 width:100%;
-background:none;
-border: 2px solid #4caf50;
-color: white;
-padding: 5px;
-font-size: 18px;
-cursor: pointer;
-margin: 12px 0;
+
 }
 .col-md-6 a{
 width:100px;

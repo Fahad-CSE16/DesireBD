@@ -100,7 +100,7 @@ order-6 {
 }
 
 .container {
-  width: 550px;
+  
   text-align: center;
   top: 50%;
   left: 50%;
@@ -109,7 +109,7 @@ order-6 {
   /* text-shadow: 1px 2px blue; */
 }
 .container-fluid {
-  text-align: center;
+  text-align: left;
 
   transform: translate (-50%, -50%);
   color: white;
@@ -152,38 +152,50 @@ order-6 {
   color: white;
   /* text-shadow: 1px 2px blue; */
   background: none;
+  margin-bottom: 1rem;
+  margin: 10px;
+  padding: 10px;
+}
+.alert-error{
+  border: 2px solid red;
+}
+.alert-warning{
+  border: 2px solid yellow;
+}
+.alert-success{
+  border: 2px solid green;
+}
+.alert-info{
+  border: 2px solid blue;
 }
 .form-group label {
   width: 100%;
+  text-align: left;
 }
-.form-text text-muted {
+.form-text {
   width: 100%;
   overflow: ;
   font-size: 12px;
   padding: 8px 0;
   margin: 8px 0;
   color: white;
+  text-align: left;
 }
-
-.textbox label,
-.textbox input {
-  border: none;
-  outline: none;
-  background: none;
+.form-text  ul li{
+  width: 100%;
+  overflow: ;
+  font-size: 12px;
+  padding: 8px 0;
+  margin: 8px 0;
   color: white;
-  /* text-shadow: 1px 2px blue; */
-  width: 80px;
-  float: left;
-  margin: 0 10px;
-  font-size: 18px;
-  overflow: hidden;
+  text-align: left;
+}
+#hint_id_username{
+  color: white;
+  display: contents;
 }
 
-.form-group {
-  margin-bottom: 1rem;
-  margin: 10px;
-  padding: 10px;
-}
+
 input {
   width: 100%;
   border: none;
@@ -292,7 +304,7 @@ textarea,
 }
 
 .btn {
-  width: 100%;
+  width: auto;
   background: none;
   border: 2px solid #4caf50;
   color: white;

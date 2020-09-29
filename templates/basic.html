@@ -15,11 +15,15 @@
   {% load static %}
   <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
   <link href="{% static 'css/style.css'  %}" rel='stylesheet'>
-  
-  <style>
-    {% block css %}
 
- {% endblock css %}
+  <style>
+    {
+      % block css %
+    }
+
+      {
+      % endblock css %
+    }
   </style>
 </head>
 
@@ -27,56 +31,82 @@
 background-size: cover;
       background-attachment: fixed;
       background-position: top;">
-  <nav class="navbar navbar-expand-lg navbar-light " style= "background:none; color:white; text-color:white;">
-    <a class="navbar-brand"  style= " color:white; text-color:white;" href="/profile/">DesireBD</a>
+  <nav class="navbar navbar-expand-lg navbar-light " style="background:none; color:white; text-color:white;">
+    <a class="navbar-brand" style=" color:white; text-color:white;" href="/profile/">DesireBD</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon" style= " color:white; text-color:white;">Menu</span>
+      <span class="navbar-toggler-icon" style=" color:white; text-color:white;">Menu</span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-      <li class="nav-item {% block blogactive %}
+        <li class="nav-item {% block blogactive %}
       {% endblock blogactive %} ">
           <a class="nav-link" href="/profile/">Home</a>
         </li>
-         <li class="nav-item dropdown" >
-        <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Tuition
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style= "background:none; text-color:#26f1fb;">
-          <a class="dropdown-item"  style= " color:#26f1fb;" href="/posts/viewpost/">View Posts</a>
-          <a class="dropdown-item"  style= " color:#26f1fb;" href="/posts/createpost/">Create Post</a>
-          <a class="dropdown-item"   style= " color:#26f1fb;" href="/profile/addsubject/">Subjects List</a>
-          <a class="dropdown-item"   style= " color:#26f1fb;" href="/profile/userlist/">Teachers List</a>
-        </div>
-        
-      </li>
-         <li class="nav-item dropdown" >
-        <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Metrimony
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style= "background:none; text-color:#26f1fb;">
-          <a class="dropdown-item"  style= " color:#26f1fb;" href="/metrimony/partners/">Life Partner</a>
-        </div>
-        
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          To-Let
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style= "background:none; color:white;">
-          <a class="dropdown-item"  style= " color:#26f1fb;" href="/tolet/viewtolet/">View Posts</a>
-          <a class="dropdown-item"  style= " color:#26f1fb;" href="/tolet/posttolet/">Create Post</a>
-          {% comment %} <a class="dropdown-item" href="/addsubject/">Subject</a> {% endcomment %}
-        </div>
-        
-      </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Tuition
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background:none; text-color:#26f1fb;">
+            <a class="dropdown-item" style=" color:#26f1fb;" href="/posts/viewpost/">View Posts</a>
+            <a class="dropdown-item" style=" color:#26f1fb;" href="/posts/createpost/">Create Post</a>
+            <a class="dropdown-item" style=" color:#26f1fb;" href="/profile/addsubject/">Subjects List</a>
+            <a class="dropdown-item" style=" color:#26f1fb;" href="/profile/userlist/">Teachers List</a>
+          </div>
+
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Metrimony
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background:none; text-color:#26f1fb;">
+            <a class="dropdown-item" style=" color:#26f1fb;" href="/metrimony/partners/">View Your Matching</a>
+
+
+
+            <a class="nav-link dropdown-toggle" href="ab" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              RelatedProfile
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="ab" style="background:none;">
+              <a class="dropdown-item" style=" color:#26f1fb;" href="/metrimony/personal/">Personal Info</a>
+              <a class="dropdown-item" style=" color:#26f1fb;" href="/metrimony/occupation/">Occupation</a>
+              <a class="dropdown-item" style=" color:#26f1fb;" href="/metrimony/address/">Address</a>
+              <a class="dropdown-item" style=" color:#26f1fb;" href="/metrimony/family/">Family</a>
+              <a class="dropdown-item" style=" color:#26f1fb;" href="/metrimony/body/">Body
+                Information</a>
+              <a class="dropdown-item" style=" color:#26f1fb;" href="/metrimony/hobby/">Hobby</a>
+              <a class="dropdown-item" style=" color:#26f1fb;" href="/metrimony/expectation/">Expectation</a>
+              <a class="dropdown-item" style=" color:#26f1fb;"
+                href="/metrimony/metrimony_profile/{{user.username}}/">View as Visitors
+              </a>
+            </div>
+
+
+          </div>
+
+
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            To-Let
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background:none; color:white;">
+            <a class="dropdown-item" style=" color:#26f1fb;" href="/tolet/viewtolet/">View Posts</a>
+            <a class="dropdown-item" style=" color:#26f1fb;" href="/tolet/posttolet/">Create Post</a>
+            {% comment %} <a class="dropdown-item" href="/addsubject/">Subject</a> {% endcomment %}
+          </div>
+
+        </li>
         <li class="nav-item  {% block contactactive %}
       {% endblock contactactive %}">
           <a class="nav-link" href="/profile/contact/">Contact</a>
         </li>
-        
+
         <li class="nav-item  {% block aboutactive %}
       {% endblock aboutactive %}">
           <a class="nav-link" href="/profile/about_us/">About</a>
@@ -86,67 +116,67 @@ background-size: cover;
           <a href="/works/" class="nav-link">How Works?</a>
         </li>
         {% comment %} <div>{% now "SHORT_DATETIME_FORMAT" %}</div> {% endcomment %}
-      
-        {% if user.is_authenticated %}
-      <ul class="navbar-nav">
-        <form method="post" action="/posts/search/" class="form-inline my-2 my-lg-0">
-        {% csrf_token %}
-        <li>
-          <input class="form-control mr-sm-2 " style="background:none;color:white;" type="search" placeholder="Search" aria-label="Search" name="q"
-            id="q"></li>
-            <li>
-          <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button></li>
 
-        </form>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            {{request.user}}
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown" style= "background:none; color:white;">
-            <a class="dropdown-item" style= " color:#26f1fb;" href="/profile/userprofile/">Profile</a>
-            <a class="dropdown-item" style= " color:#26f1fb;" href="/profile/notification/">Notifications</a>
-            <a class="dropdown-item" style= " color:#26f1fb;" href="/profile/logout/">Logout</a>
-            
-          </div>
-        </li>
-      </ul>
-      {% else %}
-      
-      <li class="nav-item  {% block signup %}
+        {% if user.is_authenticated %}
+        <ul class="navbar-nav">
+          <form method="post" action="/posts/search/" class="form-inline my-2 my-lg-0">
+            {% csrf_token %}
+            <li>
+              <input class="form-control mr-sm-2 " style="background:none;color:white;" type="search"
+                placeholder="Search" aria-label="Search" name="q" id="q"></li>
+            <li>
+              <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button></li>
+
+          </form>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              {{request.user}}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background:none; color:white;">
+              <a class="dropdown-item" style=" color:#26f1fb;" href="/profile/userprofile/">Profile</a>
+              <a class="dropdown-item" style=" color:#26f1fb;" href="/profile/notification/">Notifications</a>
+              <a class="dropdown-item" style=" color:#26f1fb;" href="/profile/logout/">Logout</a>
+
+            </div>
+          </li>
+        </ul>
+        {% else %}
+
+        <li class="nav-item  {% block signup %}
       {% endblock signup %}">
           <a class="nav-link" href="{% url 'signup' %}">Signup</a>
         </li>
-      <li class="nav-item  {% block login %}
+        <li class="nav-item  {% block login %}
       {% endblock login %}">
           <a class="nav-link" href="/profile/login/">Login</a>
         </li>
-     
-      {% endif %}
-      <li class="nav-item">
+
+        {% endif %}
+        <li class="nav-item">
           <a class="nav-link" href="">{% now "h:i A" as current_time %}
-          {{ current_time|center:"150"  }}</a>
+            {{ current_time|center:"150"  }}</a>
         </li>
-      <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" href="">{% now "D jS F Y" %}</a>
         </li>
       </ul>
     </div>
-  
+
   </nav>
 
 
 
-  
- {% for message in messages  %}
 
-<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+  {% for message in messages  %}
+
+  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
     <strong></strong> {{ message }}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
+      <span aria-hidden="true">&times;</span>
     </button>
-</div>
-{% endfor %}
+  </div>
+  {% endfor %}
   <br>
   {% block body %}
   {% endblock  %}

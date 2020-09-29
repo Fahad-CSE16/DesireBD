@@ -68,7 +68,7 @@ def authorcontact(request, sno):
             phone=form.cleaned_data['phone']
             # form.save()
             notify.send(user, recipient=receiver,  verb="is applying for your tuition teacher, EMail: "+str(email)+" Phone: " + str(
-                phone)+ f''' <a class =" btn btn-primary btn-sm " href="/profile/otherprofile/{user.username}/"> View</a> Teachers profile , Says: ''' + str(content))
+                phone)+ f''' <a class =" btn btn-primary btn-sm " href="/profile/otherprofile/{user.username}/"> View</a> Teachers profile ''' )
             messages.success(request, 'successfully Sent.')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:

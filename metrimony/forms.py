@@ -65,7 +65,7 @@ class PersonalForm(ModelForm):
             'do_u_smoke':'Have Smoking Habit?',
             'do_u_drink':'Have Drinking Habit?',
             'have_child':'Do you have any Child?',
-            'sir_name':'SirName',
+            'sir_name':'SurName',
         }
 
     def __init__(self, *args, **kwargs):
