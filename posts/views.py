@@ -204,7 +204,7 @@ def blogPost(request, sno):
 
 
 def viewpost(request):
-    posts = TuitionPost.objects.all().order_by('timeStamp')
+    posts = TuitionPost.objects.all().order_by('-timeStamp')
     district = District.objects.all().order_by('name')
     subject = Subject.objects.all().order_by('name')
     classes = Classes.objects.all().order_by('name')
