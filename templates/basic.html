@@ -17,13 +17,8 @@
   <link href="{% static 'css/style.css'  %}" rel='stylesheet'>
 
   <style>
-    {
-      % block css %
-    }
-
-      {
-      % endblock css %
-    }
+    {% block css %}
+      {% endblock css %}
   </style>
 </head>
 
